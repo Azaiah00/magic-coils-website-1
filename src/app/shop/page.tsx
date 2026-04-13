@@ -8,7 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { useCart } from "@/context/CartContext";
-import { products } from "@/data/products";
+import { formatListingPrice, productToCartLine, products } from "@/data/products";
 
 const categories = [
   { id: "all", label: "All Products" },
@@ -94,7 +94,7 @@ export default function ShopPage() {
                   {/* Quick Add Button */}
                   <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
                     <button 
-                      onClick={() => addItem({ ...product, quantity: 1 })}
+                      onClick={() => addItem(productToCartLine(product, 1))}
                       className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
                     >
                       Quick Add
@@ -114,7 +114,9 @@ export default function ShopPage() {
                       {product.name}
                     </Link>
                   </h3>
-                  <p className="font-sans text-primary/80 font-medium">${product.price.toFixed(2)}</p>
+                  <p className="font-sans text-primary/80 font-medium">
+                    {formatListingPrice(product)}
+                  </p>
                 </div>
               </motion.div>
             ))}

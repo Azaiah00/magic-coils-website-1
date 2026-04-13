@@ -8,7 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { useCart } from "@/context/CartContext";
-import { products } from "@/data/products";
+import { productToCartLine, products } from "@/data/products";
 import { notFound } from "next/navigation";
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -18,10 +18,17 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<string | null>("description");
+  // Size index when the SKU has multiple bottles (see `variants` in `src/data/products.ts`).
+  const [variantIndex, setVariantIndex] = useState(0);
 
   if (!product) {
     return notFound();
   }
+
+  const hasVariants = Boolean(product.variants?.length);
+  const displayPrice = hasVariants
+    ? product.variants![variantIndex].price
+    : product.price;
 
   const toggleAccordion = (id: string) => {
     setOpenAccordion(openAccordion === id ? null : id);
@@ -66,8 +73,35 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                     {product.name}
                   </h1>
                   <p className="font-sans text-2xl text-primary/80 mb-8">
-                    ${product.price.toFixed(2)}
+                    ${displayPrice.toFixed(2)}
                   </p>
+
+                  {hasVariants && (
+                    <div className="mb-8">
+                      <p className="text-xs text-accent uppercase tracking-widest mb-3 font-semibold">
+                        Size
+                      </p>
+                      <div className="flex flex-wrap gap-3">
+                        {product.variants!.map((v, i) => (
+                          <button
+                            key={v.id}
+                            type="button"
+                            onClick={() => setVariantIndex(i)}
+                            className={`px-4 py-3 text-sm font-sans border transition-colors duration-300 ${
+                              variantIndex === i
+                                ? "border-primary bg-primary text-white"
+                                : "border-primary/20 text-primary hover:border-primary/40"
+                            }`}
+                          >
+                            {v.sizeLabel}
+                            <span className="block text-xs opacity-80 mt-0.5">
+                              ${v.price.toFixed(2)}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex items-center gap-6 mb-10">
                     <div className="flex items-center border border-primary/20 p-2">
@@ -86,7 +120,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                       </button>
                     </div>
                     <button 
-                      onClick={() => addItem({ ...product, quantity })}
+                      onClick={() =>
+                        addItem(productToCartLine(product, quantity, variantIndex))
+                      }
                       className="flex-1 bg-primary text-white py-5 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
                     >
                       Add to Cart
@@ -114,7 +150,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                       <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
-                        className="pb-6 text-primary/70 font-sans leading-relaxed"
+                        className="pb-6 text-primary/70 font-sans leading-relaxed whitespace-pre-line"
                       >
                         {product.description}
                       </motion.div>
