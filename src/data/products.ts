@@ -22,6 +22,13 @@ export type Product = {
   ingredients: string;
   howToUse: string;
   variants?: ProductVariant[];
+  /**
+   * Shopify product handle (auto-generated from the product title in Shopify admin,
+   * e.g. "Peppermint Detox Shampoo" -> "peppermint-detox-shampoo"). Used by the
+   * Storefront API to create a real cart at checkout. Update each product's handle
+   * in Shopify -> Products -> product page -> "Edit website SEO" if needed.
+   */
+  shopifyHandle?: string;
 };
 
 /**
@@ -49,6 +56,8 @@ export function productToCartLine(
   variantIndex = 0
 ): CartItem {
   const variant = product.variants?.[variantIndex];
+  // shopifyHandle + sizeLabel travel with the line so /api/checkout can look up
+  // the correct Shopify variant ID when the shopper starts checkout.
   if (variant) {
     return {
       id: variant.id,
@@ -56,6 +65,8 @@ export function productToCartLine(
       price: variant.price,
       quantity,
       image: product.image,
+      shopifyHandle: product.shopifyHandle,
+      sizeLabel: variant.sizeLabel,
     };
   }
   return {
@@ -64,6 +75,7 @@ export function productToCartLine(
     price: product.price,
     quantity,
     image: product.image,
+    shopifyHandle: product.shopifyHandle,
   };
 }
 
@@ -80,6 +92,7 @@ export const products: Product[] = [
     subtitle: "First lather · scalp & detox",
     category: "shampoo",
     image: "/images/peppermint-shampoo.png",
+    shopifyHandle: "peppermint-detox-shampoo",
     description:
       "Our Peppermint Detox Shampoo is a first lather shampoo that does three things at once:\n\n1. Exfoliate the scalp from unwanted dandruff or flakes.\n2. Clarify and detox the hair from unwanted minerals and product build-up.\n3. Promote growth.",
     ingredients:
@@ -98,6 +111,7 @@ export const products: Product[] = [
     subtitle: "Moisture-rich cleanse",
     category: "shampoo",
     image: "/images/hydration-shampoo.png",
+    shopifyHandle: "intense-hydration-shampoo",
     description:
       "Our Intense Hydration Shampoo instantly provides moisture to each hair strand while strengthening it and detangling the hair simultaneously.",
     ingredients:
@@ -116,6 +130,7 @@ export const products: Product[] = [
     subtitle: "Softness & natural shine",
     category: "shampoo",
     image: "/images/moisture-conditioner.png",
+    shopifyHandle: "moisture-rich-conditioner",
     description:
       "The Magic Coils Moisture Rich Conditioner gives the hair softness and natural shine like no other conditioner on the market. Use with a plastic cap or steamer for amazing results.",
     ingredients:
@@ -134,6 +149,7 @@ export const products: Product[] = [
     subtitle: "Argan oil + vitamin C + honey oil",
     category: "treatments",
     image: "/images/leave-in-pro.png",
+    shopifyHandle: "3-in-1-leave-in-treatment",
     description:
       "The Magic Coils 3-In-1 Leave In Treatment infuses argan oil, vitamin C, and honey oil to add strength, shine, and softness to the hair that lasts all day long.",
     ingredients:
@@ -152,6 +168,7 @@ export const products: Product[] = [
     subtitle: "7.44 oz · Soft set control",
     category: "styling",
     image: "/images/control-foam-pro.png",
+    shopifyHandle: "control-foam-wrap-lotion-setting-mousse",
     description:
       "Our Magic Coils Control Foam Wrap Lotion gives you the control over your hair you want when creating a soft set.",
     ingredients:
@@ -166,6 +183,7 @@ export const products: Product[] = [
     subtitle: "Definition without stickiness",
     category: "styling",
     image: "/images/honey-argan-curl-forming-custard.png",
+    shopifyHandle: "honey-argan-curl-forming-custard",
     description:
       "Our Honey & Argan Curl Forming Custard is a non-sticky, non-flaking product that works wonders for two strand twists, twist-out styles, or looks where you want more curl definition.",
     ingredients:
@@ -180,6 +198,7 @@ export const products: Product[] = [
     subtitle: "8.45 oz · Natural styles",
     category: "styling",
     image: "/images/moisturizing-cream.png",
+    shopifyHandle: "honey-argan-daily-moisturizing-cream",
     description:
       "Our Honey & Argan Daily Moisturizing Cream is the perfect natural hair moisturizer for all natural hair styles while providing a natural shine.",
     ingredients:
@@ -194,6 +213,7 @@ export const products: Product[] = [
     subtitle: "4.05 oz · Heat protectant",
     category: "treatments",
     image: "/images/honey-argan-strengthening-serum.png",
+    shopifyHandle: "honey-argan-strengthening-serum",
     description:
       "Magic Coils Honey & Argan Strengthening Serum is a lightweight heat protectant that gives the hair instant shine and softness that lasts all day long.",
     ingredients:

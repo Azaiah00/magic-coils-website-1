@@ -8,6 +8,10 @@ export type CartItem = {
   price: number;
   quantity: number;
   image: string;
+  /** Shopify product handle, used by /api/checkout to resolve a real variant. */
+  shopifyHandle?: string;
+  /** Size option value for products with variants, e.g. "8.45 oz". */
+  sizeLabel?: string;
 };
 
 type CartContextType = {

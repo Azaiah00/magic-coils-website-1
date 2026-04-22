@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
@@ -7,6 +8,46 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function SlideOutCart() {
   const { isOpen, closeCart, items, removeItem, updateQuantity, cartTotal } = useCart();
+  // Checkout state: show a loading label and any Shopify error near the button.
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  // Build /api/checkout payload and redirect to the hosted Shopify checkout URL.
+  async function handleCheckout() {
+    setCheckoutError(null);
+    // Every line needs a Shopify handle so the API can resolve its variant.
+    const lines = items
+      .filter((i) => i.shopifyHandle)
+      .map((i) => ({
+        handle: i.shopifyHandle as string,
+        sizeLabel: i.sizeLabel,
+        quantity: i.quantity,
+      }));
+
+    if (lines.length === 0) {
+      setCheckoutError(
+        "This product is not yet connected to Shopify. Please try again soon."
+      );
+      return;
+    }
+
+    setCheckingOut(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lines }),
+      });
+      const data = (await res.json()) as { checkoutUrl?: string; error?: string };
+      if (!res.ok || !data.checkoutUrl) {
+        throw new Error(data.error ?? "Could not start checkout.");
+      }
+      window.location.href = data.checkoutUrl;
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Checkout failed.");
+      setCheckingOut(false);
+    }
+  }
 
   return (
     <AnimatePresence>
@@ -114,8 +155,17 @@ export default function SlideOutCart() {
                 <p className="text-xs text-primary/50 text-center mb-6">
                   Shipping & taxes calculated at checkout.
                 </p>
-                <button className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300">
-                  Checkout
+                {checkoutError && (
+                  <p className="text-xs text-red-600 text-center mb-3">
+                    {checkoutError}
+                  </p>
+                )}
+                <button
+                  onClick={handleCheckout}
+                  disabled={checkingOut}
+                  className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {checkingOut ? "Redirecting…" : "Checkout"}
                 </button>
               </div>
             )}
