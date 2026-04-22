@@ -67,43 +67,34 @@ export function productToCartLine(
   };
 }
 
+/**
+ * Store order is intentional: shop grid and home "Iconic Essentials" (first four) follow this array order.
+ *
+ * Product images use explicit filenames so PDPs never share the same file by mistake (e.g. peppermint vs custard).
+ */
 export const products: Product[] = [
   {
-    id: "control-foam",
-    name: "Control Foam Wrap Lotion & Setting Mousse",
-    price: 9.95,
-    subtitle: "7.44 oz · Soft set control",
-    category: "styling",
-    image: "/images/control-foam-pro.png",
+    id: "peppermint-shampoo",
+    name: "Peppermint Detox Shampoo",
+    price: 10.95,
+    subtitle: "First lather · scalp & detox",
+    category: "shampoo",
+    image: "/images/peppermint-shampoo.png",
     description:
-      "Our Magic Coils Control Foam Wrap Lotion gives you the control over your hair you want when creating a soft set.",
+      "Our Peppermint Detox Shampoo is a first lather shampoo that does three things at once:\n\n1. Exfoliate the scalp from unwanted dandruff or flakes.\n2. Clarify and detox the hair from unwanted minerals and product build-up.\n3. Promote growth.",
     ingredients:
-      "Water (Aqua), Polyquaternium-11, Cocamidopropyl Betaine, Argania Spinosa (Argan) Kernel Oil, Ascorbic Acid (Vitamin C), Honey Extract, PEG-40 Hydrogenated Castor Oil, Fragrance (Parfum).",
+      "Water (Aqua), Mentha Piperita (Peppermint) Oil, Argan Oil, Aloe Vera Oil, Tea Tree Oil, Sodium Lauryl Sulfoacetate, Cocamidopropyl Betaine, Menthol.",
     howToUse:
-      "Apply generously to damp hair. Comb through for even distribution. Mold, wrap, or set as desired. Sit under a warm dryer until completely dry.",
-  },
-  {
-    id: "leave-in-treatment",
-    name: "3-In-1 Leave In Treatment",
-    price: 11.95,
-    subtitle: "Argan oil + vitamin C + honey oil",
-    category: "treatments",
-    image: "/images/leave-in-pro.png",
-    description:
-      "The Magic Coils 3-In-1 Leave In Treatment infuses argan oil, vitamin C, and honey oil to add strength, shine, and softness to the hair that lasts all day long.",
-    ingredients:
-      "Water (Aqua), Cetearyl Alcohol, Argania Spinosa (Argan) Kernel Oil, Ascorbic Acid (Vitamin C), Honey Oil, Behentrimonium Methosulfate, Quaternium-91, Panthenol, Phenoxyethanol.",
-    howToUse:
-      "Apply to clean, damp hair. Distribute evenly from roots to ends. Do not rinse. Style as usual.",
+      "Apply to wet hair and scalp. Massage vigorously to stimulate blood flow. Rinse thoroughly. Feel the magic tingle.",
     variants: [
-      { id: "leave-in-treatment-845", sizeLabel: "8.45 oz", price: 11.95 },
-      { id: "leave-in-treatment-338", sizeLabel: "33.8 oz", price: 24.95 },
+      { id: "peppermint-shampoo-845", sizeLabel: "8.45 oz", price: 10.95 },
+      { id: "peppermint-shampoo-338", sizeLabel: "33.8 oz", price: 21.95 },
     ],
   },
   {
     id: "hydration-shampoo",
     name: "Intense Hydration Shampoo",
-    price: 18.95,
+    price: 8.95,
     subtitle: "Moisture-rich cleanse",
     category: "shampoo",
     image: "/images/hydration-shampoo.png",
@@ -114,7 +105,7 @@ export const products: Product[] = [
     howToUse:
       "Apply to wet hair, massage into a rich lather. Rinse thoroughly. For best results, follow with Moisture Rich Conditioner.",
     variants: [
-      { id: "hydration-shampoo-845", sizeLabel: "8.45 oz", price: 18.95 },
+      { id: "hydration-shampoo-845", sizeLabel: "8.45 oz", price: 8.95 },
       { id: "hydration-shampoo-338", sizeLabel: "33.8 oz", price: 18.95 },
     ],
   },
@@ -137,50 +128,50 @@ export const products: Product[] = [
     ],
   },
   {
+    id: "leave-in-treatment",
+    name: "3-In-1 Leave In Treatment",
+    price: 11.95,
+    subtitle: "Argan oil + vitamin C + honey oil",
+    category: "treatments",
+    image: "/images/leave-in-pro.png",
+    description:
+      "The Magic Coils 3-In-1 Leave In Treatment infuses argan oil, vitamin C, and honey oil to add strength, shine, and softness to the hair that lasts all day long.",
+    ingredients:
+      "Water (Aqua), Cetearyl Alcohol, Argania Spinosa (Argan) Kernel Oil, Ascorbic Acid (Vitamin C), Honey Oil, Behentrimonium Methosulfate, Quaternium-91, Panthenol, Phenoxyethanol.",
+    howToUse:
+      "Apply to clean, damp hair. Distribute evenly from roots to ends. Do not rinse. Style as usual.",
+    variants: [
+      { id: "leave-in-treatment-845", sizeLabel: "8.45 oz", price: 11.95 },
+      { id: "leave-in-treatment-338", sizeLabel: "33.8 oz", price: 24.95 },
+    ],
+  },
+  {
+    id: "control-foam",
+    name: "Control Foam Wrap Lotion & Setting Mousse",
+    price: 9.95,
+    subtitle: "7.44 oz · Soft set control",
+    category: "styling",
+    image: "/images/control-foam-pro.png",
+    description:
+      "Our Magic Coils Control Foam Wrap Lotion gives you the control over your hair you want when creating a soft set.",
+    ingredients:
+      "Water (Aqua), Polyquaternium-11, Cocamidopropyl Betaine, Argania Spinosa (Argan) Kernel Oil, Ascorbic Acid (Vitamin C), Honey Extract, PEG-40 Hydrogenated Castor Oil, Fragrance (Parfum).",
+    howToUse:
+      "Apply generously to damp hair. Comb through for even distribution. Mold, wrap, or set as desired. Sit under a warm dryer until completely dry.",
+  },
+  {
     id: "curl-custard",
     name: "Honey & Argan Curl Forming Custard",
     price: 9.95,
     subtitle: "Definition without stickiness",
     category: "styling",
-    image: "/images/curl-custard.png",
+    image: "/images/honey-argan-curl-forming-custard.png",
     description:
       "Our Honey & Argan Curl Forming Custard is a non-sticky, non-flaking product that works wonders for two strand twists, twist-out styles, or looks where you want more curl definition.",
     ingredients:
       "Water (Aqua), Glycerin, Argan Oil, Vitamin C, Honey Oil, Pectin, Althaea Officinalis (Marshmallow) Root Extract, Aloe Barbadensis Leaf Juice, Agave Americana Leaf Extract.",
     howToUse:
       "Apply to damp hair in sections. Use fingers to coil or twist. Allow to air dry or use a diffuser for more volume.",
-  },
-  {
-    id: "peppermint-shampoo",
-    name: "Peppermint Detox Shampoo",
-    price: 10.95,
-    subtitle: "First lather · scalp & detox",
-    category: "shampoo",
-    image: "/images/peppermint-shampoo.png",
-    description:
-      "Our Peppermint Detox Shampoo is a first lather shampoo that does three things at once:\n\n1. Exfoliate the scalp from unwanted dandruff or flakes.\n2. Clarify and detox the hair from unwanted minerals and product build-up.\n3. Promote growth.",
-    ingredients:
-      "Water (Aqua), Mentha Piperita (Peppermint) Oil, Argan Oil, Aloe Vera Oil, Tea Tree Oil, Sodium Lauryl Sulfoacetate, Cocamidopropyl Betaine, Menthol.",
-    howToUse:
-      "Apply to wet hair and scalp. Massage vigorously to stimulate blood flow. Rinse thoroughly. Feel the magic tingle.",
-    variants: [
-      { id: "peppermint-shampoo-845", sizeLabel: "8.45 oz", price: 10.95 },
-      { id: "peppermint-shampoo-338", sizeLabel: "33.8 oz", price: 21.95 },
-    ],
-  },
-  {
-    id: "strengthening-serum",
-    name: "Honey & Argan Strengthening Serum",
-    price: 12.95,
-    subtitle: "4.05 oz · Heat protectant",
-    category: "treatments",
-    image: "/images/strengthening-serum.png",
-    description:
-      "Magic Coils Honey & Argan Strengthening Serum is a lightweight heat protectant that gives the hair instant shine and softness that lasts all day long.",
-    ingredients:
-      "Cyclopentasiloxane, Dimethiconol, Argania Spinosa (Argan) Kernel Oil, Ascorbic Acid (Vitamin C), Honey Oil, Tocopheryl Acetate (Vitamin E), Fragrance.",
-    howToUse:
-      "Apply a small amount to damp or dry hair before using heat tools. Can also be used as a finishing touch for extra shine and frizz control.",
   },
   {
     id: "moisturizing-cream",
@@ -195,5 +186,19 @@ export const products: Product[] = [
       "Water (Aqua), Butyrospermum Parkii (Shea) Butter, Argan Oil, Vitamin C, Honey Oil, Coconut Oil, Cetearyl Alcohol, Polysorbate 60, Vegetable Glycerin.",
     howToUse:
       "Apply a small amount to hands and work through dry or damp hair daily. Focus on ends and dry areas of the scalp.",
+  },
+  {
+    id: "strengthening-serum",
+    name: "Honey & Argan Strengthening Serum",
+    price: 12.95,
+    subtitle: "4.05 oz · Heat protectant",
+    category: "treatments",
+    image: "/images/honey-argan-strengthening-serum.png",
+    description:
+      "Magic Coils Honey & Argan Strengthening Serum is a lightweight heat protectant that gives the hair instant shine and softness that lasts all day long.",
+    ingredients:
+      "Cyclopentasiloxane, Dimethiconol, Argania Spinosa (Argan) Kernel Oil, Ascorbic Acid (Vitamin C), Honey Oil, Tocopheryl Acetate (Vitamin E), Fragrance.",
+    howToUse:
+      "Apply a small amount to damp or dry hair before using heat tools. Can also be used as a finishing touch for extra shine and frizz control.",
   },
 ];
