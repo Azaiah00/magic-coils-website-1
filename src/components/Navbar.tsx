@@ -40,6 +40,9 @@ export default function Navbar() {
             <Link href="/quiz" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
               Hair Quiz
             </Link>
+            <Link href="/directory" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+              Stylists
+            </Link>
             <Link href="/about" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
               Our Story
             </Link>
@@ -52,7 +55,7 @@ export default function Navbar() {
               alt="Magic Coils" 
               width={140} 
               height={70} 
-              className="object-contain h-14 w-auto"
+              className="object-contain h-14 w-auto drop-shadow-sm"
               priority
             />
           </Link>
@@ -92,7 +95,7 @@ export default function Navbar() {
             className="fixed inset-0 bg-background z-50 flex flex-col"
           >
             <div className="flex justify-between items-center p-6 border-b border-surface">
-              <Image src="/images/magic-coils-logo.png" alt="Magic Coils" width={100} height={50} className="h-10 w-auto" />
+              <Image src="/images/magic-coils-logo.png" alt="Magic Coils" width={100} height={50} className="h-10 w-auto drop-shadow-sm" />
               <button onClick={() => setMobileMenuOpen(false)} className="p-2">
                 <X className="w-6 h-6 text-primary" />
               </button>

@@ -24,7 +24,7 @@ export default function Footer() {
               alt="Magic Coils" 
               width={160} 
               height={80} 
-              className="object-contain"
+              className="object-contain drop-shadow-sm"
               />
             </Link>
             <p className="font-sans text-sm text-primary/70 mb-8 max-w-sm leading-relaxed">

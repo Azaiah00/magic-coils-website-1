@@ -42,8 +42,10 @@ export default function SocialProof() {
   };
 
   return (
-    <section className="py-24 bg-surface border-y border-primary/5">
-      <div className="container mx-auto px-4 md:px-8">
+    <section className="py-24 bg-primary border-y border-accent/20 relative overflow-hidden">
+      {/* Subtle Damask Pattern Overlay */}
+      <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -53,13 +55,13 @@ export default function SocialProof() {
         >
           {proofs.map((proof, index) => (
             <motion.div key={index} variants={itemVariants} className="flex flex-col items-center text-center group">
-              <div className="mb-8 p-6 bg-white rounded-full shadow-sm group-hover:shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2">
+              <div className="mb-8 p-6 bg-white/10 rounded-full shadow-[0_0_15px_rgba(212,175,55,0.1)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] transition-all duration-500 ease-out group-hover:-translate-y-2 border border-accent/20">
                 {proof.icon}
               </div>
-              <h3 className="font-serif text-2xl text-primary mb-4">
+              <h3 className="font-serif text-2xl text-white mb-4">
                 {proof.title}
               </h3>
-              <p className="font-sans text-base text-primary/70 max-w-xs leading-relaxed">
+              <p className="font-sans text-base text-white/70 max-w-xs leading-relaxed font-light">
                 {proof.description}
               </p>
             </motion.div>

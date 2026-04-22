@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
+import BrandStory from "@/components/BrandStory";
 import QuizSection from "@/components/QuizSection";
 import SocialProof from "@/components/SocialProof";
 import Footer from "@/components/Footer";
@@ -13,6 +14,7 @@ export default function Home() {
       <PageTransition>
         <Hero />
         <ProductGrid />
+        <BrandStory />
         <QuizSection />
         <SocialProof />
       </PageTransition>

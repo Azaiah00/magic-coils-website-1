@@ -12,8 +12,10 @@ export default function ProductGrid() {
   const displayProducts = products.slice(0, 4);
 
   return (
-    <section className="py-32 bg-surface">
-      <div className="container mx-auto px-4 md:px-8">
+    <section className="py-32 bg-surface relative overflow-hidden">
+      {/* Subtle Damask Pattern Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -22,7 +24,9 @@ export default function ProductGrid() {
             transition={{ duration: 0.8 }}
             className="max-w-2xl"
           >
-            <h2 className="font-serif text-5xl md:text-6xl text-primary mb-6">Iconic Essentials</h2>
+            <h2 className="font-serif text-5xl md:text-6xl text-primary mb-6">
+              Iconic <span className="bg-gradient-to-r from-[#BF953F] via-[#D4AF37] to-[#B38728] bg-clip-text text-transparent">Essentials</span>
+            </h2>
             <p className="font-sans text-lg text-primary/70 leading-relaxed">
               Curated perfection for your daily routine. Experience the magic of our best-selling formulas, crafted to honor the beauty of textured hair.
             </p>
