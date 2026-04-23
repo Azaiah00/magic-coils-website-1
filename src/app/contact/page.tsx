@@ -62,8 +62,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-sans font-semibold text-primary mb-1">Email</h3>
-                    <a href="mailto:hairforyoullc@gmail.com" className="font-sans text-primary/70 hover:text-accent transition-colors">
-                      hairforyoullc@gmail.com
+                    <a href="mailto:info@magiccoils.net" className="font-sans text-primary/70 hover:text-accent transition-colors">
+                      info@magiccoils.net
                     </a>
                     <p className="font-sans text-sm text-primary/50 mt-1">We aim to respond within 24 hours.</p>
                   </div>

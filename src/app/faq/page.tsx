@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     question: "Do you offer wholesale pricing for salons?",
-    answer: "Absolutely. We love partnering with stylists. Please visit our Contact page and select 'Wholesale' as the subject, or email us directly at hairforyoullc@gmail.com with your salon details."
+    answer: "Absolutely. We love partnering with stylists. Please visit our Contact page and select 'Wholesale' as the subject, or email us directly at info@magiccoils.net with your salon details."
   },
   {
     question: "What is your return policy?",

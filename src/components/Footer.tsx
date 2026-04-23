@@ -125,7 +125,7 @@ export default function Footer() {
             </p>
             <span className="hidden md:inline text-primary/30">|</span>
             <p className="font-sans text-xs text-primary/50">
-              Hair For You LLC &bull; 843-344-7131 &bull; <a href="mailto:hairforyoullc@gmail.com" className="hover:text-accent transition-colors">hairforyoullc@gmail.com</a>
+              Hair For You LLC &bull; 843-344-7131 &bull; <a href="mailto:info@magiccoils.net" className="hover:text-accent transition-colors">info@magiccoils.net</a>
             </p>
           </div>
           <div className="flex gap-8">
