@@ -20,7 +20,7 @@ const stylists = [
     name: "Serena Davis",
     specialty: "Color Specialist & Extensions",
     location: "Houston, TX",
-    image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=800&auto=format&fit=crop",
     instagram: "@serenadoeshair",
   },
   {
@@ -28,7 +28,7 @@ const stylists = [
     name: "Chloe Washington",
     specialty: "Locs, Braids & Protective Styles",
     location: "Los Angeles, CA",
-    image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop",
     instagram: "@chloesmagiccoils",
   },
   {
