@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -20,7 +20,7 @@ const stylists = [
     name: "Serena Davis",
     specialty: "Color Specialist & Extensions",
     location: "Houston, TX",
-    image: "https://images.unsplash.com/photo-1543269664-76bc3997d9ea?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=800&auto=format&fit=crop",
     instagram: "@serenadoeshair",
   },
   {
@@ -28,7 +28,7 @@ const stylists = [
     name: "Chloe Washington",
     specialty: "Locs, Braids & Protective Styles",
     location: "Los Angeles, CA",
-    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?q=80&w=800&auto=format&fit=crop",
     instagram: "@chloesmagiccoils",
   },
   {
@@ -44,7 +44,7 @@ const stylists = [
     name: "Nia Robinson",
     specialty: "Curly Cuts & Wash n' Go's",
     location: "New York, NY",
-    image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?q=80&w=800&auto=format&fit=crop",
     instagram: "@niarobinsoncurls",
   },
   {
@@ -52,12 +52,12 @@ const stylists = [
     name: "Maya Smith",
     specialty: "Healthy Hair Care & Treatments",
     location: "Chicago, IL",
-    image: "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
     instagram: "@mayasmithhair",
   }
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -67,12 +67,12 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+    transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
   },
 };
 
