@@ -23,60 +23,65 @@ export default function Navbar() {
 
         {/* Main Navbar */}
         <div className="border-b border-surface">
-          <div className="container mx-auto px-4 md:px-8 h-24 flex items-center justify-between">
+          <div className="container mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between">
             
-            {/* Mobile Menu Toggle */}
-            <button 
-              className="md:hidden p-2 -ml-2 text-primary"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <Menu className="w-6 h-6" strokeWidth={1.5} />
-            </button>
+            {/* Left Section: Mobile Menu Toggle / Desktop Links */}
+            <div className="flex-1 flex items-center justify-start">
+              {/* Mobile Menu Toggle */}
+              <button 
+                className="md:hidden p-2 -ml-2 text-primary hover:text-accent transition-colors"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <Menu className="w-6 h-6" strokeWidth={1.5} />
+              </button>
 
-            {/* Left: Links */}
-            <nav className="hidden md:flex items-center gap-10 flex-1">
-              <Link href="/shop" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
-                Shop All
-              </Link>
-              <Link href="/quiz" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
-                Hair Quiz
-              </Link>
-              <Link href="/directory" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
-                Stylists
-              </Link>
-              <Link href="/about" className="text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
-                Our Story
-              </Link>
-            </nav>
+              {/* Desktop Links */}
+              <nav className="hidden md:flex items-center gap-6 lg:gap-10">
+                <Link href="/shop" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                  Shop All
+                </Link>
+                <Link href="/quiz" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                  Hair Quiz
+                </Link>
+                <Link href="/directory" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                  Stylists
+                </Link>
+                <Link href="/about" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                  Our Story
+                </Link>
+              </nav>
+            </div>
 
-            {/* Center: Logo */}
-            <Link href="/" className="flex-1 md:flex-none flex justify-center items-center">
-              <Image 
-                src="/images/magic-coils-logo.png" 
-                alt="Magic Coils" 
-                width={140} 
-                height={70} 
-                className="object-contain h-14 w-auto drop-shadow-sm"
-                priority
-              />
-            </Link>
+            {/* Center Section: Logo */}
+            <div className="flex justify-center items-center shrink-0 px-2">
+              <Link href="/" className="flex items-center justify-center">
+                <Image 
+                  src="/images/magic-coils-logo.png" 
+                  alt="Magic Coils" 
+                  width={160} 
+                  height={80} 
+                  className="object-contain h-12 md:h-16 w-auto drop-shadow-sm"
+                  priority
+                />
+              </Link>
+            </div>
 
-            {/* Right: Icons */}
-            <div className="flex items-center justify-end gap-6 flex-1">
-              <button aria-label="Search" className="hover:text-accent transition-colors duration-300 ease-in-out hidden sm:block">
+            {/* Right Section: Icons */}
+            <div className="flex items-center justify-end gap-2 md:gap-6 flex-1">
+              <button aria-label="Search" className="hover:text-accent transition-colors duration-300 ease-in-out hidden sm:block p-2">
                 <Search className="w-5 h-5" strokeWidth={1.5} />
               </button>
-              <button aria-label="Account" className="hover:text-accent transition-colors duration-300 ease-in-out hidden sm:block">
+              <button aria-label="Account" className="hover:text-accent transition-colors duration-300 ease-in-out hidden sm:block p-2">
                 <User className="w-5 h-5" strokeWidth={1.5} />
               </button>
               <button 
                 aria-label="Cart" 
                 onClick={openCart}
-                className="relative hover:text-accent transition-colors duration-300 ease-in-out p-2 -mr-2"
+                className="relative hover:text-accent transition-colors duration-300 ease-in-out p-2 -mr-2 md:mr-0"
               >
-                <ShoppingCart className="w-5 h-5" strokeWidth={1.5} />
+                <ShoppingCart className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
                 {itemCount > 0 && (
-                  <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center bg-accent text-white text-[10px] font-bold rounded-full">
+                  <span className="absolute top-0 right-0 flex h-4 w-4 md:h-5 md:w-5 items-center justify-center bg-accent text-white text-[10px] md:text-xs font-bold rounded-full">
                     {itemCount}
                   </span>
                 )}
