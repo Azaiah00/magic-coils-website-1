@@ -77,6 +77,7 @@ export default function Footer() {
               <Link href="/about" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Our Story</Link>
               <Link href="/blog" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Curl Talk Blog</Link>
               <Link href="/directory" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Stylist Directory</Link>
+              <Link href="/distributor" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Distributors</Link>
               <Link href="/faq" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">FAQ</Link>
               <Link href="/contact" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Contact Us</Link>
             </nav>

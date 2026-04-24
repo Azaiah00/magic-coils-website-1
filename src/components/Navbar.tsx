@@ -36,17 +36,20 @@ export default function Navbar() {
               </button>
 
               {/* Desktop Links */}
-              <nav className="hidden md:flex items-center gap-6 lg:gap-10">
-                <Link href="/shop" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+              <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10">
+                <Link href="/shop" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
                   Shop All
                 </Link>
-                <Link href="/quiz" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                <Link href="/quiz" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
                   Hair Quiz
                 </Link>
-                <Link href="/directory" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                <Link href="/directory" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
                   Stylists
                 </Link>
-                <Link href="/about" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out">
+                <Link href="/distributor" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
+                  Distributors
+                </Link>
+                <Link href="/about" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
                   Our Story
                 </Link>
               </nav>
@@ -112,6 +115,7 @@ export default function Navbar() {
               <Link href="/quiz" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Hair Quiz</Link>
               <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Our Story</Link>
               <Link href="/directory" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Stylist Directory</Link>
+              <Link href="/distributor" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Distributors</Link>
               <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Curl Talk Blog</Link>
             </nav>
           </motion.div>
