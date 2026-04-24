@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import SlideOutCart from "@/components/SlideOutCart";
+import PopupModal from "@/components/PopupModal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <CartProvider>
           {children}
           <SlideOutCart />
+          <PopupModal />
         </CartProvider>
       </body>
     </html>
