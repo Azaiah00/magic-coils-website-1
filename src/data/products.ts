@@ -91,7 +91,7 @@ export const products: Product[] = [
     price: 10.95,
     subtitle: "First lather · scalp & detox",
     category: "shampoo",
-    image: "/images/peppermint-shampoo.png",
+    image: "/images/peppermint-shampoo-new.png",
     shopifyHandle: "peppermint-detox-shampoo",
     description:
       "Our Peppermint Detox Shampoo is a first lather shampoo that does three things at once:\n\n1. Exfoliate the scalp from unwanted dandruff or flakes.\n2. Clarify and detox the hair from unwanted minerals and product build-up.\n3. Promote growth.",
