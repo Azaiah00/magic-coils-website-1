@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Search, User, ShoppingCart, Menu, X } from "lucide-react";
+import { Search, User, ShoppingCart, Menu, X, Instagram } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,8 +17,17 @@ export default function Navbar() {
     <>
       <header className="sticky top-0 z-40 w-full bg-background/90 backdrop-blur-md flex flex-col">
         {/* Announcement Bar */}
-        <div className="bg-primary text-accent py-2.5 text-center text-xs md:text-sm font-medium tracking-widest uppercase">
-          Free Shipping on Orders Over $75 | Crowned in Magic
+        <div className="bg-primary text-accent py-2.5 text-center text-xs md:text-sm font-medium tracking-widest uppercase flex items-center justify-center gap-2">
+          <span>Free Shipping on Orders Over $75 | Crowned in Magic</span>
+          <span className="hidden sm:inline">|</span>
+          <a 
+            href="https://instagram.com/magiccoilsofficial" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hidden sm:inline hover:text-white transition-colors"
+          >
+            @magiccoilsofficial
+          </a>
         </div>
 
         {/* Main Navbar */}
@@ -107,13 +116,40 @@ export default function Navbar() {
                 <X className="w-6 h-6 text-primary" />
               </button>
             </div>
-            <nav className="flex flex-col p-8 gap-8">
+            <nav className="flex flex-col p-8 gap-8 flex-grow">
               <Link href="/shop" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Shop All</Link>
               <Link href="/quiz" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Hair Quiz</Link>
               <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Our Story</Link>
               <Link href="/directory" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Stylist Directory</Link>
               <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="font-serif text-3xl text-primary">Curl Talk Blog</Link>
             </nav>
+            
+            {/* Mobile Social Links */}
+            <div className="p-8 border-t border-surface">
+              <p className="text-xs text-primary/50 uppercase tracking-widest mb-4">Follow @magiccoilsofficial</p>
+              <div className="flex items-center gap-6">
+                <a 
+                  href="https://instagram.com/magiccoilsofficial" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 text-primary hover:text-accent transition-colors"
+                >
+                  <Instagram className="w-6 h-6" />
+                  <span className="font-sans text-sm">Instagram</span>
+                </a>
+                <a 
+                  href="https://tiktok.com/@magiccoilsofficial" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 text-primary hover:text-accent transition-colors"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                  <span className="font-sans text-sm">TikTok</span>
+                </a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
