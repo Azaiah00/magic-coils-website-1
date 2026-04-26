@@ -5,6 +5,7 @@ import ProductGrid from "@/components/ProductGrid";
 import BrandStory from "@/components/BrandStory";
 import QuizSection from "@/components/QuizSection";
 import SocialProof from "@/components/SocialProof";
+import DistributorTeaser from "@/components/DistributorTeaser";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <BrandStory />
         <QuizSection />
         <SocialProof />
+        <DistributorTeaser />
       </PageTransition>
       <Footer />
     </main>
