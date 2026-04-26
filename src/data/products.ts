@@ -227,7 +227,7 @@ export const products: Product[] = [
     price: 50.00,
     subtitle: "Complete set for perfect twists",
     category: "bundles",
-    image: "/images/bundle-2-strand-twist.png",
+    image: "/images/bundle-2-strand-twist-new.png",
     shopifyHandle: "the-magic-coils-2-strand-twist",
     description:
       "Everything you need for the perfect 2 Strand Twist. This bundle includes:\n\n- 3-In-1 Leave In Treatment (8.45 oz)\n- Honey & Argan Curl Forming Custard (8.45 oz)\n- Control Foam Wrap Lotion & Setting Mousse (7.44 oz)\n- Honey & Argan Strengthening Serum (4.05 oz)",
@@ -240,7 +240,7 @@ export const products: Product[] = [
     price: 100.00,
     subtitle: "The ultimate silk press system",
     category: "bundles",
-    image: "/images/bundle-magic-press.png",
+    image: "/images/bundle-magic-press-new.png",
     shopifyHandle: "the-magic-press",
     description:
       "The complete professional system for a flawless, long-lasting silk press. This bundle includes:\n\n- Peppermint Detox Shampoo (33.8 oz)\n- Intense Hydration Shampoo (33.8 oz)\n- Moisture Rich Conditioner (33.8 oz)\n- 3-In-1 Leave In Treatment (33.8 oz)\n- Honey & Argan Strengthening Serum (4.05 oz)",
