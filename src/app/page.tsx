@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import BundleShowcase from "@/components/BundleShowcase";
 import ProductGrid from "@/components/ProductGrid";
 import BrandStory from "@/components/BrandStory";
 import QuizSection from "@/components/QuizSection";
@@ -13,6 +14,7 @@ export default function Home() {
       <Navbar />
       <PageTransition>
         <Hero />
+        <BundleShowcase />
         <ProductGrid />
         <BrandStory />
         <QuizSection />

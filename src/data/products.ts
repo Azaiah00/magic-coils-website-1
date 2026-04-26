@@ -16,7 +16,7 @@ export type Product = {
   /** Lowest SKU price — used for sorting and as a fallback when no variants exist. */
   price: number;
   subtitle: string;
-  category: "shampoo" | "styling" | "treatments";
+  category: "shampoo" | "styling" | "treatments" | "bundles";
   image: string;
   description: string;
   ingredients: string;
@@ -221,4 +221,30 @@ export const products: Product[] = [
     howToUse:
       "Apply a small amount to damp or dry hair before using heat tools. Can also be used as a finishing touch for extra shine and frizz control.",
   },
+  {
+    id: "bundle-2-strand-twist",
+    name: "The Magic Coils 2 Strand Twist",
+    price: 50.00,
+    subtitle: "Complete set for perfect twists",
+    category: "bundles",
+    image: "/images/bundle-2-strand-twist.png",
+    shopifyHandle: "the-magic-coils-2-strand-twist",
+    description:
+      "Everything you need for the perfect 2 Strand Twist. This bundle includes:\n\n- 3-In-1 Leave In Treatment (8.45 oz)\n- Honey & Argan Curl Forming Custard (8.45 oz)\n- Control Foam Wrap Lotion & Setting Mousse (7.44 oz)\n- Honey & Argan Strengthening Serum (4.05 oz)",
+    ingredients: "See individual products for full ingredient lists.",
+    howToUse: "Layer the Leave In Treatment, followed by the Curl Forming Custard or Control Foam. Finish with the Strengthening Serum for brilliant shine.",
+  },
+  {
+    id: "bundle-magic-press",
+    name: "The Magic Press",
+    price: 100.00,
+    subtitle: "The ultimate silk press system",
+    category: "bundles",
+    image: "/images/bundle-magic-press.png",
+    shopifyHandle: "the-magic-press",
+    description:
+      "The complete professional system for a flawless, long-lasting silk press. This bundle includes:\n\n- Peppermint Detox Shampoo (33.8 oz)\n- Intense Hydration Shampoo (33.8 oz)\n- Moisture Rich Conditioner (33.8 oz)\n- 3-In-1 Leave In Treatment (33.8 oz)\n- Honey & Argan Strengthening Serum (4.05 oz)",
+    ingredients: "See individual products for full ingredient lists.",
+    howToUse: "Start with the Peppermint Detox Shampoo to clarify, follow with Intense Hydration Shampoo and Moisture Rich Conditioner. Apply the Leave In Treatment before blow-drying, and use the Strengthening Serum before flat ironing.",
+  }
 ];

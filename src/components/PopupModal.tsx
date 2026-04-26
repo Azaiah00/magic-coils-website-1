@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
+/** How far down the page (0–1) before we show the promo — ~40% of scrollable height. */
+const SCROLL_DEPTH_THRESHOLD = 0.4;
+
 export default function PopupModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(true);
+  const scrollDepthTriggeredRef = useRef(false);
 
   useEffect(() => {
     // Check if the user has already seen the popup in this session
@@ -22,13 +26,40 @@ export default function PopupModal() {
     const initTimer = setTimeout(() => {
       setIsDismissed(false);
     }, 0);
-    
-    // 1. Time-delayed intent (show after 20 seconds)
-    const popupTimer = setTimeout(() => {
-      setIsOpen(true);
-    }, 20000);
 
-    // 2. Exit intent (mouse leaves the top of the viewport)
+    // 1. Scroll-depth intent: open after user has scrolled ~40% of the page
+    //    (relative to total scrollable distance, not viewport height alone).
+    let ticking = false;
+    const checkScrollDepth = () => {
+      if (scrollDepthTriggeredRef.current) return;
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
+      // Very short pages: skip scroll rule so we do not pop immediately at load
+      if (scrollable < 120) return;
+      const scrolled = window.scrollY;
+      const ratio = scrolled / scrollable;
+      if (ratio >= SCROLL_DEPTH_THRESHOLD) {
+        scrollDepthTriggeredRef.current = true;
+        setIsOpen(true);
+      }
+    };
+
+    const onScroll = () => {
+      if (scrollDepthTriggeredRef.current) return;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          checkScrollDepth();
+          ticking = false;
+        });
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Run once in case they land mid-page (e.g. anchor) or page is short after paint
+    requestAnimationFrame(checkScrollDepth);
+
+    // 2. Exit intent (mouse leaves the top of the viewport) — desktop only pattern
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 10) {
         setIsOpen(true);
@@ -39,7 +70,7 @@ export default function PopupModal() {
 
     return () => {
       clearTimeout(initTimer);
-      clearTimeout(popupTimer);
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
@@ -77,7 +108,7 @@ export default function PopupModal() {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
             className="relative w-full max-w-4xl bg-white shadow-2xl overflow-hidden flex flex-col md:flex-row z-10 border border-accent/20"
           >
             {/* Close Button */}
