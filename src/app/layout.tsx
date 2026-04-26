@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Magic Coils | Crowned in Magic",
   description: "Professional formulations designed to nourish, define, and protect. Your hair is a crown.",
   verification: {
-    other: { 'p:domain_verify': process.env.PINTEREST_DOMAIN_VERIFY || '' },
+    other: { 'p:domain_verify': '93c3e3c4317a41498fc73b6921399419' },
   },
 };
 
