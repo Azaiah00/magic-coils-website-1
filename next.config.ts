@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   // Allow product photos served from Shopify's CDN (used once we switch to
   // Shopify-hosted media). Local /images paths still work as before.
   images: {
+    unoptimized: true,
     remotePatterns: [
       { protocol: "https", hostname: "cdn.shopify.com" },
       { protocol: "https", hostname: "images.unsplash.com" },
