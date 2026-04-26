@@ -15,6 +15,7 @@ const categories = [
   { id: "shampoo", label: "Shampoo & Conditioners" },
   { id: "styling", label: "Styling" },
   { id: "treatments", label: "Treatments" },
+  { id: "bundles", label: "Bundles", href: "/bundles" },
 ];
 
 export default function ShopPage() {
@@ -53,17 +54,27 @@ export default function ShopPage() {
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
             {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`text-sm font-semibold tracking-widest uppercase transition-colors duration-300 pb-2 border-b-2 ${
-                  activeCategory === cat.id 
-                    ? "border-accent text-primary" 
-                    : "border-transparent text-primary/50 hover:text-primary"
-                }`}
-              >
-                {cat.label}
-              </button>
+              cat.href ? (
+                <Link
+                  key={cat.id}
+                  href={cat.href}
+                  className="text-sm font-semibold tracking-widest uppercase transition-colors duration-300 pb-2 border-b-2 border-transparent text-primary/50 hover:text-primary hover:border-accent"
+                >
+                  {cat.label}
+                </Link>
+              ) : (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`text-sm font-semibold tracking-widest uppercase transition-colors duration-300 pb-2 border-b-2 ${
+                    activeCategory === cat.id 
+                      ? "border-accent text-primary" 
+                      : "border-transparent text-primary/50 hover:text-primary"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              )
             ))}
           </div>
 
