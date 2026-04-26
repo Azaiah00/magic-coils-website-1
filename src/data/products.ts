@@ -88,7 +88,7 @@ export const products: Product[] = [
   {
     id: "peppermint-shampoo",
     name: "Peppermint Detox Shampoo",
-    price: 10.95,
+    price: 17.95,
     subtitle: "First lather · scalp & detox",
     category: "shampoo",
     image: "/images/peppermint-shampoo-new.png",
@@ -100,14 +100,14 @@ export const products: Product[] = [
     howToUse:
       "Apply to wet hair and scalp. Massage vigorously to stimulate blood flow. Rinse thoroughly. Feel the magic tingle.",
     variants: [
-      { id: "peppermint-shampoo-845", sizeLabel: "8.45 oz", price: 10.95 },
-      { id: "peppermint-shampoo-338", sizeLabel: "33.8 oz", price: 21.95 },
+      { id: "peppermint-shampoo-845", sizeLabel: "8.45 oz", price: 17.95 },
+      { id: "peppermint-shampoo-338", sizeLabel: "32 oz", price: 33.95 },
     ],
   },
   {
     id: "hydration-shampoo",
     name: "Intense Hydration Shampoo",
-    price: 8.95,
+    price: 15.95,
     subtitle: "Moisture-rich cleanse",
     category: "shampoo",
     image: "/images/hydration-shampoo.png",
@@ -119,14 +119,14 @@ export const products: Product[] = [
     howToUse:
       "Apply to wet hair, massage into a rich lather. Rinse thoroughly. For best results, follow with Moisture Rich Conditioner.",
     variants: [
-      { id: "hydration-shampoo-845", sizeLabel: "8.45 oz", price: 8.95 },
-      { id: "hydration-shampoo-338", sizeLabel: "33.8 oz", price: 18.95 },
+      { id: "hydration-shampoo-845", sizeLabel: "8.45 oz", price: 15.95 },
+      { id: "hydration-shampoo-338", sizeLabel: "32 oz", price: 26.95 },
     ],
   },
   {
     id: "moisture-conditioner",
     name: "Moisture Rich Conditioner",
-    price: 9.95,
+    price: 16.97,
     subtitle: "Softness & natural shine",
     category: "shampoo",
     image: "/images/moisture-conditioner.png",
@@ -138,14 +138,14 @@ export const products: Product[] = [
     howToUse:
       "After shampooing, apply from mid-lengths to ends. Leave on for 3-5 minutes. Rinse thoroughly with cool water to seal the cuticle.",
     variants: [
-      { id: "moisture-conditioner-845", sizeLabel: "8.45 oz", price: 9.95 },
-      { id: "moisture-conditioner-338", sizeLabel: "33.8 oz", price: 19.95 },
+      { id: "moisture-conditioner-845", sizeLabel: "8.45 oz", price: 16.97 },
+      { id: "moisture-conditioner-338", sizeLabel: "32 oz", price: 31.95 },
     ],
   },
   {
     id: "leave-in-treatment",
     name: "3-In-1 Leave In Treatment",
-    price: 11.95,
+    price: 16.95,
     subtitle: "Argan oil + vitamin C + honey oil",
     category: "treatments",
     image: "/images/leave-in-pro.png",
@@ -157,14 +157,14 @@ export const products: Product[] = [
     howToUse:
       "Apply to clean, damp hair. Distribute evenly from roots to ends. Do not rinse. Style as usual.",
     variants: [
-      { id: "leave-in-treatment-845", sizeLabel: "8.45 oz", price: 11.95 },
-      { id: "leave-in-treatment-338", sizeLabel: "33.8 oz", price: 24.95 },
+      { id: "leave-in-treatment-845", sizeLabel: "8.45 oz", price: 16.95 },
+      { id: "leave-in-treatment-338", sizeLabel: "33 oz", price: 33.95 },
     ],
   },
   {
     id: "control-foam",
     name: "Control Foam Wrap Lotion & Setting Mousse",
-    price: 9.95,
+    price: 16.95,
     subtitle: "7.44 oz · Soft set control",
     category: "styling",
     image: "/images/control-foam-pro.png",
@@ -179,7 +179,7 @@ export const products: Product[] = [
   {
     id: "curl-custard",
     name: "Honey & Argan Curl Forming Custard",
-    price: 9.95,
+    price: 16.95,
     subtitle: "Definition without stickiness",
     category: "styling",
     image: "/images/honey-argan-curl-forming-custard.png",
@@ -194,7 +194,7 @@ export const products: Product[] = [
   {
     id: "moisturizing-cream",
     name: "Honey & Argan Daily Moisturizing Cream",
-    price: 9.95,
+    price: 16.95,
     subtitle: "8.45 oz · Natural styles",
     category: "styling",
     image: "/images/moisturizing-cream.png",
@@ -209,7 +209,7 @@ export const products: Product[] = [
   {
     id: "strengthening-serum",
     name: "Honey & Argan Strengthening Serum",
-    price: 12.95,
+    price: 24.95,
     subtitle: "4.05 oz · Heat protectant",
     category: "treatments",
     image: "/images/honey-argan-strengthening-serum.png",
