@@ -135,7 +135,7 @@ export default function PopupModal() {
             {/* Right Side: Content */}
             <div className="w-full md:w-1/2 relative bg-primary flex flex-col justify-center p-10 md:p-12 lg:p-16 text-center">
               {/* Subtle Damask Pattern Background */}
-              <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+              <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
 
               <div className="relative z-10 flex flex-col items-center">
                 <span className="text-accent text-xs font-bold tracking-widest uppercase mb-4">

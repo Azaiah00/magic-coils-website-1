@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-[90vh] flex flex-col lg:flex-row bg-primary overflow-hidden">
       {/* Visual Background (Damask Pattern) */}
-      <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+      <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
       
       {/* Animated Gold Glow */}
       <motion.div 

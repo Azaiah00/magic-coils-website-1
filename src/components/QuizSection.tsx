@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 export default function QuizSection() {
   return (
     <section className="py-32 bg-primary relative overflow-hidden flex items-center justify-center min-h-[70vh]">
+      <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
       {/* Decorative background elements */}
       <motion.div 
         animate={{ 

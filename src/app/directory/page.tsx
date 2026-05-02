@@ -54,7 +54,7 @@ export default function StylistDirectory() {
         {/* Luxury Hero Section */}
         <section className="relative w-full py-32 lg:py-48 flex items-center justify-center bg-primary overflow-hidden">
         {/* Damask Pattern Overlay */}
-        <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+        <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
         
         {/* Animated Gold Glow */}
         <motion.div 
@@ -159,7 +159,7 @@ export default function StylistDirectory() {
       
       {/* CTA Section */}
       <section className="py-24 bg-primary text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 mix-blend-overlay" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+        <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
         <div className="container relative z-10 px-4">
           <h2 className="font-serif text-4xl md:text-5xl text-white mb-6">Are you a professional stylist?</h2>
           <p className="text-white/80 max-w-xl mx-auto mb-10 font-light">

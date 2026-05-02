@@ -14,7 +14,7 @@ export default function DistributorPage() {
         {/* Luxury Hero Section */}
         <section className="relative w-full py-32 lg:py-48 flex items-center justify-center bg-primary overflow-hidden">
           {/* Damask Pattern Overlay */}
-          <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+          <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
           
           {/* Animated Gold Glow */}
           <motion.div 

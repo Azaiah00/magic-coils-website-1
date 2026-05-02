@@ -44,7 +44,7 @@ export default function SocialProof() {
   return (
     <section className="py-24 bg-primary border-y border-accent/20 relative overflow-hidden">
       {/* Subtle Damask Pattern Overlay */}
-      <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+      <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div 
           variants={containerVariants}

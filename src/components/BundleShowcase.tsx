@@ -206,7 +206,7 @@ export default function BundleShowcase() {
   return (
     <>
       <section className="py-24 bg-primary relative overflow-hidden text-center text-white">
-        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/promo-card.png")', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+        <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-accent/20 rounded-full blur-[150px] -translate-x-1/2"></div>
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#BF953F]/20 rounded-full blur-[150px] translate-x-1/2"></div>
 
