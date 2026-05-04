@@ -21,7 +21,9 @@ export default function SlideOutCart() {
       .map((i) => ({
         handle: i.shopifyHandle as string,
         sizeLabel: i.sizeLabel,
+        unitPrice: i.price,
         quantity: i.quantity,
+        ...(i.shopifyVariantId ? { merchandiseId: i.shopifyVariantId } : {}),
       }));
 
     if (lines.length === 0) {

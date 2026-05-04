@@ -5,82 +5,55 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-/** How far down the page (0–1) before we show the promo — ~40% of scrollable height. */
-const SCROLL_DEPTH_THRESHOLD = 0.4;
+/** Max times we ever show the exit popup (across visits); user asked for once or twice — we use 2. */
+const MAX_EXIT_POPUPS_LIFETIME = 2;
+
+/** localStorage key: number of times the exit offer was shown. */
+const EXIT_COUNT_KEY = "magic_coils_exit_intent_count";
 
 export default function PopupModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(true);
-  const scrollDepthTriggeredRef = useRef(false);
+
+  // After we show (or user dismisses) on this tab session, do not trigger again until a full reload.
+  const exitHandledThisTabRef = useRef(false);
 
   useEffect(() => {
-    // Check if the user has already seen the popup in this session
-    const hasSeenPopup = sessionStorage.getItem("magic_coils_popup_seen");
-    
-    if (hasSeenPopup) {
+    if (typeof window === "undefined") return;
+
+    const count = parseInt(localStorage.getItem(EXIT_COUNT_KEY) || "0", 10);
+    if (count >= MAX_EXIT_POPUPS_LIFETIME) {
       return;
     }
 
-    // Set it to not dismissed only after we confirm they haven't seen it
-    // Using a timeout of 0 avoids the synchronous setState in effect warning
+    // Ready to show chrome only if we might still trigger exit intent
     const initTimer = setTimeout(() => {
       setIsDismissed(false);
     }, 0);
 
-    // 1. Scroll-depth intent: open after user has scrolled ~40% of the page
-    //    (relative to total scrollable distance, not viewport height alone).
-    let ticking = false;
-    const checkScrollDepth = () => {
-      if (scrollDepthTriggeredRef.current) return;
-      const doc = document.documentElement;
-      const scrollable = doc.scrollHeight - window.innerHeight;
-      // Very short pages: skip scroll rule so we do not pop immediately at load
-      if (scrollable < 120) return;
-      const scrolled = window.scrollY;
-      const ratio = scrolled / scrollable;
-      if (ratio >= SCROLL_DEPTH_THRESHOLD) {
-        scrollDepthTriggeredRef.current = true;
-        setIsOpen(true);
-      }
-    };
-
-    const onScroll = () => {
-      if (scrollDepthTriggeredRef.current) return;
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          checkScrollDepth();
-          ticking = false;
-        });
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    // Run once in case they land mid-page (e.g. anchor) or page is short after paint
-    requestAnimationFrame(checkScrollDepth);
-
-    // 2. Exit intent (mouse leaves the top of the viewport) — desktop only pattern
+    /**
+     * Exit intent only (mouse leaves toward the browser chrome — desktop).
+     * No scroll-depth popup — that felt repetitive and annoying.
+     */
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 10) {
-        setIsOpen(true);
-      }
+      if (exitHandledThisTabRef.current) return;
+      if (e.clientY > 10) return;
+
+      const c = parseInt(localStorage.getItem(EXIT_COUNT_KEY) || "0", 10);
+      if (c >= MAX_EXIT_POPUPS_LIFETIME) return;
+
+      exitHandledThisTabRef.current = true;
+      localStorage.setItem(EXIT_COUNT_KEY, String(c + 1));
+      setIsOpen(true);
     };
 
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       clearTimeout(initTimer);
-      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
-
-  // When the modal opens, mark it as seen in the session
-  useEffect(() => {
-    if (isOpen) {
-      sessionStorage.setItem("magic_coils_popup_seen", "true");
-    }
-  }, [isOpen]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -141,39 +114,40 @@ export default function PopupModal() {
                 <span className="text-accent text-xs font-bold tracking-widest uppercase mb-4">
                   Wait! Before you go...
                 </span>
-                
+
                 <h2 className="font-serif text-4xl lg:text-5xl text-white mb-2 leading-tight">
-                  The <br/>
-                  <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent drop-shadow-sm">Magic Ten</span>
+                  The <br />
+                  <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent drop-shadow-sm">
+                    Magic Ten
+                  </span>
                 </h2>
-                
+
                 <p className="font-sans text-white/80 text-sm lg:text-base mb-8 max-w-sm mx-auto font-light leading-relaxed">
                   Treat your curls like royalty. Enter your email to unlock <strong>10% off</strong> your first purchase of our professional formulas.
                 </p>
 
-                <form 
+                <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    // Handle email signup logic here
                     handleClose();
-                  }} 
+                  }}
                   className="w-full flex flex-col gap-4"
                 >
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email address" 
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
                     className="w-full bg-white/10 border border-accent/30 text-white px-5 py-4 text-sm placeholder:text-white/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all duration-300"
                     required
                   />
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="w-full bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300"
                   >
                     Claim My 10%
                   </button>
                 </form>
 
-                <button 
+                <button
                   onClick={handleClose}
                   className="mt-6 text-white/50 hover:text-white text-xs font-medium tracking-wide underline underline-offset-4 transition-colors"
                 >

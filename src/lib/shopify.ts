@@ -18,6 +18,13 @@ export type CheckoutLineInput = {
   handle: string;
   /** Optional size label, e.g. "8.45 oz", matches the variant option value. */
   sizeLabel?: string;
+  /** Unit price from our cart line; matched to Storefront `variant.price.amount`. */
+  unitPrice?: number;
+  /**
+   * Optional ProductVariant GID from Storefront (`gid://shopify/ProductVariant/...`).
+   * Must belong to the product for `handle`; used verbatim as merchandiseId.
+   */
+  merchandiseId?: string;
   quantity: number;
 };
 
@@ -71,6 +78,7 @@ type VariantNode = {
   id: string;
   title: string;
   selectedOptions: Array<{ name: string; value: string }>;
+  price: { amount: string; currencyCode: string };
 };
 
 type ProductByHandleResponse = {
@@ -95,6 +103,10 @@ export async function getProductByHandle(handle: string) {
             id
             title
             selectedOptions { name value }
+            price {
+              amount
+              currencyCode
+            }
           }
         }
       }
@@ -104,11 +116,18 @@ export async function getProductByHandle(handle: string) {
   return data.product;
 }
 
+/** Compare cart price to Shopify Money amount (Storefront returns decimal strings). */
+function priceAmountMatchesVariant(amount: string, unitPrice: number): boolean {
+  const n = Number.parseFloat(amount);
+  if (Number.isNaN(n)) return false;
+  return Math.abs(n - unitPrice) < 0.01;
+}
+
 /**
- * Pick the right variant ID for a line. Matches by size option value (case-insensitive),
- * falling back to variant title, then the first variant if nothing else matches.
+ * Pick variant by size option / title (case-insensitive). Last resort only;
+ * our labels often differ from Shopify option text (e.g. "32 oz" vs "33.8 oz").
  */
-function pickVariantId(
+function pickVariantIdByLabel(
   variants: VariantNode[],
   sizeLabel?: string
 ): string | null {
@@ -122,7 +141,50 @@ function pickVariantId(
   const byTitle = variants.find(
     (v) => v.title.trim().toLowerCase() === wanted
   );
-  return byTitle?.id ?? variants[0].id;
+  return byTitle?.id ?? null;
+}
+
+/**
+ * Resolve the Storefront `ProductVariant` GID to send as `merchandiseId`.
+ * Prefers an explicit `merchandiseId` when it appears on this product's variants,
+ * then matches `unitPrice` to `variant.price` from Shopify (same payload as `variant.id`),
+ * then falls back to label matching / first variant.
+ */
+function resolveVariantMerchandiseId(
+  variants: VariantNode[],
+  line: CheckoutLineInput
+): string | null {
+  if (!variants.length) return null;
+
+  if (line.merchandiseId) {
+    const gid = line.merchandiseId.trim();
+    if (variants.some((v) => v.id === gid)) {
+      return gid;
+    }
+    throw new Error(
+      `merchandiseId does not match any variant for handle "${line.handle}".`
+    );
+  }
+
+  if (line.unitPrice != null) {
+    const matches = variants.filter((v) =>
+      priceAmountMatchesVariant(v.price.amount, line.unitPrice as number)
+    );
+    if (matches.length === 1) {
+      return matches[0].id;
+    }
+    if (matches.length > 1) {
+      const byLabel = pickVariantIdByLabel(matches, line.sizeLabel);
+      if (byLabel) return byLabel;
+      throw new Error(
+        `Multiple Shopify variants match unit price ${line.unitPrice} for "${line.handle}".`
+      );
+    }
+  }
+
+  return (
+    pickVariantIdByLabel(variants, line.sizeLabel) ?? variants[0]?.id ?? null
+  );
 }
 
 type CartCreateResponse = {
@@ -146,7 +208,7 @@ export async function createCheckoutUrl(
       if (!product) {
         throw new Error(`Shopify product not found for handle "${line.handle}"`);
       }
-      const variantId = pickVariantId(product.variants.nodes, line.sizeLabel);
+      const variantId = resolveVariantMerchandiseId(product.variants.nodes, line);
       if (!variantId) {
         throw new Error(`No variant found for "${line.handle}"`);
       }

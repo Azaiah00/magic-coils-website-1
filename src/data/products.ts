@@ -8,6 +8,8 @@ export type ProductVariant = {
   id: string;
   sizeLabel: string;
   price: number;
+  /** If set, checkout sends this Storefront GID as merchandiseId (skips fuzzy matching). */
+  shopifyVariantId?: string;
 };
 
 export type Product = {
@@ -67,6 +69,7 @@ export function productToCartLine(
       image: product.image,
       shopifyHandle: product.shopifyHandle,
       sizeLabel: variant.sizeLabel,
+      shopifyVariantId: variant.shopifyVariantId,
     };
   }
   return {

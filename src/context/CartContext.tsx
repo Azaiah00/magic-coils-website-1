@@ -12,6 +12,11 @@ export type CartItem = {
   shopifyHandle?: string;
   /** Size option value for products with variants, e.g. "8.45 oz". */
   sizeLabel?: string;
+  /**
+   * Optional Storefront API ProductVariant GID (gid://shopify/ProductVariant/...).
+   * When set, checkout uses this as merchandiseId after verifying it belongs to the handle.
+   */
+  shopifyVariantId?: string;
 };
 
 type CartContextType = {
