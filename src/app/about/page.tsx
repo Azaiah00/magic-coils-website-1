@@ -128,7 +128,7 @@ export default function AboutPage() {
                   src="/images/founder-antwun.png"
                   alt="Antwun Wilson, Founder of Magic Coils"
                   fill
-                  className="object-cover object-top shadow-2xl"
+                  className="object-cover object-center shadow-2xl"
                 />
               </motion.div>
 
