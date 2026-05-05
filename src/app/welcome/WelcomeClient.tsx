@@ -133,7 +133,7 @@ function WelcomeForm() {
               </div>
 
               <Link 
-                href="/?discount_code=MAGICTEN"
+                href="/shop?discount=MAGICTEN"
                 className="w-full inline-flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300"
               >
                 Shop Now & Apply Code

@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import SlideOutCart from "@/components/SlideOutCart";
 import PopupModal from "@/components/PopupModal";
+import DiscountUrlCapture from "@/components/DiscountUrlCapture";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,6 +35,7 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} font-sans antialiased text-primary bg-background`}
       >
         <CartProvider>
+          <DiscountUrlCapture />
           {children}
           <SlideOutCart />
           <PopupModal />

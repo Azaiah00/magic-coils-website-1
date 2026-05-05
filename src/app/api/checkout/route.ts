@@ -11,6 +11,8 @@ export const runtime = "nodejs";
 
 type RequestBody = {
   lines: CheckoutLineInput[];
+  /** Optional Shopify discount codes (e.g. MAGICTEN) applied at cart create for hosted checkout. */
+  discountCodes?: string[];
 };
 
 export async function POST(req: Request) {
@@ -29,7 +31,10 @@ export async function POST(req: Request) {
   }
 
   try {
-    const checkoutUrl = await createCheckoutUrl(body.lines);
+    const checkoutUrl = await createCheckoutUrl(
+      body.lines,
+      body.discountCodes
+    );
     return NextResponse.json({ checkoutUrl });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Checkout failed.";

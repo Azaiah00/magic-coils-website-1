@@ -197,9 +197,11 @@ type CartCreateResponse = {
 /**
  * Turn our internal lines (handle + size + qty) into a Shopify cart and
  * return the hosted checkout URL the browser should redirect to.
+ * Optional discount codes (e.g. MAGICTEN) are applied via CartInput.discountCodes for headless checkout.
  */
 export async function createCheckoutUrl(
-  lines: CheckoutLineInput[]
+  lines: CheckoutLineInput[],
+  discountCodes?: string[]
 ): Promise<string> {
   // Resolve each handle -> variant ID in parallel.
   const resolved = await Promise.all(
@@ -216,14 +218,25 @@ export async function createCheckoutUrl(
     })
   );
 
+  const codes = (discountCodes ?? [])
+    .map((c) => c.trim())
+    .filter(Boolean);
+
+  const cartInput: { lines: typeof resolved; discountCodes?: string[] } = {
+    lines: resolved,
+  };
+  if (codes.length > 0) {
+    cartInput.discountCodes = codes;
+  }
+
   const data = await storefront<CartCreateResponse>(
-    `mutation CartCreate($lines: [CartLineInput!]!) {
-      cartCreate(input: { lines: $lines }) {
+    `mutation CartCreate($input: CartInput!) {
+      cartCreate(input: $input) {
         cart { id checkoutUrl }
         userErrors { field message }
       }
     }`,
-    { lines: resolved }
+    { input: cartInput }
   );
 
   const { cart, userErrors } = data.cartCreate;

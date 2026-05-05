@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
+import { getStoredCheckoutDiscount } from "@/lib/checkoutDiscount";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -35,10 +36,14 @@ export default function SlideOutCart() {
 
     setCheckingOut(true);
     try {
+      const storedDiscount = getStoredCheckoutDiscount();
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lines }),
+        body: JSON.stringify({
+          lines,
+          ...(storedDiscount ? { discountCodes: [storedDiscount] } : {}),
+        }),
       });
       const data = (await res.json()) as { checkoutUrl?: string; error?: string };
       if (!res.ok || !data.checkoutUrl) {
