@@ -17,6 +17,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  // Anchor every relative metadata URL (og/twitter images, canonicals, etc.) to the
+  // production domain so social preview cards never reference http://localhost:3000.
+  metadataBase: new URL("https://magiccoils.net"),
   title: "Magic Coils | Crowned in Magic",
   description: "Professional formulations designed to nourish, define, and protect. Your hair is a crown.",
   verification: {

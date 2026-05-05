@@ -75,20 +75,25 @@ export default function PopupModal() {
     e.preventDefault();
     setStatus("loading");
 
+    // Source is "popup" so MailerLite reports attribute popup signups vs /welcome.
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "exit_intent_popup" }),
+        body: JSON.stringify({ email, source: "popup" }),
       });
 
-      if (res.ok) {
-        setStatus("success");
-      } else {
-        setStatus("error");
+      if (!res.ok) {
+        // Log so we can see backend issues, but don't block the user from getting MAGICTEN.
+        console.warn("Popup subscribe non-2xx; falling back to inline code reveal.");
       }
-    } catch {
-      setStatus("error");
+    } catch (err) {
+      // Network failure / offline. Same fallback: still reveal the code.
+      console.warn("Popup subscribe failed; showing code anyway.", err);
+    } finally {
+      // Always show the success view so the user gets the code instantly.
+      // The canonical email delivery still happens via MailerLite when the API call succeeded.
+      setStatus("success");
     }
   };
 
