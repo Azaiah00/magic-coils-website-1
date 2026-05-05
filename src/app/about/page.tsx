@@ -77,6 +77,89 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Founder's Message */}
+        <section className="py-24 md:py-32 bg-background">
+          <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Founder Image */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative aspect-[4/5] w-full max-w-md mx-auto lg:mx-0"
+              >
+                <Image
+                  src="/images/founder-antwun.png"
+                  alt="Antwun Wilson, Founder of Magic Coils"
+                  fill
+                  className="object-cover object-top shadow-2xl"
+                />
+              </motion.div>
+
+              {/* Message Content */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                {/* Section Label */}
+                <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-2 block">
+                  FOUNDER&apos;S MESSAGE
+                </span>
+                
+                {/* Subcaption */}
+                <p className="font-serif italic text-primary/70 text-base mb-8">
+                  Antwun Wilson, Founder · Hair For You LLC
+                </p>
+
+                {/* Body Copy */}
+                <div className="font-sans text-[17px] leading-[28px] text-primary/90 space-y-6">
+                  <p>
+                    I built Magic Coils because the haircare aisle never built it for the women in my life.
+                  </p>
+                  
+                  <p>
+                    For years I watched the women in my family search for products that actually understood their hair. Bottle after bottle promised to &quot;tame&quot; them. <em className="italic">Tame.</em> As if their crowns were something unruly that needed to be managed instead of celebrated. The shelves were full of formulas designed for someone else&apos;s texture, marketed in someone else&apos;s language. The few brands that did serve textured hair too often felt like an afterthought — thin ingredient lists, generic packaging, no soul behind the label.
+                  </p>
+                  
+                  <p>
+                    I knew their hair deserved more. More care. More science. More respect.
+                  </p>
+                  
+                  <p>
+                    So I built it. Magic Coils is what happens when a brand starts with that respect from day one. Every product in our line is built around three hero ingredients chosen specifically for textured hair: <strong className="text-primary">argan oil</strong> for slip and shine, <strong className="text-primary">vitamin C</strong> for scalp health and luminosity, and <strong className="text-primary">honey oil</strong> for deep, lasting moisture. Eight professional-grade formulas — not one of them an afterthought, not one ingredient filler. Each one designed to nourish, define, and protect the natural pattern of your crown, exactly as it grows.
+                  </p>
+                  
+                  <p>
+                    But Magic Coils isn&apos;t only about what&apos;s in the bottle. It&apos;s about who you become when you finally use a product that was made for you. The first time your wash day feels like ritual instead of routine. The first time your twist-out lasts seven days instead of three. The first time you look in the mirror and your hair looks the way it was always supposed to.
+                  </p>
+                  
+                  <p>
+                    That&apos;s the magic. That&apos;s the promise.
+                  </p>
+                  
+                  <p>
+                    This is the brand the women in my life deserved. The one we built so the women coming after them never have to wait for it the way they did.
+                  </p>
+                </div>
+
+                {/* Sign-off */}
+                <div className="mt-10 pt-8 border-t border-accent/20">
+                  <p className="font-serif italic text-accent text-[15px]">
+                    Welcome to Magic Coils. Crowned in Magic.
+                  </p>
+                  <p className="font-serif italic text-primary/60 text-[15px] mt-4">
+                    — Antwun Wilson<br />
+                    Founder, Magic Coils · Hair For You LLC
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Core Values */}
         <section className="py-24 bg-surface border-y border-primary/5">
           <div className="container mx-auto px-4 md:px-8">
