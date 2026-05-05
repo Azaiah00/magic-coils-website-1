@@ -83,7 +83,10 @@ export default function ShopPage() {
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-12"
           >
-            {filteredProducts.map((product) => (
+            {filteredProducts.map((product) => {
+              // Only the two shop bundles get a wider 4:3 frame + contain so composite art isn’t side-cropped.
+              const isBundleCard = product.category === "bundles";
+              return (
               <motion.div 
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -94,12 +97,18 @@ export default function ShopPage() {
                 className="group relative flex flex-col"
               >
                 {/* Image Wrapper */}
-                <div className="relative w-full aspect-[4/5] bg-surface overflow-hidden mb-6 flex items-center justify-center shadow-sm">
+                <div
+                  className={`relative w-full bg-surface overflow-hidden mb-6 flex items-center justify-center shadow-sm ${
+                    isBundleCard ? "aspect-[4/3]" : "aspect-[4/5]"
+                  }`}
+                >
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-110"
+                    className={`object-center transition-transform duration-1000 ease-out group-hover:scale-110 ${
+                      isBundleCard ? "object-contain p-2 md:p-4" : "object-cover"
+                    }`}
                   />
                   
                   {/* Quick Add Button */}
@@ -130,7 +139,8 @@ export default function ShopPage() {
                   </p>
                 </div>
               </motion.div>
-            ))}
+            );
+            })}
           </motion.div>
         </div>
       </PageTransition>

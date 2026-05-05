@@ -3,10 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Loader2, Check, Copy } from "lucide-react";
+import Link from "next/link";
 
-/** Max times we ever show the exit popup (across visits); user asked for once or twice — we use 2. */
-const MAX_EXIT_POPUPS_LIFETIME = 2;
+/** Max times we ever show the exit popup (across visits); user asked to slow it down, so we use 1. */
+const MAX_EXIT_POPUPS_LIFETIME = 1;
 
 /** localStorage key: number of times the exit offer was shown. */
 const EXIT_COUNT_KEY = "magic_coils_exit_intent_count";
@@ -14,6 +15,9 @@ const EXIT_COUNT_KEY = "magic_coils_exit_intent_count";
 export default function PopupModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDismissed, setIsDismissed] = useState(true);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [copied, setCopied] = useState(false);
 
   // After we show (or user dismisses) on this tab session, do not trigger again until a full reload.
   const exitHandledThisTabRef = useRef(false);
@@ -33,8 +37,9 @@ export default function PopupModal() {
 
     /**
      * Exit intent only (mouse leaves toward the browser chrome — desktop).
-     * No scroll-depth popup — that felt repetitive and annoying.
+     * To "slow it down", we add a 10 second delay before the listener is even active.
      */
+    let listenerAdded = false;
     const handleMouseLeave = (e: MouseEvent) => {
       if (exitHandledThisTabRef.current) return;
       if (e.clientY > 10) return;
@@ -47,17 +52,50 @@ export default function PopupModal() {
       setIsOpen(true);
     };
 
-    document.addEventListener("mouseleave", handleMouseLeave);
+    const delayTimer = setTimeout(() => {
+      document.addEventListener("mouseleave", handleMouseLeave);
+      listenerAdded = true;
+    }, 10000); // 10 seconds before exit intent becomes active
 
     return () => {
       clearTimeout(initTimer);
-      document.removeEventListener("mouseleave", handleMouseLeave);
+      clearTimeout(delayTimer);
+      if (listenerAdded) {
+        document.removeEventListener("mouseleave", handleMouseLeave);
+      }
     };
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
     setIsDismissed(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "exit_intent_popup" }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("MAGICTEN");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   if (isDismissed) return null;
@@ -110,49 +148,103 @@ export default function PopupModal() {
               {/* Subtle Damask Pattern Background */}
               <div className="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
 
-              <div className="relative z-10 flex flex-col items-center">
-                <span className="text-accent text-xs font-bold tracking-widest uppercase mb-4">
-                  Wait! Before you go...
-                </span>
+              <div className="relative z-10 flex flex-col items-center w-full">
+                <AnimatePresence mode="wait">
+                  {status !== "success" ? (
+                    <motion.div
+                      key="form"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full flex flex-col items-center"
+                    >
+                      <span className="text-accent text-xs font-bold tracking-widest uppercase mb-4">
+                        Wait! Before you go...
+                      </span>
 
-                <h2 className="font-serif text-4xl lg:text-5xl text-white mb-2 leading-tight">
-                  The <br />
-                  <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent drop-shadow-sm">
-                    Magic Ten
-                  </span>
-                </h2>
+                      <h2 className="font-serif text-4xl lg:text-5xl text-white mb-2 leading-tight">
+                        The <br />
+                        <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent drop-shadow-sm">
+                          Magic Ten
+                        </span>
+                      </h2>
 
-                <p className="font-sans text-white/80 text-sm lg:text-base mb-8 max-w-sm mx-auto font-light leading-relaxed">
-                  Treat your curls like royalty. Enter your email to unlock <strong>10% off</strong> your first purchase of our professional formulas.
-                </p>
+                      <p className="font-sans text-white/80 text-sm lg:text-base mb-8 max-w-sm mx-auto font-light leading-relaxed">
+                        Treat your curls like royalty. Enter your email to unlock <strong>10% off</strong> your first purchase of our professional formulas.
+                      </p>
 
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    handleClose();
-                  }}
-                  className="w-full flex flex-col gap-4"
-                >
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="w-full bg-white/10 border border-accent/30 text-white px-5 py-4 text-sm placeholder:text-white/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all duration-300"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300"
-                  >
-                    Claim My 10%
-                  </button>
-                </form>
+                      <form
+                        onSubmit={handleSubmit}
+                        className="w-full flex flex-col gap-4"
+                      >
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="Enter your email address"
+                          className="w-full bg-white/10 border border-accent/30 text-white px-5 py-4 text-sm placeholder:text-white/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all duration-300"
+                          required
+                          disabled={status === "loading"}
+                        />
+                        <button
+                          type="submit"
+                          disabled={status === "loading"}
+                          className="w-full flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300 disabled:opacity-70 disabled:hover:scale-100"
+                        >
+                          {status === "loading" ? <Loader2 className="w-5 h-5 animate-spin" /> : "Claim My 10%"}
+                        </button>
+                        {status === "error" && (
+                          <p className="text-red-400 text-xs mt-2">Something went wrong. Please try again.</p>
+                        )}
+                      </form>
 
-                <button
-                  onClick={handleClose}
-                  className="mt-6 text-white/50 hover:text-white text-xs font-medium tracking-wide underline underline-offset-4 transition-colors"
-                >
-                  No thanks, I&apos;ll pay full price.
-                </button>
+                      <button
+                        onClick={handleClose}
+                        className="mt-6 text-white/50 hover:text-white text-xs font-medium tracking-wide underline underline-offset-4 transition-colors"
+                      >
+                        No thanks, I&apos;ll pay full price.
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="w-full flex flex-col items-center"
+                    >
+                      <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-6">
+                        <Check className="w-8 h-8 text-accent" />
+                      </div>
+                      <h2 className="font-serif text-3xl text-white mb-4">
+                        Check your email — your code is on its way.
+                      </h2>
+                      <p className="font-sans text-white/70 text-sm mb-8">
+                        Or copy it right here to use immediately:
+                      </p>
+
+                      <div className="w-full flex items-center justify-between bg-white/5 border border-accent/40 p-4 mb-8">
+                        <span className="font-mono text-2xl tracking-widest text-accent font-bold">MAGICTEN</span>
+                        <button 
+                          onClick={handleCopy}
+                          className="p-2 hover:bg-white/10 rounded transition-colors text-white"
+                          aria-label="Copy code"
+                        >
+                          {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+                        </button>
+                      </div>
+
+                      <Link 
+                        href="/?discount_code=MAGICTEN"
+                        onClick={handleClose}
+                        className="w-full inline-flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300"
+                      >
+                        Shop Now & Apply Code
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>
