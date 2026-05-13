@@ -1,16 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2, Check, Copy } from "lucide-react";
 import Link from "next/link";
 
-/** Max times we ever show the exit popup (across visits); user asked to slow it down, so we use 1. */
-const MAX_EXIT_POPUPS_LIFETIME = 1;
-
-/** localStorage key: number of times the exit offer was shown. */
-const EXIT_COUNT_KEY = "magic_coils_exit_intent_count";
+/**
+ * localStorage key + cooldown window for popup throttling.
+ *
+ * We track the popup with a single timestamp instead of a counter:
+ * after it shows once, we don't show it again for a full week. This
+ * covers the once-per-week cap directly and avoids needing a separate
+ * count field. Old visitors with the previous `magic_coils_exit_intent_count`
+ * key in localStorage are unaffected — that key is just orphaned.
+ */
+const LAST_SHOWN_KEY = "magic_coils_popup_last_shown";
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 export default function PopupModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,50 +25,58 @@ export default function PopupModal() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [copied, setCopied] = useState(false);
 
-  // After we show (or user dismisses) on this tab session, do not trigger again until a full reload.
-  const exitHandledThisTabRef = useRef(false);
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const count = parseInt(localStorage.getItem(EXIT_COUNT_KEY) || "0", 10);
-    if (count >= MAX_EXIT_POPUPS_LIFETIME) {
+    // Throttle to once per week regardless of which trigger fires.
+    const lastShown = parseInt(localStorage.getItem(LAST_SHOWN_KEY) || "0", 10);
+    if (lastShown && Date.now() - lastShown < WEEK_MS) {
       return;
     }
 
-    // Ready to show chrome only if we might still trigger exit intent
-    const initTimer = setTimeout(() => {
-      setIsDismissed(false);
-    }, 0);
+    setIsDismissed(false);
 
-    /**
-     * Exit intent only (mouse leaves toward the browser chrome — desktop).
-     * To "slow it down", we add a 10 second delay before the listener is even active.
-     */
-    let listenerAdded = false;
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (exitHandledThisTabRef.current) return;
-      if (e.clientY > 10) return;
-
-      const c = parseInt(localStorage.getItem(EXIT_COUNT_KEY) || "0", 10);
-      if (c >= MAX_EXIT_POPUPS_LIFETIME) return;
-
-      exitHandledThisTabRef.current = true;
-      localStorage.setItem(EXIT_COUNT_KEY, String(c + 1));
+    // Single guard so whichever trigger wins first (exit-intent vs
+    // scroll vs timer), the others quietly no-op.
+    let triggered = false;
+    const markTriggered = () => {
+      if (triggered) return;
+      triggered = true;
+      localStorage.setItem(LAST_SHOWN_KEY, String(Date.now()));
       setIsOpen(true);
     };
 
-    const delayTimer = setTimeout(() => {
+    // Desktop trigger: mouse leaves toward browser chrome.
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY > 10) return;
+      markTriggered();
+    };
+
+    // Mobile trigger #1: visitor scrolls past 50% of the page.
+    const handleScroll = () => {
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) return;
+      const scrollPct = window.scrollY / docHeight;
+      if (scrollPct >= 0.5) markTriggered();
+    };
+
+    // Mobile trigger #2: 25 seconds after page load. Covers visitors
+    // who barely scroll but linger reading (mobile-only behavior).
+    const timerTrigger = setTimeout(markTriggered, 25_000);
+
+    // 10s grace period before any listener is active so we don't
+    // ambush brand-new visitors before they've seen anything.
+    const activationTimer = setTimeout(() => {
       document.addEventListener("mouseleave", handleMouseLeave);
-      listenerAdded = true;
-    }, 10000); // 10 seconds before exit intent becomes active
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }, 10_000);
 
     return () => {
-      clearTimeout(initTimer);
-      clearTimeout(delayTimer);
-      if (listenerAdded) {
-        document.removeEventListener("mouseleave", handleMouseLeave);
-      }
+      clearTimeout(timerTrigger);
+      clearTimeout(activationTimer);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

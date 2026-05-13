@@ -29,7 +29,10 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         email: email,
         fields: {
-          source: source || "direct",
+          // MailerLite already has a built-in `signup_source` field —
+          // mapping our incoming `source` value to it keeps everything
+          // in one column instead of creating a duplicate field.
+          signup_source: source || "direct",
         },
         groups: GROUP_ID ? [GROUP_ID] : undefined,
       }),

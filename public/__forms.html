@@ -1,0 +1,41 @@
+<!--
+  Netlify Forms registration shim.
+
+  Why this file exists:
+    Our real contact form lives at /contact (server component reading
+    searchParams), which makes that route dynamic. Netlify's
+    build-time form detection only scans static .html files in the
+    publish directory, so a dynamic route can't register itself.
+    This static HTML file mirrors the same form name + field names so
+    Netlify registers the "contact" form at build time. Submissions
+    from the real /contact page are then matched by form-name and
+    accepted normally.
+
+  How Netlify uses it:
+    Netlify scans this file during the post-build step, finds the
+    <form data-netlify="true" name="contact">, and registers it.
+    From that point, any POST whose body includes
+    `form-name=contact` lands in the dashboard (Forms tab) and
+    triggers any configured email notifications.
+
+  Do NOT remove fields here without also updating /contact — the
+  fields here define the schema Netlify stores submissions against.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify Forms registration</title>
+  </head>
+  <body>
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text"  name="bot-field" />
+      <input type="text"  name="firstName" />
+      <input type="text"  name="lastName" />
+      <input type="email" name="email" />
+      <input type="text"  name="subject" />
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>

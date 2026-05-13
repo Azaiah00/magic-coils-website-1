@@ -7,6 +7,7 @@ import Link from "next/link";
 // — removed until the brand actually launches those channels.
 import { Instagram } from "lucide-react";
 import { motion } from "framer-motion";
+import FooterSubscribe from "./FooterSubscribe";
 
 export default function Footer() {
   return (
@@ -92,20 +93,10 @@ export default function Footer() {
             <p className="font-sans text-sm text-primary/70 mb-6 leading-relaxed">
               Subscribe to receive educational content, access to exclusive deals, and more.
             </p>
-            <form className="flex flex-col gap-4">
-              <input 
-                type="email" 
-                placeholder="Enter your email address" 
-                className="w-full bg-surface border border-surface px-5 py-4 text-sm focus:outline-none focus:border-accent focus:bg-white transition-colors duration-300"
-                required
-              />
-              <button 
-                type="button" 
-                className="w-full bg-primary text-white px-5 py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300"
-              >
-                Subscribe
-              </button>
-            </form>
+            {/* The actual subscribe form lives in its own Client
+                Component so it can manage submit state without forcing
+                the rest of the Footer into form state-handling. */}
+            <FooterSubscribe />
           </motion.div>
         </div>
 

@@ -16,15 +16,32 @@ export default function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-background/90 backdrop-blur-md flex flex-col">
-        {/* Announcement Bar */}
+        {/* Announcement Bar
+            Three rotating pieces of info, each progressively revealed
+            on larger screens:
+              - Free shipping threshold (always visible)
+              - MAGICTEN promo CTA linking to /welcome (sm+)
+              - Instagram handle (lg+)
+            Visitors who never scroll into the footer still see the
+            discount code offer at the top of every page. */}
         <div className="bg-primary text-accent py-2.5 text-center text-xs md:text-sm font-medium tracking-widest uppercase flex items-center justify-center gap-2">
-          <span>Free Shipping on Orders Over $75 | Crowned in Magic</span>
+          <span>Free Shipping Over $75</span>
           <span className="hidden sm:inline">|</span>
-          <a 
-            href="https://instagram.com/magiccoilsofficial" 
-            target="_blank" 
+          <span className="hidden sm:inline">
+            Get 10% Off Your First Order:{" "}
+            <Link
+              href="/welcome"
+              className="underline hover:text-white transition-colors"
+            >
+              Claim MAGICTEN
+            </Link>
+          </span>
+          <span className="hidden lg:inline">|</span>
+          <a
+            href="https://instagram.com/magiccoilsofficial"
+            target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline hover:text-white transition-colors"
+            className="hidden lg:inline hover:text-white transition-colors"
           >
             @magiccoilsofficial
           </a>
