@@ -55,6 +55,12 @@ export default function Navbar() {
                 <Link href="/directory" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
                   Stylists
                 </Link>
+                {/* Curl Talk = the editorial blog. Added to desktop nav
+                    as part of Brief #2 / PR-1 so visitors have a single
+                    discoverable entry point to long-form content. */}
+                <Link href="/blog" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
+                  Curl Talk
+                </Link>
                 <Link href="/about" className="text-xs lg:text-sm font-semibold tracking-widest uppercase hover:text-accent transition-colors duration-300 ease-in-out whitespace-nowrap">
                   Our Story
                 </Link>

@@ -1,0 +1,14 @@
+# Lesser 404 redirects — Netlify reads this file automatically.
+# We point visitors landing on dead/expected URLs to the closest live
+# destination instead of a 404 page. 302 for short-term redirects we
+# may turn into real routes later (cart, search, account, login);
+# 301 for ones we don't plan to build separately (shipping, returns,
+# wholesale, press).
+/cart       /shop        302
+/search     /shop        302
+/account    /shop        302
+/login      /shop        302
+/shipping   /faq         301
+/returns    /faq         301
+/wholesale  /distributor 301
+/press      /contact     301

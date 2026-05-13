@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Tailwind v4 plugin registration. Powers the `prose` classes used on
+   the /privacy and /terms pages so the rendered Markdown gets sensible
+   typography defaults without us having to hand-style every element. */
+@plugin "@tailwindcss/typography";
+
 @theme {
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
