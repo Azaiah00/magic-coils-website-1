@@ -52,6 +52,49 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Organization + WebSite schema gives search engines and AI
+            crawlers a stable machine-readable identity for the brand. */}
+        <Script
+          id="org-schema"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://magiccoils.net/#organization",
+                  name: "Magic Coils",
+                  legalName: "Hair For You LLC",
+                  url: "https://magiccoils.net",
+                  logo: "https://magiccoils.net/images/magic-coils-logo.png",
+                  image: "https://magiccoils.net/images/promo-throne.png",
+                  description:
+                    "Professional natural haircare for textured crowns. Powered by argan oil, vitamin C, and honey oil. Crowned in Magic.",
+                  sameAs: [
+                    "https://www.instagram.com/magiccoilsofficial",
+                    "https://www.tiktok.com/@magiccoilsofficial",
+                  ],
+                  contactPoint: {
+                    "@type": "ContactPoint",
+                    telephone: "+1-843-344-7131",
+                    email: "info@magiccoils.net",
+                    contactType: "customer service",
+                    availableLanguage: "English",
+                  },
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://magiccoils.net/#website",
+                  url: "https://magiccoils.net",
+                  name: "Magic Coils",
+                  publisher: { "@id": "https://magiccoils.net/#organization" },
+                },
+              ],
+            }),
+          }}
+        />
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased text-primary bg-background`}

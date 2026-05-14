@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -29,6 +30,26 @@ export default function ShopPage() {
   return (
     <main className="min-h-screen flex flex-col w-full bg-background">
       <Navbar />
+      <Script
+        id="shop-itemlist-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Magic Coils — Full Product Line",
+            url: "https://magiccoils.net/shop",
+            numberOfItems: products.length,
+            itemListElement: products.map((p, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              url: `https://magiccoils.net/product/${p.id}`,
+              name: p.name,
+            })),
+          }),
+        }}
+      />
       <PageTransition>
         <div className="pt-24 pb-12 bg-surface">
           <div className="container mx-auto px-4 md:px-8 text-center">

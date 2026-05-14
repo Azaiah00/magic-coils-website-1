@@ -1,207 +1,158 @@
-"use client";
-
-import { useState, use } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import Script from "next/script";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { useCart } from "@/context/CartContext";
-import { productToCartLine, products } from "@/data/products";
-import { notFound } from "next/navigation";
+import ProductPageClient from "./ProductPageClient";
+import { products } from "@/data/products";
 
-export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
-  const product = products.find(p => p.id === resolvedParams.id);
-  
-  const { addItem } = useCart();
-  const [quantity, setQuantity] = useState(1);
-  const [openAccordion, setOpenAccordion] = useState<string | null>("description");
-  // Size index when the SKU has multiple bottles (see `variants` in `src/data/products.ts`).
-  const [variantIndex, setVariantIndex] = useState(0);
+type Params = { id: string };
+
+export async function generateStaticParams() {
+  return products.map((p) => ({ id: p.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
+  if (!product) return { title: "Product Not Found | Magic Coils" };
+
+  const url = `https://magiccoils.net/product/${product.id}`;
+  const descShort = product.description.split("\n")[0].slice(0, 155).trim();
+
+  return {
+    title: `${product.name} | Magic Coils`,
+    description: descShort,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${product.name} | Crowned in Magic`,
+      description: descShort,
+      url,
+      type: "website",
+      images: [
+        {
+          url: `https://magiccoils.net${product.image}`,
+          width: 1200,
+          height: 1200,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.name} | Magic Coils`,
+      description: descShort,
+      images: [`https://magiccoils.net${product.image}`],
+    },
+  };
+}
+
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { id } = await params;
+  const product = products.find((p) => p.id === id);
 
   if (!product) {
-    return notFound();
+    notFound();
   }
-
-  const hasVariants = Boolean(product.variants?.length);
-  const displayPrice = hasVariants
-    ? product.variants![variantIndex].price
-    : product.price;
-
-  const toggleAccordion = (id: string) => {
-    setOpenAccordion(openAccordion === id ? null : id);
-  };
 
   return (
     <main className="min-h-screen flex flex-col w-full bg-background">
       <Navbar />
+
+      <Script
+        id={`product-schema-${product.id}`}
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            description: product.description.replace(/\n+/g, " "),
+            image: `https://magiccoils.net${product.image}`,
+            brand: { "@type": "Brand", name: "Magic Coils" },
+            category: product.category,
+            offers: product.variants?.length
+              ? product.variants.map((v) => ({
+                  "@type": "Offer",
+                  url: `https://magiccoils.net/product/${product.id}`,
+                  priceCurrency: "USD",
+                  price: v.price.toFixed(2),
+                  availability: "https://schema.org/InStock",
+                  name: v.sizeLabel,
+                }))
+              : {
+                  "@type": "Offer",
+                  url: `https://magiccoils.net/product/${product.id}`,
+                  priceCurrency: "USD",
+                  price: product.price.toFixed(2),
+                  availability: "https://schema.org/InStock",
+                },
+          }),
+        }}
+      />
+      <Script
+        id={`breadcrumb-schema-${product.id}`}
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://magiccoils.net/",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Shop",
+                item: "https://magiccoils.net/shop",
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: product.name,
+                item: `https://magiccoils.net/product/${product.id}`,
+              },
+            ],
+          }),
+        }}
+      />
+
       <PageTransition>
-        <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
-            
-            {/* Left: Image Gallery */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="w-full lg:w-1/2"
-            >
-              <div className="relative w-full aspect-[4/5] bg-surface flex items-center justify-center shadow-inner">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover object-center p-8 md:p-12"
-                  priority
-                />
-              </div>
-            </motion.div>
+        <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-4 md:px-8 py-4">
+          <ol className="flex items-center gap-2 text-xs text-primary/60">
+            <li>
+              <Link href="/" className="hover:text-accent">
+                Home
+              </Link>
+            </li>
+            <li aria-hidden="true">›</li>
+            <li>
+              <Link href="/shop" className="hover:text-accent">
+                Shop
+              </Link>
+            </li>
+            <li aria-hidden="true">›</li>
+            <li className="text-primary">{product.name}</li>
+          </ol>
+        </nav>
 
-            {/* Right: Product Info (Sticky) */}
-            <div className="w-full lg:w-1/2">
-              <div className="sticky top-32">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <p className="text-sm text-accent uppercase tracking-widest mb-3 font-semibold">
-                    {product.subtitle}
-                  </p>
-                  <h1 className="font-serif text-4xl md:text-5xl text-primary mb-4 leading-tight">
-                    {product.name}
-                  </h1>
-                  <p className="font-sans text-2xl text-primary/80 mb-8">
-                    ${displayPrice.toFixed(2)}
-                  </p>
-
-                  {hasVariants && (
-                    <div className="mb-8">
-                      <p className="text-xs text-accent uppercase tracking-widest mb-3 font-semibold">
-                        Size
-                      </p>
-                      <div className="flex flex-wrap gap-3">
-                        {product.variants!.map((v, i) => (
-                          <button
-                            key={v.id}
-                            type="button"
-                            onClick={() => setVariantIndex(i)}
-                            className={`px-4 py-3 text-sm font-sans border transition-colors duration-300 ${
-                              variantIndex === i
-                                ? "border-primary bg-primary text-white"
-                                : "border-primary/20 text-primary hover:border-primary/40"
-                            }`}
-                          >
-                            {v.sizeLabel}
-                            <span className="block text-xs opacity-80 mt-0.5">
-                              ${v.price.toFixed(2)}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-6 mb-10">
-                    <div className="flex items-center border border-primary/20 p-2">
-                      <button 
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="p-2 hover:bg-surface transition-colors"
-                      >
-                        <Minus className="w-4 h-4 text-primary" />
-                      </button>
-                      <span className="w-12 text-center font-sans text-lg">{quantity}</span>
-                      <button 
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="p-2 hover:bg-surface transition-colors"
-                      >
-                        <Plus className="w-4 h-4 text-primary" />
-                      </button>
-                    </div>
-                    <button 
-                      onClick={() =>
-                        addItem(productToCartLine(product, quantity, variantIndex))
-                      }
-                      className="flex-1 bg-primary text-white py-5 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </motion.div>
-
-                {/* Accordions */}
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="border-t border-surface"
-                >
-                  {/* Description */}
-                  <div className="border-b border-surface">
-                    <button 
-                      onClick={() => toggleAccordion("description")}
-                      className="w-full py-6 flex justify-between items-center text-left"
-                    >
-                      <span className="font-serif text-xl text-primary">Description</span>
-                      {openAccordion === "description" ? <ChevronUp className="w-5 h-5 text-primary" /> : <ChevronDown className="w-5 h-5 text-primary" />}
-                    </button>
-                    {openAccordion === "description" && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        className="pb-6 text-primary/70 font-sans leading-relaxed whitespace-pre-line"
-                      >
-                        {product.description}
-                      </motion.div>
-                    )}
-                  </div>
-
-                  {/* How to Use */}
-                  <div className="border-b border-surface">
-                    <button 
-                      onClick={() => toggleAccordion("howToUse")}
-                      className="w-full py-6 flex justify-between items-center text-left"
-                    >
-                      <span className="font-serif text-xl text-primary">How to Use</span>
-                      {openAccordion === "howToUse" ? <ChevronUp className="w-5 h-5 text-primary" /> : <ChevronDown className="w-5 h-5 text-primary" />}
-                    </button>
-                    {openAccordion === "howToUse" && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        className="pb-6 text-primary/70 font-sans leading-relaxed"
-                      >
-                        {product.howToUse}
-                      </motion.div>
-                    )}
-                  </div>
-
-                  {/* Ingredients */}
-                  <div className="border-b border-surface">
-                    <button 
-                      onClick={() => toggleAccordion("ingredients")}
-                      className="w-full py-6 flex justify-between items-center text-left"
-                    >
-                      <span className="font-serif text-xl text-primary">Ingredients</span>
-                      {openAccordion === "ingredients" ? <ChevronUp className="w-5 h-5 text-primary" /> : <ChevronDown className="w-5 h-5 text-primary" />}
-                    </button>
-                    {openAccordion === "ingredients" && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        className="pb-6 text-primary/70 font-sans leading-relaxed text-sm"
-                      >
-                        {product.ingredients}
-                      </motion.div>
-                    )}
-                  </div>
-                </motion.div>
-
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProductPageClient product={product} />
       </PageTransition>
       <Footer />
     </main>
