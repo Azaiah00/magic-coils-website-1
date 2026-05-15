@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { email, source } = await req.json();
+    // `hair_type` is optional — the quiz flow (Brief #4) posts it so we
+    // can segment quiz-tagged subscribers by texture inside MailerLite.
+    // Other surfaces (footer, popup, welcome) just omit the field.
+    const { email, source, hair_type } = await req.json();
 
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -33,6 +36,10 @@ export async function POST(req: Request) {
           // mapping our incoming `source` value to it keeps everything
           // in one column instead of creating a duplicate field.
           signup_source: source || "direct",
+          // Only forward `hair_type` when the caller sent one. MailerLite
+          // auto-creates the custom field on first non-empty value, so
+          // no manual admin setup is needed.
+          ...(hair_type ? { hair_type } : {}),
         },
         groups: GROUP_ID ? [GROUP_ID] : undefined,
       }),
