@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
 import { formatListingPrice, productToCartLine, products } from "@/data/products";
 
@@ -91,6 +92,7 @@ export default function ProductGrid() {
                     {product.name}
                   </Link>
                 </h3>
+                <JudgeMePreviewBadge product={product} />
                 <p className="font-sans text-primary/80 font-medium text-lg">
                   {formatListingPrice(product)}
                 </p>

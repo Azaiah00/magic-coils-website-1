@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
 import { formatListingPrice, productToCartLine, products } from "@/data/products";
 
@@ -155,6 +156,7 @@ export default function ShopPage() {
                       {product.name}
                     </Link>
                   </h3>
+                  <JudgeMePreviewBadge product={product} />
                   <p className="font-sans text-primary/80 font-medium">
                     {formatListingPrice(product)}
                   </p>

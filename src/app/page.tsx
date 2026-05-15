@@ -4,6 +4,7 @@ import BundleTeaser from "@/components/BundleTeaser";
 import ProductGrid from "@/components/ProductGrid";
 import BrandStory from "@/components/BrandStory";
 import GoogleReviewsSection from "@/components/GoogleReviewsSection";
+import JudgeMeReviewsCarousel from "@/components/JudgeMeReviewsCarousel";
 import QuizSection from "@/components/QuizSection";
 import SocialProof from "@/components/SocialProof";
 import SocialCTA from "@/components/SocialCTA";
@@ -21,6 +22,7 @@ export default function Home() {
         <ProductGrid />
         <BrandStory />
         <GoogleReviewsSection />
+        <JudgeMeReviewsCarousel />
         <QuizSection />
         <SocialProof />
         <SocialCTA />

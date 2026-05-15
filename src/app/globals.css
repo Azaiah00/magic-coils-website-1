@@ -26,6 +26,42 @@
   }
 }
 
+@layer components {
+  /* Judge.me widgets are injected by their CDN script after Shopify setup.
+     These overrides keep their default markup aligned with Magic Coils:
+     royal blue text, gold stars, Playfair headings, and clean card spacing. */
+  .jdgm-widget {
+    --jdgm-primary-color: var(--primary);
+    --jdgm-secondary-color: var(--accent);
+    color: var(--primary);
+    font-family: var(--font-inter), sans-serif;
+  }
+
+  .jdgm-widget :is(.jdgm-star, .jdgm-prev-badge__stars, .jdgm-rev__rating) {
+    color: var(--accent) !important;
+  }
+
+  .jdgm-widget :is(.jdgm-rev-widg__title, .jdgm-widget-title) {
+    color: var(--primary);
+    font-family: var(--font-playfair), serif;
+  }
+
+  .jdgm-widget :is(.jdgm-write-rev-link, .jdgm-submit-rev, .jdgm-btn) {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #FFFFFF !important;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .jdgm-widget :is(.jdgm-write-rev-link, .jdgm-submit-rev, .jdgm-btn):hover {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: var(--primary) !important;
+  }
+}
+
 html,
 body {
   max-width: 100vw;

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
+import JudgeMeProductReviews from "@/components/JudgeMeProductReviews";
 import { useCart } from "@/context/CartContext";
 import { productToCartLine, type Product } from "@/data/products";
 
@@ -25,8 +26,9 @@ export default function ProductPageClient({ product }: Props) {
   };
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+    <>
+      <div className="container mx-auto px-4 md:px-8 py-16 md:py-24">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
         {/* Left: Image Gallery */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -198,7 +200,9 @@ export default function ProductPageClient({ product }: Props) {
             </motion.div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+      <JudgeMeProductReviews product={product} />
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import SlideOutCart from "@/components/SlideOutCart";
 import PopupModal from "@/components/PopupModal";
 import DiscountUrlCapture from "@/components/DiscountUrlCapture";
+import { JUDGEME_PUBLIC_TOKEN, JUDGEME_SHOP_DOMAIN } from "@/lib/judgeme";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -52,6 +53,30 @@ export default function RootLayout({
             `,
           }}
         />
+        {JUDGEME_PUBLIC_TOKEN ? (
+          <>
+            {/* Judge.me headless widgets. The public token comes from the
+                Shopify Judge.me app after install. If it is not configured,
+                widgets remain hidden instead of showing broken placeholders. */}
+            <Script
+              id="judgeme-config"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.jdgm = window.jdgm || {};
+                  window.jdgm.SHOP_DOMAIN = ${JSON.stringify(JUDGEME_SHOP_DOMAIN)};
+                  window.jdgm.PLATFORM = 'shopify';
+                  window.jdgm.PUBLIC_TOKEN = ${JSON.stringify(JUDGEME_PUBLIC_TOKEN)};
+                `,
+              }}
+            />
+            <Script
+              id="judgeme-widget-preloader"
+              src="https://cdn.judge.me/widget_preloader.js"
+              strategy="afterInteractive"
+            />
+          </>
+        ) : null}
         {/* Organization + WebSite schema gives search engines and AI
             crawlers a stable machine-readable identity for the brand. */}
         <Script
