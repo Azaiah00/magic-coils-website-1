@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import BundleTeaser from "@/components/BundleTeaser";
 import ProductGrid from "@/components/ProductGrid";
 import BrandStory from "@/components/BrandStory";
+import GoogleReviewsSection from "@/components/GoogleReviewsSection";
 import QuizSection from "@/components/QuizSection";
 import SocialProof from "@/components/SocialProof";
 import SocialCTA from "@/components/SocialCTA";
@@ -19,6 +20,7 @@ export default function Home() {
         <BundleTeaser />
         <ProductGrid />
         <BrandStory />
+        <GoogleReviewsSection />
         <QuizSection />
         <SocialProof />
         <SocialCTA />
