@@ -85,7 +85,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-8"
+              className="text-center"
             >
               <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-3 block">
                 IN ACTION
@@ -93,21 +93,6 @@ export default function AboutPage() {
               <p className="font-serif italic text-primary/70 text-lg">
                 Where the magic comes to life
               </p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative aspect-[16/10] w-full overflow-hidden shadow-xl"
-            >
-              <Image
-                src="/images/about-booth.png"
-                alt="Magic Coils booth at a trade show event with founder Antwun Wilson"
-                fill
-                className="object-cover object-center"
-              />
             </motion.div>
           </div>
         </section>
