@@ -77,26 +77,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Event Presence — Where the Magic Happens */}
-        <section className="py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 md:px-8 max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center"
-            >
-              <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase mb-3 block">
-                IN ACTION
-              </span>
-              <p className="font-serif italic text-primary/70 text-lg">
-                Where the magic comes to life
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
         {/* Founder's Message */}
         <section className="py-24 md:py-32 bg-background">
           <div className="container mx-auto px-4 md:px-8 max-w-6xl">
