@@ -46,21 +46,6 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
           className="max-w-xl text-left flex flex-col items-start"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-8"
-          >
-            <Image 
-              src="/images/magic-coils-logo.png" 
-              alt="Magic Coils Logo" 
-              width={200} 
-              height={100} 
-              className="object-contain drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]"
-            />
-          </motion.div>
-          
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white leading-[1.1] mb-6 drop-shadow-lg">
             Crowned <br className="hidden lg:block" /> in <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent">Magic.</span>
           </h1>
