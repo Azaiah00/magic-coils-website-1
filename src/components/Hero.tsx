@@ -62,10 +62,10 @@ export default function Hero() {
               <span className="relative z-10">Shop the Collection</span>
             </Link>
             <Link
-              href="/directory"
+              href="/quiz"
               className="group relative inline-flex items-center justify-center border border-accent text-accent px-10 py-5 text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors duration-300 hover:bg-accent hover:text-primary"
             >
-              <span className="relative z-10">Find a Stylist</span>
+              <span className="relative z-10">Take the Hair Quiz</span>
             </Link>
           </div>
         </motion.div>
