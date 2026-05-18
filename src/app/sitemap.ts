@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllBlogPostMeta } from "@/lib/blog";
 import { products } from "@/data/products";
 
 // Single source for absolute URLs in the sitemap. Keep in sync with
@@ -47,6 +48,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: product.category === "bundles" ? 0.95 : 0.85,
   }));
 
+  // Curl Talk articles — one entry per markdown file in content/blog/.
+  const articlePaths = getAllBlogPostMeta().map((article) => ({
+    url: `${BASE}/blog/${article.slug}`,
+    lastModified: new Date(article.updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     ...staticPaths.map((p) => ({
       url: `${BASE}${p.path}`,
@@ -55,5 +64,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: p.priority,
     })),
     ...productPaths,
+    ...articlePaths,
   ];
 }
