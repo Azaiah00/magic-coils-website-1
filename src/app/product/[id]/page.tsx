@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ProductPageClient from "./ProductPageClient";
-import { products } from "@/data/products";
+import { getProductGalleryImages, getProductListingImage, products } from "@/data/products";
 
 type Params = { id: string };
 
@@ -26,6 +26,8 @@ export async function generateMetadata({
   const url = `https://magiccoils.net/product/${product.id}`;
   const descShort = product.description.split("\n")[0].slice(0, 155).trim();
 
+  const listingImage = getProductListingImage(product);
+
   return {
     title: `${product.name} | Magic Coils`,
     description: descShort,
@@ -37,7 +39,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: `https://magiccoils.net${product.image}`,
+          url: `https://magiccoils.net${listingImage}`,
           width: 1200,
           height: 1200,
           alt: product.name,
@@ -48,7 +50,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${product.name} | Magic Coils`,
       description: descShort,
-      images: [`https://magiccoils.net${product.image}`],
+      images: [`https://magiccoils.net${listingImage}`],
     },
   };
 }
@@ -79,7 +81,9 @@ export default async function ProductPage({
             "@type": "Product",
             name: product.name,
             description: product.description.replace(/\n+/g, " "),
-            image: `https://magiccoils.net${product.image}`,
+            image: getProductGalleryImages(product).map(
+              (img) => `https://magiccoils.net${img}`
+            ),
             brand: { "@type": "Brand", name: "Magic Coils" },
             category: product.category,
             offers: product.variants?.length

@@ -22,7 +22,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import Link from "next/link";
 import Image from "next/image";
-import { products, productToCartLine, Product } from "@/data/products";
+import { products, productToCartLine, getProductListingImage, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { Check, Loader2, ShoppingBag } from "lucide-react";
 
@@ -530,7 +530,7 @@ export default function QuizPage() {
                         className="w-full bg-white border border-primary/10 p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 text-left shadow-sm hover:shadow-md transition-shadow"
                       >
                         <div className="relative w-48 h-48 bg-surface flex-shrink-0">
-                          <Image src={product.image} alt={product.name} fill className="object-cover" />
+                          <Image src={getProductListingImage(product)} alt={product.name} fill className="object-contain p-2" />
                         </div>
                         <div className="flex-1">
                           <p className="text-xs text-accent uppercase tracking-widest mb-2 font-bold">

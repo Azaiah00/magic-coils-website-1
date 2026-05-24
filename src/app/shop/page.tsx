@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
-import { formatListingPrice, productToCartLine, products } from "@/data/products";
+import { formatListingPrice, getProductListingImage, productToCartLine, products } from "@/data/products";
 
 const categories = [
   { id: "all", label: "All Products" },
@@ -105,10 +105,7 @@ export default function ShopPage() {
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-12"
           >
-            {filteredProducts.map((product) => {
-              // Only the two shop bundles get a wider 4:3 frame + contain so composite art isn’t side-cropped.
-              const isBundleCard = product.category === "bundles";
-              return (
+            {filteredProducts.map((product) => (
               <motion.div 
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -118,19 +115,13 @@ export default function ShopPage() {
                 key={product.id} 
                 className="group relative flex flex-col"
               >
-                {/* Image Wrapper */}
-                <div
-                  className={`relative w-full bg-surface overflow-hidden mb-6 flex items-center justify-center shadow-sm ${
-                    isBundleCard ? "aspect-[4/3]" : "aspect-[4/5]"
-                  }`}
-                >
+                {/* Image Wrapper — same 4:5 frame for every product including bundles */}
+                <div className="relative w-full aspect-[4/5] bg-surface overflow-hidden mb-6 flex items-center justify-center shadow-sm">
                   <Image
-                    src={product.image}
+                    src={getProductListingImage(product)}
                     alt={product.name}
                     fill
-                    className={`object-center transition-transform duration-1000 ease-out group-hover:scale-110 ${
-                      isBundleCard ? "object-contain p-2 md:p-4" : "object-cover"
-                    }`}
+                    className="object-contain object-center p-3 md:p-4 transition-transform duration-1000 ease-out group-hover:scale-105"
                   />
                   
                   {/* Quick Add Button */}
@@ -162,8 +153,7 @@ export default function ShopPage() {
                   </p>
                 </div>
               </motion.div>
-            );
-            })}
+            ))}
           </motion.div>
         </div>
       </PageTransition>

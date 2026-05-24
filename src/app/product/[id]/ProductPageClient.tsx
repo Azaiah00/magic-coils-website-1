@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
 import JudgeMeProductReviews from "@/components/JudgeMeProductReviews";
+import { ProductImageCarouselFromProduct } from "@/components/ProductImageCarousel";
 import { useCart } from "@/context/CartContext";
 import { productToCartLine, type Product } from "@/data/products";
 
@@ -35,15 +35,7 @@ export default function ProductPageClient({ product }: Props) {
           animate={{ opacity: 1, x: 0 }}
           className="w-full lg:w-1/2"
         >
-          <div className="relative w-full aspect-[4/5] bg-surface flex items-center justify-center shadow-inner">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover object-center p-8 md:p-12"
-              priority
-            />
-          </div>
+          <ProductImageCarouselFromProduct product={product} />
         </motion.div>
 
         {/* Right: Product Info (Sticky) */}

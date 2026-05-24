@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
-import { formatListingPrice, productToCartLine, products } from "@/data/products";
+import { formatListingPrice, getProductListingImage, productToCartLine, products } from "@/data/products";
 
 export default function ProductGrid() {
   const { addItem } = useCart();
@@ -62,10 +62,10 @@ export default function ProductGrid() {
               {/* Image Wrapper */}
               <div className={`relative w-full aspect-[3/4] bg-white overflow-hidden mb-6 flex items-center justify-center shadow-sm`}>
                 <Image
-                  src={product.image}
+                  src={getProductListingImage(product)}
                   alt={product.name}
                   fill
-                  className="object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-110 p-4"
+                  className="object-contain object-center transition-transform duration-1000 ease-out group-hover:scale-110 p-4"
                 />
                 
                 {/* Quick Add Button */}

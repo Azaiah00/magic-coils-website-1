@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { products } from "@/data/products";
-import { formatListingPrice } from "@/data/products";
+import { formatListingPrice, getProductListingImage } from "@/data/products";
 
 type BlogRelatedProductsProps = {
   productIds: string[];
@@ -36,7 +36,7 @@ export default function BlogRelatedProducts({
           >
             <div className="relative aspect-square bg-white mb-4 overflow-hidden shadow-sm">
               <Image
-                src={product!.image}
+                src={getProductListingImage(product!)}
                 alt={product!.name}
                 fill
                 className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
