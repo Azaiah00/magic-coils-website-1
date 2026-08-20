@@ -91,7 +91,7 @@ export default function BrandStory() {
                 At Magic Coils, we know that textured hair requires a different level of care. It needs deep hydration, intentional ingredients, and products that respect the science of our strands.
               </p>
               <p>
-                Our professional-grade formulas are crafted specifically for Black women—designed to detangle, moisturize, and add brilliant shine without compromising the integrity of your natural curl pattern.
+                Magic Coils brings cleansers, conditioners, leave-ins, stylers, and finishing products together for textured-hair routines built around clear steps and styling goals.
               </p>
               <p className="font-medium text-primary">
                 Whether you&apos;re doing a wash-and-go or prepping for a silk press, treat your hair like royalty.

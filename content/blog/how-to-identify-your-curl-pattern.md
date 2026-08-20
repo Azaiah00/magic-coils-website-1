@@ -4,6 +4,7 @@ slug: "how-to-identify-your-curl-pattern"
 description: "The hair typing system explained without the confusion. A complete guide to identifying your texture from Type 1 (straight) through Type 8 (zig-zag coiled), with the products and routines that work for each."
 publishedAt: "2026-05-29"
 updatedAt: "2026-05-29"
+draft: true
 author: "The Crown Editors"
 pillar: "education"
 featuredImage: "/images/hair-type-4.png"

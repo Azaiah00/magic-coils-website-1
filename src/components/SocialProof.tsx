@@ -7,18 +7,18 @@ export default function SocialProof() {
   const proofs = [
     {
       icon: <Award className="w-10 h-10 text-accent" strokeWidth={1} />,
-      title: "Used by Top Salon Stylists",
-      description: "Trusted by professionals for flawless, lasting results.",
+      title: "Salon & At-Home Routines",
+      description: "Built for textured-hair wash days, styling, and finishing.",
     },
     {
       icon: <Leaf className="w-10 h-10 text-accent" strokeWidth={1} />,
-      title: "Science Meets Nature",
-      description: "Premium botanicals engineered for maximum efficacy.",
+      title: "Ingredient-Led Formulas",
+      description: "Product pages list the ingredients and directions before you buy.",
     },
     {
       icon: <ShieldCheck className="w-10 h-10 text-accent" strokeWidth={1} />,
-      title: "Cruelty-Free Formulations",
-      description: "Ethically crafted without animal testing, ever.",
+      title: "Shop With Clarity",
+      description: "Choose individual products or complete routines for your styling goal.",
     },
   ];
 

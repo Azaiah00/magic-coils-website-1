@@ -56,7 +56,7 @@ export default function DistributorPage() {
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
               className="text-white/80 font-sans text-lg md:text-xl max-w-3xl mx-auto font-light tracking-wide leading-relaxed"
             >
-              Gain an additional stream of income by providing a salon-quality line of products that proven stylists and their clients love.
+              Add Magic Coils to your retail offering and introduce clients to complete textured-hair routines for cleansing, styling, and finishing.
             </motion.p>
           </div>
         </section>
@@ -67,7 +67,7 @@ export default function DistributorPage() {
             <div className="bg-white p-10 md:p-16 shadow-2xl border border-accent/20 flex flex-col items-center text-center">
               <h2 className="font-serif text-3xl md:text-4xl text-primary mb-6">Partner With The Best</h2>
               <p className="text-primary/70 font-sans text-lg mb-10 max-w-2xl leading-relaxed">
-                We are actively seeking passionate distributors and salon owners to carry the Magic Coils professional line. Expand your retail offerings and increase your revenue with formulations that deliver flawless, healthy results for textured hair.
+                We are seeking distributors, salon owners, and independent stylists interested in carrying Magic Coils. Apply to discuss current products, sizes, wholesale terms, and partner support.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 w-full">

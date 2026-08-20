@@ -21,7 +21,7 @@ export default function DistributorTeaser() {
             Become a Distributor
           </h2>
           <p className="font-sans text-base md:text-lg text-primary/70 leading-relaxed font-light mb-8">
-            Gain an additional stream of income by providing a salon-quality line of products that proven stylists and their clients love.
+            Add Magic Coils to your retail offering and introduce clients to complete textured-hair routines for cleansing, styling, and finishing.
           </p>
           <Link
             href="/distributor"

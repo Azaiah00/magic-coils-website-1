@@ -25,7 +25,7 @@ export default function Navbar() {
             Visitors who never scroll into the footer still see the
             discount code offer at the top of every page. */}
         <div className="bg-primary text-accent py-2.5 text-center text-xs md:text-sm font-medium tracking-widest uppercase flex items-center justify-center gap-2">
-          <span>Free Shipping Over $75</span>
+          <span>Shop Complete Textured-Hair Routines</span>
           <span className="hidden sm:inline">|</span>
           <span className="hidden sm:inline">
             Get 10% Off Your First Order:{" "}

@@ -49,6 +49,7 @@ function parsePostFile(filename: string): BlogPost {
           a: String(faq.a),
         }))
       : undefined,
+    draft: data.draft === true,
     content,
   };
 }
@@ -66,6 +67,7 @@ export function getAllBlogPosts(): BlogPost[] {
     .readdirSync(BLOG_DIR)
     .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
     .map(parsePostFile)
+    .filter((post) => !post.draft)
     .sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
@@ -74,7 +76,10 @@ export function getAllBlogPosts(): BlogPost[] {
 
 /** Metadata-only list — lighter for index cards and RSS. */
 export function getAllBlogPostMeta(): BlogPostMeta[] {
-  return getAllBlogPosts().map(({ content: _content, ...meta }) => meta);
+  return getAllBlogPosts().map(({ content, ...meta }) => {
+    void content;
+    return meta;
+  });
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {

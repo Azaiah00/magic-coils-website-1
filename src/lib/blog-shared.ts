@@ -19,6 +19,7 @@ export type BlogPostMeta = {
   keywords: string[];
   relatedProducts: string[];
   faqs?: BlogFaq[];
+  draft?: boolean;
 };
 
 export type BlogPost = BlogPostMeta & {

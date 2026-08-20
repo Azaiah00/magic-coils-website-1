@@ -4,6 +4,7 @@ slug: "wash-and-go-4c-hair"
 description: "The step-by-step Magic Coils method for defined, hydrated 4c coils that last 5–7 days — no crunch, no shrinkage panic, no white residue."
 publishedAt: "2026-05-15"
 updatedAt: "2026-05-15"
+draft: true
 author: "The Crown Editors"
 pillar: "tutorial"
 featuredImage: "/images/model-bathroom.png"

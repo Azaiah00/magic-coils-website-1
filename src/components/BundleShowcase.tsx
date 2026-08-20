@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Star, Truck, Heart, ShieldCheck, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { productToCartLine, products } from "@/data/products";
+import { abbreviateReviewerName, googleReviews } from "@/data/reviews";
 
 // Locked product data
 const BUNDLES = [
@@ -28,15 +29,15 @@ const BUNDLES = [
     ],
     benefits: [
       "Defines coils without crunch or flake",
-      "Lasts 5+ days on twist-outs",
+      "Layered routine for twists and twist-outs",
       "Lightweight enough for daily refresh",
-      "Founder-formulated for 4A–4C"
+      "Created for textured-hair styling routines"
     ]
   },
   {
     slug: "bundle-magic-press",
     name: "The Magic Press",
-    tagline: "Pro 33.8oz sizes. The kit your stylist uses, in your shower.",
+    tagline: "A complete wash-to-finish silk press routine.",
     price: 100.00,
     originalPrice: 151.75,
     savings: 51.75,
@@ -51,54 +52,21 @@ const BUNDLES = [
       { name: "Honey & Argan Serum",        size: "4.05 oz", individual: 24.95 }
     ],
     benefits: [
-      "90+ wash days for under $1.12 each",
-      "Salon-quality formulas at home",
-      "Ideal for households with multiple naturals",
-      "The pro stylist kit — now consumer-priced"
+      "Five products designed to be used as one routine",
+      "Wash, condition, prep, and finish in one set",
+      "Professional sizes for frequent wash days",
+      "Made for salon and at-home silk press routines"
     ]
-  }
-];
-
-const REVIEWS = [
-  {
-    title: "Still defined on day 14",
-    body: "\"Day 14 and my twist-out is still defined. The Custard alone is worth the bundle.\"",
-    name: "Jasmine T.",
-    bundle: "2 Strand Twist"
-  },
-  {
-    title: "My chair workhorse",
-    body: "\"I'm a stylist and the Magic Press 33.8oz set is my chair workhorse. My clients ask what I'm using every appointment.\"",
-    name: "Mariah L.",
-    bundle: "Magic Press"
-  },
-  {
-    title: "My 4C edges are healthy",
-    body: "\"Switched from a brand I won't name. My 4C edges have never looked this healthy. Three months in, this is the line.\"",
-    name: "Brittany A.",
-    bundle: "2 Strand Twist"
-  },
-  {
-    title: "The math is real",
-    body: "\"The bundle math is real. I would have spent $150+ for less product. The conditioner smells like luxury.\"",
-    name: "Sade F.",
-    bundle: "Magic Press"
-  },
-  {
-    title: "Wash day cut in half",
-    body: "\"Wash day went from 4 hours to 90 minutes. The 3-in-1 is the missing piece I didn't know I needed.\"",
-    name: "Tiana W.",
-    bundle: "2 Strand Twist"
   }
 ];
 
 const FAQS = [
   { q: "Which bundle should I choose?", a: "Not sure what your curls need? Take the Coil Crown Quiz to get matched." },
-  { q: "Are these formulas safe for color-treated 4A–4C hair?", a: "Yes. Our entire line is sulfate-free and made without drying alcohols, so your color stays vibrant." },
-  { q: "How long do these bundles last?", a: "The 2 Strand Twist typically lasts 6–8 weeks with regular use. The Magic Press 33.8oz bundle offers 90+ wash days." },
+  { q: "Can I use these bundles on color-treated hair?", a: "Check the complete ingredient list on each product and ask your colorist before adding a new cleanser or styling product to a color-maintenance routine." },
+  { q: "How long do these bundles last?", a: "Usage varies by hair length, density, routine, and how many people use the products. Product sizes are listed with each bundle so you can compare them before ordering." },
   { q: "Can I customize a bundle?", a: "Not yet — but taking the Coil Crown Quiz will build you a personalized 2-product starter routine." },
-  { q: "Do you offer subscriptions?", a: "Coming soon. Join our SMS list (text CROWN to 12345) to get early access and never run out." },
-  { q: "What's your return policy?", a: "We offer a 30-day satisfaction promise. If your coils aren't crowned, we'll make it right. Email info@magiccoils.net to start a return." }
+  { q: "Do you offer subscriptions?", a: "Subscriptions are not currently available. Join the email list for product and restock updates." },
+  { q: "What's your return policy?", a: "Unopened, unused products may be returned within 14 days of delivery, less original shipping costs. See the full Return Policy or email info@magiccoils.net before sending anything back." }
 ];
 
 export default function BundleShowcase() {
@@ -195,13 +163,13 @@ export default function BundleShowcase() {
   
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentReview(prev => (prev + 1) % REVIEWS.length);
+      setCurrentReview(prev => (prev + 1) % googleReviews.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextReview = () => setCurrentReview(p => (p + 1) % REVIEWS.length);
-  const prevReview = () => setCurrentReview(p => (p - 1 + REVIEWS.length) % REVIEWS.length);
+  const nextReview = () => setCurrentReview(p => (p + 1) % googleReviews.length);
+  const prevReview = () => setCurrentReview(p => (p - 1 + googleReviews.length) % googleReviews.length);
 
   return (
     <>
@@ -224,7 +192,7 @@ export default function BundleShowcase() {
               The <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent">Magic Bundles</span>
             </h1>
             <p className="font-sans text-lg text-white/80 leading-relaxed font-light">
-              Everything you need for salon-quality results at home. Curated systems designed to work perfectly together.
+              Curated product routines for silk presses, twists, coils, and textured-hair styling days.
             </p>
           </motion.div>
 
@@ -237,7 +205,7 @@ export default function BundleShowcase() {
           >
             <div className="text-left flex-1">
               <h3 className="font-serif text-2xl md:text-3xl text-white mb-2">Not sure which bundle is right for your hair?</h3>
-              <p className="text-white/70 font-light font-sans">Take the 90-second Coil Crown quiz and we&apos;ll match you.</p>
+              <p className="text-white/70 font-light font-sans">Take the 60-second Coil Crown quiz and we&apos;ll match you.</p>
             </div>
             <Link 
               href="/quiz" 
@@ -359,22 +327,22 @@ export default function BundleShowcase() {
             <div className="flex flex-col items-center p-4">
               <Heart className="w-8 h-8 text-accent mb-4" strokeWidth={1.5} />
               <h4 className="font-serif text-lg text-primary mb-2">Black-Owned & Independent</h4>
-              <p className="font-sans text-sm text-primary/70 font-light">Built by stylist Antwun Wilson. Never reformulated.</p>
+              <p className="font-sans text-sm text-primary/70 font-light">Founded by Antwun Wilson under Hair For You LLC.</p>
             </div>
             <div className="flex flex-col items-center p-4">
               <Truck className="w-8 h-8 text-accent mb-4" strokeWidth={1.5} />
-              <h4 className="font-serif text-lg text-primary mb-2">Free Shipping Over $75</h4>
-              <p className="font-sans text-sm text-primary/70 font-light">Both bundles qualify automatically.</p>
+              <h4 className="font-serif text-lg text-primary mb-2">Shopify-Powered Checkout</h4>
+              <p className="font-sans text-sm text-primary/70 font-light">Complete payment through the connected Shopify store.</p>
             </div>
             <div className="flex flex-col items-center p-4">
               <Star className="w-8 h-8 text-accent mb-4" strokeWidth={1.5} />
-              <h4 className="font-serif text-lg text-primary mb-2">Magic Points Every Order</h4>
-              <p className="font-sans text-sm text-primary/70 font-light">Earn $1 per dollar back toward future drops.</p>
+              <h4 className="font-serif text-lg text-primary mb-2">Complete Routines</h4>
+              <p className="font-sans text-sm text-primary/70 font-light">Shop products grouped by a clear styling goal.</p>
             </div>
             <div className="flex flex-col items-center p-4">
               <ShieldCheck className="w-8 h-8 text-accent mb-4" strokeWidth={1.5} />
-              <h4 className="font-serif text-lg text-primary mb-2">30-Day Satisfaction Promise</h4>
-              <p className="font-sans text-sm text-primary/70 font-light">If your coils aren&apos;t crowned, we&apos;ll make it right.</p>
+              <h4 className="font-serif text-lg text-primary mb-2">Clear Return Policy</h4>
+              <p className="font-sans text-sm text-primary/70 font-light">Unopened products may be returned within 14 days.</p>
             </div>
           </div>
         </div>
@@ -386,7 +354,7 @@ export default function BundleShowcase() {
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="font-serif text-4xl text-primary mb-2">Crown Reviews</h2>
-              <p className="font-sans text-primary/60">Real results from verified buyers.</p>
+              <p className="font-sans text-primary/60">Verified public reviews from Google.</p>
             </div>
             <div className="hidden md:flex gap-2">
               <button onClick={prevReview} className="p-3 border border-surface text-primary hover:bg-primary hover:text-white transition-colors rounded-full">
@@ -411,24 +379,23 @@ export default function BundleShowcase() {
                 <div className="flex items-center gap-1 mb-6">
                   {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-accent text-accent" />)}
                 </div>
-                <h3 className="font-serif text-2xl text-primary mb-4">{REVIEWS[currentReview].title}</h3>
                 <p className="font-sans text-lg md:text-xl text-primary/80 font-light italic mb-8 max-w-4xl leading-relaxed">
-                  {REVIEWS[currentReview].body}
+                  &ldquo;{googleReviews[currentReview].text}&rdquo;
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-accent font-serif text-xl">
-                    {REVIEWS[currentReview].name.charAt(0)}
+                    {googleReviews[currentReview].reviewer.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-bold text-primary">{REVIEWS[currentReview].name} <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full ml-2 font-normal">Verified Buyer</span></p>
-                    <p className="text-sm text-primary/60">Crowned with: {REVIEWS[currentReview].bundle}</p>
+                    <p className="font-bold text-primary">{abbreviateReviewerName(googleReviews[currentReview].reviewer)} <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full ml-2 font-normal">Google review</span></p>
+                    <p className="text-sm text-primary/60">{googleReviews[currentReview].date}</p>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
             
             <div className="flex justify-center gap-2 mt-8 md:hidden">
-              {REVIEWS.map((_, i) => (
+              {googleReviews.map((_, i) => (
                 <button key={i} onClick={() => setCurrentReview(i)} className={`w-2 h-2 rounded-full transition-colors ${i === currentReview ? 'bg-accent' : 'bg-surface'}`} />
               ))}
             </div>

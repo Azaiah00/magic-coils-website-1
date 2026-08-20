@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Script from "next/script";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -12,28 +11,28 @@ const faqs = [
   {
     question: "What's in Magic Coils products that makes them different?",
     answer:
-      "Every formula in the Magic Coils line is built around the same three hero ingredients: argan oil (for slip, shine, and reinforcement of the hair shaft), vitamin C (for scalp wellness, cuticle brightness, and protection against environmental stress), and honey oil (a natural humectant that pulls moisture into the strand and holds it there). This trio is layered across all eight products — shampoos, conditioners, leave-ins, custards, and serums — so the moisture story stays consistent from the first lather to the final finish. No sulfates, no parabens, no mineral oil, no synthetic dyes.",
+      "Magic Coils offers cleansers, conditioners, leave-ins, stylers, and a finishing serum designed to work as complete textured-hair routines. Ingredients vary by product, so review the complete ingredient list on each product page and package before use, especially if you have allergies or sensitivities.",
   },
   {
     question: "Are Magic Coils products safe for color-treated hair?",
     answer:
-      "Yes. Every Magic Coils formulation is sulfate-free and paraben-free, which means they protect and extend the life of professional color (single-process, balayage, highlights, fashion colors) while maintaining the moisture levels color-treated hair needs. The Peppermint Detox Shampoo is the only product we recommend using sparingly (once a week or every other wash) on freshly-colored hair, because its clarifying action is intentionally deep. For routine wash days, lead with Intense Hydration Shampoo and Moisture Rich Conditioner.",
+      "Color services and formulas vary. Check the ingredient list for the specific Magic Coils product you want to use and ask your colorist before changing your color-maintenance routine. Clarifying shampoos may be used less often depending on your stylist's guidance.",
   },
   {
     question:
       "Are Magic Coils products safe for chemically processed, relaxed, or transitioning hair?",
     answer:
-      "Yes. The line was designed by a professional stylist for textured hair in every state — natural, relaxed, transitioning, and chemically processed. The sulfate-free formulas are gentle enough to wash without further drying chemically treated strands, and the argan-and-honey ingredient stack delivers the moisture that processed hair needs most. The Strengthening Serum is especially good for transitioning hair, where the line of demarcation is most fragile.",
+      "Chemically processed hair can have different needs and sensitivities. Review the ingredient list and directions for each product, patch test first, and ask the professional who performed your chemical service if you are unsure whether a product fits your routine.",
   },
   {
-    question: "Are Magic Coils products cruelty-free and vegan?",
+    question: "Are Magic Coils products vegan or certified cruelty-free?",
     answer:
-      "All Magic Coils products are cruelty-free — never tested on animals at any stage of development, formulation, or production. Most of our products are also vegan; the line uses honey extract rather than animal-derived ingredients in most formulations. The Moisturizing Cream contains shea butter (plant-derived) and our Strengthening Serum uses silicone-based heat protection (also plant-and-mineral-derived). If you need a fully vegan-certified list, email info@magiccoils.net and we'll send the ingredient breakdown for your specific products.",
+      "We are verifying certification and supplier documentation before making line-wide vegan or cruelty-free claims. For a current ingredient question, email info@magiccoils.net with the exact product name before ordering.",
   },
   {
     question: "How are Magic Coils products stored, and what's the shelf life?",
     answer:
-      "Store all Magic Coils products at room temperature, away from direct sunlight and heat. The professional-grade preservative system (sodium benzoate, phenoxyethanol) keeps unopened products fresh for 24 months from the date of manufacture. Once opened, use within 12 months for best results. The Strengthening Serum and the Moisturizing Cream are the most stable — those last the longest after opening. Don't store any product in a hot car or near a steamy shower long-term.",
+      "Store products closed at room temperature and away from direct sunlight or excessive heat. Follow the lot, expiration, or period-after-opening information printed on the package. If that information is unclear, email info@magiccoils.net with the product name and lot code.",
   },
   {
     question: "Will Magic Coils work on my hair texture?",
@@ -43,12 +42,12 @@ const faqs = [
   {
     question: "Can I use Magic Coils on my children's hair?",
     answer:
-      "Yes. The formulas are gentle, sulfate-free, paraben-free, and fragrance-mild — designed for textured crowns of every age. The 3-In-1 Leave In Treatment and the Moisturizing Cream are particularly popular for children's wash days because they detangle without tears and moisturize without heaviness. For toddlers and younger children, the standard adult dosage applies in smaller amounts. As with any new haircare product, do a patch test if your child has sensitive skin or known allergies.",
+      "Magic Coils products are not presented as children's products. Ask a pediatrician or dermatologist before using a new cosmetic product on a young child, review the complete ingredient list, keep products out of the eyes, and patch test first when appropriate.",
   },
   {
     question: "Can I use Magic Coils products on locs?",
     answer:
-      "Yes — all Magic Coils products are loc-safe. The Peppermint Detox Shampoo is especially well-loved by the loc community because it clarifies without leaving residue inside the loc structure. Pair it with Intense Hydration Shampoo on the same wash day, then condition with Moisture Rich Conditioner under a plastic cap. The Moisturizing Cream and Strengthening Serum work beautifully as daily and weekly maintenance on mature locs.",
+      "Several Magic Coils products can fit loc-care routines, but product choice and amount matter. Review the ingredients and directions, use lightweight amounts to avoid buildup, and ask your loctician which cleanser, moisturizer, or finishing product best fits your locs.",
   },
   {
     question: "How long does shipping take?",
@@ -68,7 +67,7 @@ const faqs = [
   {
     question: "Do you offer wholesale or distributor pricing for salons?",
     answer:
-      "Yes. The Magic Coils Royal Court is our professional partner program — competitive wholesale pricing, professional-size product access (33.8 oz bottles), exclusive marketing support, and a directory listing on magiccoils.net for clients to find your salon. To apply, visit magiccoils.net/distributor and email info@magiccoils.net with your salon name, location, and the products you're interested in carrying.",
+      "Yes. The Magic Coils Royal Court is the professional partner program for salons and independent stylists interested in carrying the line. To apply, visit magiccoils.net/distributor or email info@magiccoils.net with your business name, location, and products of interest. Current sizes, pricing, minimums, and partner benefits are confirmed during onboarding.",
   },
   {
     question: "How do I get listed as a Magic Coils stylist?",
@@ -83,17 +82,17 @@ const faqs = [
   {
     question: "Who founded Magic Coils?",
     answer:
-      "Magic Coils is founded by Antwun Wilson, a professional stylist who built the line out of his own salon in response to a simple problem: every textured-hair brand on the market either compromised on quality or compromised on price, and there wasn't a single professional-grade line that did both right. Magic Coils is the answer — salon-grade formulas in retail-friendly sizes, built for the textured crown. The brand is owned and operated by Hair For You LLC (Antwun's family company). Read his full story at magiccoils.net/about.",
+      "Magic Coils was founded by Antwun Wilson, a hair distributor and the founder of Hair For You. The brand is operated by Hair For You LLC and focuses on product routines for textured hair. Read more at magiccoils.net/about.",
   },
   {
     question: "I have a sensitive scalp. Will Magic Coils irritate it?",
     answer:
-      "The Magic Coils line is formulated to be gentle on sensitive scalps — sulfate-free, paraben-free, silicone-free (with the exception of the Strengthening Serum, which uses silicones intentionally for heat protection). The Peppermint Detox Shampoo does contain peppermint oil and menthol, which create a noticeable tingling sensation — most customers love this, but if you have known sensitivity to mint or menthol, swap it for Intense Hydration Shampoo as your primary cleanser. For any new product, we recommend a patch test on the inside of your forearm 24 hours before full use if you have a history of contact sensitivities.",
+      "Any cosmetic product can irritate a sensitive scalp. Review the complete ingredient list and patch test before full use. Peppermint Detox Shampoo lists peppermint oil and menthol, so avoid it if you know you react to mint or menthol. Stop use and consult a healthcare professional if irritation occurs.",
   },
   {
     question: "What if I have an allergic reaction to a product?",
     answer:
-      "Stop using the product immediately and rinse the affected area with cool water and a gentle, fragrance-free cleanser. If symptoms (itching, redness, swelling, hives) persist beyond 24 hours or worsen, see a dermatologist. Email info@magiccoils.net with the product name, your order number, and a description of the reaction — we'll process a full refund and add the ingredient flag to your account so we can flag it on future orders. Magic Coils products are cosmetics, not medical treatments, and reactions are rare but do happen on a small percentage of sensitive scalps.",
+      "Stop using the product and follow the safety directions on its label. Seek prompt medical care for severe or worsening symptoms. You may also email info@magiccoils.net with the product name, lot code, order number, and a description of what occurred so the team can document and review the report. Magic Coils products are cosmetics, not medical treatments.",
   },
   {
     question: "How do I cancel my email subscription or update my preferences?",
@@ -112,10 +111,8 @@ export default function FAQPage() {
   return (
     <main className="min-h-screen flex flex-col w-full bg-background">
       <Navbar />
-      <Script
-        id="faq-page-schema"
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
