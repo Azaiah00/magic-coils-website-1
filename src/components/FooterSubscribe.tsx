@@ -38,14 +38,13 @@ export default function FooterSubscribe() {
     }
   };
 
-  // Success state replaces the entire form so the visitor sees the
-  // confirmation immediately, with a hint about the MAGICTEN code.
+  // Success state replaces the form with immediate confirmation.
   if (status === "success") {
     return (
       <div className="bg-surface border border-accent p-5">
         <p className="font-serif text-base text-primary">Check your inbox 👑</p>
         <p className="font-sans text-xs text-primary/70 mt-1">
-          Your MAGICTEN code is on its way.
+          You&apos;re on the Crowned Community list for product and routine updates.
         </p>
       </div>
     );

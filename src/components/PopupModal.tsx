@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Loader2, Check, Copy } from "lucide-react";
-import Link from "next/link";
+import { X, Loader2, Check } from "lucide-react";
 
 /**
  * localStorage key + cooldown window for popup throttling.
@@ -23,7 +22,6 @@ export default function PopupModal() {
   const [isDismissed, setIsDismissed] = useState(true);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -97,24 +95,12 @@ export default function PopupModal() {
         body: JSON.stringify({ email, source: "popup" }),
       });
 
-      if (!res.ok) {
-        // Log so we can see backend issues, but don't block the user from getting MAGICTEN.
-        console.warn("Popup subscribe non-2xx; falling back to inline code reveal.");
-      }
-    } catch (err) {
-      // Network failure / offline. Same fallback: still reveal the code.
-      console.warn("Popup subscribe failed; showing code anyway.", err);
-    } finally {
-      // Always show the success view so the user gets the code instantly.
-      // The canonical email delivery still happens via MailerLite when the API call succeeded.
+      if (!res.ok) throw new Error("subscribe failed");
       setStatus("success");
+      setEmail("");
+    } catch {
+      setStatus("error");
     }
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText("MAGICTEN");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   if (isDismissed) return null;
@@ -183,14 +169,14 @@ export default function PopupModal() {
                       </span>
 
                       <h2 className="font-serif text-4xl lg:text-5xl text-white mb-2 leading-tight">
-                        The <br />
+                        Join the <br />
                         <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent drop-shadow-sm">
-                          Magic Ten
+                          Crowned Community
                         </span>
                       </h2>
 
                       <p className="font-sans text-white/80 text-sm lg:text-base mb-8 max-w-sm mx-auto font-light leading-relaxed">
-                        Treat your curls like royalty. Enter your email to unlock <strong>10% off</strong> your first purchase of our professional formulas.
+                        Get textured-hair routine education, product updates, and new-release news in your inbox.
                       </p>
 
                       <form
@@ -211,7 +197,7 @@ export default function PopupModal() {
                           disabled={status === "loading"}
                           className="w-full flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300 disabled:opacity-70 disabled:hover:scale-100"
                         >
-                          {status === "loading" ? <Loader2 className="w-5 h-5 animate-spin" /> : "Claim My 10%"}
+                          {status === "loading" ? <Loader2 className="w-5 h-5 animate-spin" /> : "Join the Community"}
                         </button>
                         {status === "error" && (
                           <p className="text-red-400 text-xs mt-2">Something went wrong. Please try again.</p>
@@ -222,7 +208,7 @@ export default function PopupModal() {
                         onClick={handleClose}
                         className="mt-6 text-white/50 hover:text-white text-xs font-medium tracking-wide underline underline-offset-4 transition-colors"
                       >
-                        No thanks, I&apos;ll pay full price.
+                        Not right now.
                       </button>
                     </motion.div>
                   ) : (
@@ -237,30 +223,19 @@ export default function PopupModal() {
                         <Check className="w-8 h-8 text-accent" />
                       </div>
                       <h2 className="font-serif text-3xl text-white mb-4">
-                        Check your email — your code is on its way.
+                        You&apos;re on the list.
                       </h2>
                       <p className="font-sans text-white/70 text-sm mb-8">
-                        Or copy it right here to use immediately:
+                        Watch your inbox for routine education, product news, and new releases.
                       </p>
 
-                      <div className="w-full flex items-center justify-between bg-white/5 border border-accent/40 p-4 mb-8">
-                        <span className="font-mono text-2xl tracking-widest text-accent font-bold">MAGICTEN</span>
-                        <button 
-                          onClick={handleCopy}
-                          className="p-2 hover:bg-white/10 rounded transition-colors text-white"
-                          aria-label="Copy code"
-                        >
-                          {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
-                        </button>
-                      </div>
-
-                      <Link 
-                        href="/shop?discount=MAGICTEN"
+                      <button
+                        type="button"
                         onClick={handleClose}
                         className="w-full inline-flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300"
                       >
-                        Shop Now & Apply Code
-                      </Link>
+                        Continue Shopping
+                      </button>
                     </motion.div>
                   )}
                 </AnimatePresence>

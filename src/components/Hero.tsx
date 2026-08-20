@@ -51,7 +51,7 @@ export default function Hero() {
           </h1>
           
           <p className="font-sans text-base sm:text-lg md:text-xl text-white/80 mb-10 max-w-md leading-relaxed font-light tracking-wide">
-            Salon-tested systems for silk presses, twists, locs, and textured-hair routines.
+            Product routines for silk presses, twists, locs, and textured-hair styling days.
           </p>
           
           <div className="flex w-full flex-col sm:flex-row gap-4 sm:gap-6">

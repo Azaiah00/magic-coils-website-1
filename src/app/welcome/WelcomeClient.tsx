@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Copy, Check } from "lucide-react";
+import { Loader2, Check } from "lucide-react";
 
 function WelcomeForm() {
   const searchParams = useSearchParams();
@@ -13,7 +13,6 @@ function WelcomeForm() {
 
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,12 +33,6 @@ function WelcomeForm() {
     } catch {
       setStatus("error");
     }
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText("MAGICTEN");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -72,13 +65,13 @@ function WelcomeForm() {
               className="w-full flex flex-col items-center"
             >
               <h2 className="font-serif text-3xl md:text-4xl text-white mb-2 leading-tight">
-                Unlock 10% Off <br/> Your First Order
+                Join the Crowned <br/> Community
               </h2>
               <p className="text-accent text-sm font-bold tracking-widest uppercase mb-6">
                 Crowned in Magic.
               </p>
               <p className="font-sans text-white/80 text-base mb-8 max-w-sm mx-auto font-light leading-relaxed">
-                Drop your email and we&apos;ll send your code instantly.
+                Get textured-hair routine education, product updates, and new-release news.
               </p>
 
               <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
@@ -96,7 +89,7 @@ function WelcomeForm() {
                   disabled={status === "loading"}
                   className="w-full flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300 disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {status === "loading" ? <Loader2 className="w-5 h-5 animate-spin" /> : "Send Me My Code"}
+                  {status === "loading" ? <Loader2 className="w-5 h-5 animate-spin" /> : "Join the Community"}
                 </button>
                 {status === "error" && (
                   <p className="text-red-400 text-sm mt-2">Something went wrong. Please try again.</p>
@@ -115,28 +108,17 @@ function WelcomeForm() {
                 <Check className="w-8 h-8 text-accent" />
               </div>
               <h2 className="font-serif text-3xl text-white mb-4">
-                Check your email — your code is on its way.
+                You&apos;re on the list.
               </h2>
               <p className="font-sans text-white/70 mb-8">
-                Or copy it right here to use immediately:
+                Watch your inbox for routine education, product news, and new releases.
               </p>
 
-              <div className="w-full flex items-center justify-between bg-white/5 border border-accent/40 p-4 mb-8">
-                <span className="font-mono text-2xl tracking-widest text-accent font-bold">MAGICTEN</span>
-                <button 
-                  onClick={handleCopy}
-                  className="p-2 hover:bg-white/10 rounded transition-colors text-white"
-                  aria-label="Copy code"
-                >
-                  {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
-                </button>
-              </div>
-
               <Link 
-                href="/shop?discount=MAGICTEN"
+                href="/shop"
                 className="w-full inline-flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-5 py-4 text-sm font-bold tracking-widest uppercase shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:scale-[1.02] transition-transform duration-300"
               >
-                Shop Now & Apply Code
+                Shop Magic Coils
               </Link>
             </motion.div>
           )}
@@ -160,29 +142,6 @@ export default function WelcomeClient() {
         <WelcomeForm />
       </Suspense>
 
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Offer",
-            "name": "10% Off First Order",
-            "description": "Unlock 10% off your first Magic Coils order by subscribing to our newsletter.",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Magic Coils Haircare Products",
-              "brand": {
-                "@type": "Brand",
-                "name": "Magic Coils"
-              }
-            },
-            "eligibleCustomerType": "NewCustomer",
-            "availability": "https://schema.org/InStock",
-            "url": "https://magiccoils.net/welcome"
-          })
-        }}
-      />
     </main>
   );
 }

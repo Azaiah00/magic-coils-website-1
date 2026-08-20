@@ -368,7 +368,7 @@ export default function QuizPage() {
                       </h2>
                       <p className="font-sans text-base md:text-lg text-primary/70 mb-8 max-w-md mx-auto leading-relaxed">
                         Drop your email and we&apos;ll send your personalized Magic Coils routine
-                        straight to your inbox &mdash; plus <strong className="text-primary">10% off</strong> your first order.
+                        straight to your inbox, along with future Magic Coils routine and product updates.
                       </p>
 
                       <form onSubmit={handleEmailSubmit} className="w-full max-w-md flex flex-col gap-4">

@@ -14,7 +14,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: "Magic Coils | Salon-Tested Textured Hair Routines",
+  title: "Magic Coils | Textured Hair Routines",
   description:
     "Shop Magic Coils systems for silk presses, twists, locs, hydration, and textured-hair routines.",
   alternates: { canonical: "https://magiccoils.net/" },

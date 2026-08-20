@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Minus, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, Mail, Minus, Plus, RotateCcw, ShoppingBag } from "lucide-react";
+import Link from "next/link";
 import JudgeMeProductReviews from "@/components/JudgeMeProductReviews";
 import { ProductImageCarouselFromProduct } from "@/components/ProductImageCarousel";
 import { useCart } from "@/context/CartContext";
@@ -31,7 +32,7 @@ export default function ProductPageClient({ product }: Props) {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
         {/* Left: Image Gallery */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           className="w-full lg:w-1/2"
         >
@@ -42,7 +43,7 @@ export default function ProductPageClient({ product }: Props) {
         <div className="w-full lg:w-1/2">
           <div className="sticky top-32">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
@@ -67,6 +68,7 @@ export default function ProductPageClient({ product }: Props) {
                         key={v.id}
                         type="button"
                         onClick={() => setVariantIndex(i)}
+                        aria-pressed={variantIndex === i}
                         className={`px-4 py-3 text-sm font-sans border transition-colors duration-300 ${
                           variantIndex === i
                             ? "border-primary bg-primary text-white"
@@ -89,14 +91,16 @@ export default function ProductPageClient({ product }: Props) {
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     className="p-2 hover:bg-surface transition-colors"
                     type="button"
+                    aria-label="Decrease quantity"
                   >
                     <Minus className="w-4 h-4 text-primary" />
                   </button>
-                  <span className="w-12 text-center font-sans text-lg">{quantity}</span>
+                  <span className="w-12 text-center font-sans text-lg" aria-live="polite">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
                     className="p-2 hover:bg-surface transition-colors"
                     type="button"
+                    aria-label="Increase quantity"
                   >
                     <Plus className="w-4 h-4 text-primary" />
                   </button>
@@ -106,14 +110,29 @@ export default function ProductPageClient({ product }: Props) {
                   className="flex-1 bg-primary text-white py-5 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
                   type="button"
                 >
-                  Add to Cart
+                  Add to Cart — ${(displayPrice * quantity).toFixed(2)}
                 </button>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10 text-sm text-primary/70">
+                <div className="flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
+                  <span>Shopify-powered checkout</span>
+                </div>
+                <Link href="/terms" className="flex items-center gap-2 hover:text-primary transition-colors">
+                  <RotateCcw className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
+                  <span>14-day unopened returns</span>
+                </Link>
+                <a href="mailto:info@magiccoils.net" className="flex items-center gap-2 hover:text-primary transition-colors">
+                  <Mail className="w-4 h-4 text-accent flex-shrink-0" aria-hidden="true" />
+                  <span>Product questions</span>
+                </a>
               </div>
             </motion.div>
 
             {/* Accordions */}
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={false}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
               className="border-t border-surface"

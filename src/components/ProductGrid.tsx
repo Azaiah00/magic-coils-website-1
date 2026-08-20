@@ -29,7 +29,7 @@ export default function ProductGrid() {
               Iconic <span className="bg-gradient-to-r from-[#BF953F] via-[#D4AF37] to-[#B38728] bg-clip-text text-transparent">Essentials</span>
             </h2>
             <p className="font-sans text-lg text-primary/70 leading-relaxed">
-              Curated perfection for your daily routine. Experience the magic of our best-selling formulas, crafted to honor the beauty of textured hair.
+              Start with the step your routine needs now, from cleansing and conditioning to styling, refreshing, and finishing.
             </p>
           </motion.div>
           <motion.div
@@ -69,13 +69,23 @@ export default function ProductGrid() {
                 />
                 
                 {/* Quick Add Button */}
-                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
-                  <button 
-                    onClick={() => addItem(productToCartLine(product, 1))}
-                    className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
-                  >
-                    Quick Add
-                  </button>
+                <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 opacity-100 translate-y-0 md:opacity-0 md:translate-y-8 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
+                  {product.variants?.length ? (
+                    <Link
+                      href={`/product/${product.id}`}
+                      className="block w-full bg-primary text-white py-4 text-center text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                    >
+                      Choose Size
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => addItem(productToCartLine(product, 1))}
+                      className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                    >
+                      Quick Add
+                    </button>
+                  )}
                 </div>
                 
                 {/* Subtle overlay on hover */}

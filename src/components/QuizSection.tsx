@@ -41,7 +41,7 @@ export default function QuizSection() {
             Find Your <br/> <span className="text-accent italic">Magic.</span>
           </h2>
           <p className="font-sans text-lg md:text-xl text-primary/80 mb-12 max-w-xl mx-auto leading-relaxed">
-            Take our 60-second consultation to build your custom routine. Discover the perfect formulations for your unique crown.
+            Take our 60-second consultation for a practical product starting point based on your texture, routine, and styling goal.
           </p>
           <Link
             href="/quiz"
