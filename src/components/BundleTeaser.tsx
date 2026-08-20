@@ -14,7 +14,7 @@ export default function BundleTeaser() {
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
@@ -27,7 +27,7 @@ export default function BundleTeaser() {
             The Magic <span className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] bg-clip-text text-transparent">Bundles</span>
           </h2>
           <p className="font-sans text-lg md:text-xl text-white/80 leading-relaxed font-light mb-12 max-w-2xl">
-            For the perfect 2-strand twist or a flawless silk press. Discover our expertly curated full-system bundles that guarantee salon-quality results at home.
+            Build a complete routine for a polished silk press or defined two-strand twists with products designed to work together.
           </p>
           <Link
             href="/bundles"

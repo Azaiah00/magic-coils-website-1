@@ -71,9 +71,9 @@ function WelcomeForm() {
               transition={{ duration: 0.3 }}
               className="w-full flex flex-col items-center"
             >
-              <h1 className="font-serif text-3xl md:text-4xl text-white mb-2 leading-tight">
+              <h2 className="font-serif text-3xl md:text-4xl text-white mb-2 leading-tight">
                 Unlock 10% Off <br/> Your First Order
-              </h1>
+              </h2>
               <p className="text-accent text-sm font-bold tracking-widest uppercase mb-6">
                 Crowned in Magic.
               </p>

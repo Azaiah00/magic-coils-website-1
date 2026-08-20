@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import BundleTeaser from "@/components/BundleTeaser";
@@ -11,6 +12,13 @@ import SocialCTA from "@/components/SocialCTA";
 import DistributorTeaser from "@/components/DistributorTeaser";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+
+export const metadata: Metadata = {
+  title: "Magic Coils | Salon-Tested Textured Hair Routines",
+  description:
+    "Shop Magic Coils systems for silk presses, twists, locs, hydration, and textured-hair routines.",
+  alternates: { canonical: "https://magiccoils.net/" },
+};
 
 export default function Home() {
   return (

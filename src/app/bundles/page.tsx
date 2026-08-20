@@ -1,11 +1,14 @@
+import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import BundleShowcase from "@/components/BundleShowcase";
 
-export const metadata = {
-  title: "Magic Bundles — Save Up to $51 | Magic Coils",
-  description: "Curated 4A–4C hair systems designed to work together. Save 34% on every bundle. Built by stylist Antwun Wilson. Crowned in Magic.",
+export const metadata: Metadata = {
+  title: "Magic Press and Twist Bundles | Magic Coils",
+  description:
+    "Shop coordinated Magic Coils routines for silk presses and two-strand twists.",
+  alternates: { canonical: "https://magiccoils.net/bundles" },
 };
 
 const BUNDLES = [
@@ -19,7 +22,7 @@ const BUNDLES = [
   {
     slug: "bundle-magic-press",
     name: "The Magic Press",
-    description: "Pro 33.8oz sizes. The kit your stylist uses, in your shower.",
+    description: "A coordinated five-product routine for silk-press wash days.",
     price: 100.00,
     image: "https://magiccoils.net/images/bundle-magic-press-new.png",
   }

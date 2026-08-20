@@ -48,7 +48,7 @@ export default function SocialProof() {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div 
           variants={containerVariants}
-          initial="hidden"
+          initial={false}
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8"

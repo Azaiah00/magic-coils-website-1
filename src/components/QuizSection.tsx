@@ -27,7 +27,7 @@ export default function QuizSection() {
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div 
-          initial={{ opacity: 0, y: 40 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}

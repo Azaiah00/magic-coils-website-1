@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Script from "next/script";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,6 +8,15 @@ import ProductPageClient from "./ProductPageClient";
 import { getProductGalleryImages, getProductListingImage, products } from "@/data/products";
 
 type Params = { id: string };
+
+function summarizeForMetadata(description: string, maxLength = 155): string {
+  const firstParagraph = description.split("\n")[0].replace(/\s+/g, " ").trim();
+  if (firstParagraph.length <= maxLength) return firstParagraph;
+
+  const candidate = firstParagraph.slice(0, maxLength + 1);
+  const lastSpace = candidate.lastIndexOf(" ");
+  return `${candidate.slice(0, lastSpace > 100 ? lastSpace : maxLength).trim()}…`;
+}
 
 export async function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
@@ -24,7 +32,7 @@ export async function generateMetadata({
   if (!product) return { title: "Product Not Found | Magic Coils" };
 
   const url = `https://magiccoils.net/product/${product.id}`;
-  const descShort = product.description.split("\n")[0].slice(0, 155).trim();
+  const descShort = summarizeForMetadata(product.description);
 
   const listingImage = getProductListingImage(product);
 
@@ -71,10 +79,8 @@ export default async function ProductPage({
     <main className="min-h-screen flex flex-col w-full bg-background">
       <Navbar />
 
-      <Script
-        id={`product-schema-${product.id}`}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
@@ -105,10 +111,8 @@ export default async function ProductPage({
           }),
         }}
       />
-      <Script
-        id={`breadcrumb-schema-${product.id}`}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",

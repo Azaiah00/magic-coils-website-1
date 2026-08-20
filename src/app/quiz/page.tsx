@@ -304,6 +304,7 @@ export default function QuizPage() {
       <Navbar />
       <PageTransition>
         <div className="flex-1 flex flex-col pt-24 pb-12 bg-surface relative overflow-hidden min-h-[80vh]">
+          <h1 className="sr-only">Find Your Magic Coils Hair Routine</h1>
           {/* Decorative Elements */}
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[150%] rounded-full border border-primary/5 rotate-12"></div>

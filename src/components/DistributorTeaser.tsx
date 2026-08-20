@@ -8,7 +8,7 @@ export default function DistributorTeaser() {
     <section className="py-20 bg-surface border-t border-accent/10">
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}

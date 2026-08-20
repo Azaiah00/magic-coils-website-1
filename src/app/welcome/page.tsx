@@ -9,6 +9,7 @@ const OG_IMAGE = "https://magiccoils.net/images/promo-card.png";
 export const metadata: Metadata = {
   title: "Unlock 10% Off | Magic Coils",
   description: "Drop your email and we'll send your 10% off code instantly. Crowned in Magic.",
+  alternates: { canonical: "https://magiccoils.net/welcome" },
   openGraph: {
     title: "Unlock 10% Off | Magic Coils",
     description: "Drop your email and we'll send your 10% off code instantly. Crowned in Magic.",
@@ -33,5 +34,10 @@ export const metadata: Metadata = {
 };
 
 export default function WelcomePage() {
-  return <WelcomeClient />;
+  return (
+    <>
+      <h1 className="sr-only">Unlock 10% Off Your First Magic Coils Order</h1>
+      <WelcomeClient />
+    </>
+  );
 }
