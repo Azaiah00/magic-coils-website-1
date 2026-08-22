@@ -75,15 +75,15 @@ export default function DistributorPage() {
                   <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-accent mb-4">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
-                  <h3 className="font-serif text-xl text-primary mb-2">High Margins</h3>
-                  <p className="text-sm text-primary/60">Competitive wholesale pricing designed for profitability.</p>
+                  <h3 className="font-serif text-xl text-primary mb-2">Wholesale Opportunity</h3>
+                  <p className="text-sm text-primary/60">Request current case pricing, minimums, and product availability for your business.</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-accent mb-4">
                     <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                   </div>
-                  <h3 className="font-serif text-xl text-primary mb-2">Proven Results</h3>
-                  <p className="text-sm text-primary/60">Formulas that clients will keep coming back to purchase.</p>
+                  <h3 className="font-serif text-xl text-primary mb-2">Routine-Based Line</h3>
+                  <p className="text-sm text-primary/60">Merchandise products around wash day, silk press, curl styling, and finishing services.</p>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-16 h-16 rounded-full bg-primary/5 flex items-center justify-center text-accent mb-4">

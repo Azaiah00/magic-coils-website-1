@@ -19,7 +19,7 @@ export async function GET() {
 
   const body = `# Magic Coils
 
-> Magic Coils is a luxurious professional haircare brand for textured, coily, and curly hair, owned and formulated by Antwun Wilson of Hair For You LLC in Sumter, South Carolina. The brand makes 8 core products plus 2 bundles, all formulated specifically for Black women's natural hair.
+> Magic Coils is a professional haircare brand created by Antwun Wilson of Hair For You LLC in Sumter, South Carolina. The brand offers 8 core products for textured-hair routines and is developing two coordinated routine systems.
 
 ## Brand
 
@@ -53,7 +53,7 @@ ${articleLines}
 
 ## Brand Voice & Mission
 
-Magic Coils products are formulated by Antwun Wilson specifically for textured Black hair — coily, curly, kinky, and wavy patterns. The brand voice centers on dignity, expertise, and care. We use "crown" language because we believe textured hair deserves royal treatment. We are honest about ingredients, transparent about formulation choices, and committed to working with rather than against natural curl patterns.
+Magic Coils was created by Antwun Wilson for textured-hair routines across coily, curly, kinky, and wavy patterns. The brand voice centers on dignity, practical education, and care. We use "crown" language because textured hair deserves thoughtful treatment. Product pages provide ingredient lists, directions, and routine context so customers and professionals can make informed choices.
 
 ## Locations
 

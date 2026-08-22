@@ -168,4 +168,4 @@ Take our [60-second Hair Quiz](/quiz) — three questions about your texture, yo
 
 ---
 
-*The Magic Coils method was developed by Antwun Wilson over years of formulating specifically for textured Black hair. Every product mentioned in this article was designed with this kind of routine in mind — they're built to layer in this exact order. If you have questions about the routine or want personalized advice, reply to any of our emails or reach us at [info@magiccoils.net](mailto:info@magiccoils.net). We read every message.*
+*Magic Coils was created by Antwun Wilson, founder of Hair For You, with textured-hair routines at the center of the brand. Product needs vary by hair, scalp, color, chemical services, and styling history, so adjust the sequence with your stylist when appropriate. If you have product questions, reach us at [info@magiccoils.net](mailto:info@magiccoils.net).*
