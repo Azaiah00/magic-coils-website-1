@@ -54,9 +54,9 @@ We reserve the right to suspend or terminate any account that violates these Ter
 
 **5.3 Sales tax.** Sales tax will be calculated and collected at checkout where required by applicable state law. The tax shown at checkout is your final tax obligation for that order.
 
-**5.4 Free shipping threshold.** Orders over $75 (subtotal, before tax) ship free within the contiguous United States. Below that threshold, standard shipping rates apply and are calculated at checkout.
+**5.4 Free shipping threshold.** Orders of $70 or more (subtotal, before tax) receive free standard shipping within the United States. Below that threshold, standard shipping rates apply and are calculated at checkout.
 
-**5.5 Shipping.** We ship within 1–3 business days of order confirmation. Transit times vary by destination and carrier (USPS, UPS, FedEx). We are not responsible for carrier delays once a package leaves our fulfillment facility. We do not currently ship internationally.
+**5.5 Shipping.** We ship within 1–3 business days of order confirmation. Transit times vary by destination and carrier (USPS, UPS, FedEx). We are not responsible for carrier delays once a package leaves our fulfillment facility. Available international destinations and carrier-calculated rates are shown at checkout.
 
 **5.6 Risk of loss.** Title and risk of loss pass to you when your order is delivered to the shipping carrier. If a package is lost in transit, contact us at info@magiccoils.net and we will work with the carrier to file a claim. If a package is marked "delivered" but you did not receive it, contact the carrier first — most carriers require lost-package claims to come from the recipient.
 

@@ -5,7 +5,11 @@
 // The Storefront API token stays on the server (via src/lib/shopify.ts).
 
 import { NextResponse } from "next/server";
-import { createCheckoutUrl, type CheckoutLineInput } from "@/lib/shopify";
+import {
+  createCheckoutUrl,
+  ShopifyCheckoutError,
+  type CheckoutLineInput,
+} from "@/lib/shopify";
 
 export const runtime = "nodejs";
 
@@ -30,6 +34,13 @@ export async function POST(req: Request) {
     );
   }
 
+  if (body.lines.length > 25) {
+    return NextResponse.json(
+      { error: "Your cart has too many separate items." },
+      { status: 400 }
+    );
+  }
+
   try {
     const checkoutUrl = await createCheckoutUrl(
       body.lines,
@@ -37,7 +48,16 @@ export async function POST(req: Request) {
     );
     return NextResponse.json({ checkoutUrl });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Checkout failed.";
-    return NextResponse.json({ error: message }, { status: 500 });
+    if (err instanceof ShopifyCheckoutError) {
+      return NextResponse.json(
+        { error: err.message, code: err.code },
+        { status: err.status }
+      );
+    }
+    console.error("Shopify checkout failed", err);
+    return NextResponse.json(
+      { error: "We could not start checkout. Please try again in a moment." },
+      { status: 500 }
+    );
   }
 }

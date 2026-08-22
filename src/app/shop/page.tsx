@@ -10,7 +10,14 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
-import { formatListingPrice, getProductListingImage, productToCartLine, products } from "@/data/products";
+import {
+  formatListingPrice,
+  getProductListingImage,
+  isProductAvailable,
+  productToCartLine,
+  products,
+} from "@/data/products";
+import { useAvailableProducts } from "@/hooks/useAvailableProducts";
 
 const categories = [
   { id: "all", label: "All Products" },
@@ -23,10 +30,11 @@ const categories = [
 export default function ShopPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const { addItem } = useCart();
+  const availableProducts = useAvailableProducts();
 
   const filteredProducts = activeCategory === "all" 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+    ? availableProducts
+    : availableProducts.filter(p => p.category === activeCategory);
 
   return (
     <main className="min-h-screen flex flex-col w-full bg-background">
@@ -126,12 +134,30 @@ export default function ShopPage() {
                   
                   {/* Quick Add Button */}
                   <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
-                    <button 
-                      onClick={() => addItem(productToCartLine(product, 1))}
-                      className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
-                    >
-                      Quick Add
-                    </button>
+                    {!isProductAvailable(product) ? (
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full bg-primary/60 text-white py-4 text-sm font-semibold tracking-widest uppercase cursor-not-allowed shadow-xl"
+                      >
+                        {product.category === "bundles" ? "Coming Soon" : "Sold Out"}
+                      </button>
+                    ) : product.variants?.length ? (
+                      <Link
+                        href={`/product/${product.id}`}
+                        className="block w-full bg-primary text-white py-4 text-center text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                      >
+                        Choose Size
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => addItem(productToCartLine(product, 1))}
+                        className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                      >
+                        Quick Add
+                      </button>
+                    )}
                   </div>
                   
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -151,6 +177,11 @@ export default function ShopPage() {
                   <p className="font-sans text-primary/80 font-medium">
                     {formatListingPrice(product)}
                   </p>
+                  {!isProductAvailable(product) && (
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-primary/50">
+                      {product.category === "bundles" ? "Online checkout coming soon" : "Currently sold out"}
+                    </p>
+                  )}
                 </div>
               </motion.div>
             ))}

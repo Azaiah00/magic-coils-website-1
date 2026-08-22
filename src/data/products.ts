@@ -8,6 +8,8 @@ export type ProductVariant = {
   id: string;
   sizeLabel: string;
   price: number;
+  /** False prevents this size from being selected or added to cart. */
+  available?: boolean;
   /** If set, checkout sends this Storefront GID as merchandiseId (skips fuzzy matching). */
   shopifyVariantId?: string;
 };
@@ -27,6 +29,12 @@ export type Product = {
   ingredients: string;
   howToUse: string;
   variants?: ProductVariant[];
+  /** False prevents purchase for a single-SKU product or an unavailable bundle. */
+  available?: boolean;
+  /** Customer-facing explanation shown when purchase is unavailable. */
+  unavailableMessage?: string;
+  /** Keep local availability authoritative (used for bundles not configured in Shopify). */
+  availabilityLocked?: boolean;
   /**
    * Shopify product handle (auto-generated from the product title in Shopify admin,
    * e.g. "Peppermint Detox Shampoo" -> "peppermint-detox-shampoo"). Used by the
@@ -63,8 +71,19 @@ export function formatListingPrice(product: Product): string {
   return `$${min.toFixed(2)} – $${max.toFixed(2)}`;
 }
 
+export function getFirstAvailableVariantIndex(product: Product): number {
+  if (!product.variants?.length) return product.available === false ? -1 : 0;
+  return product.variants.findIndex((variant) => variant.available !== false);
+}
+
+export function isProductAvailable(product: Product): boolean {
+  if (product.available === false) return false;
+  if (!product.variants?.length) return true;
+  return getFirstAvailableVariantIndex(product) >= 0;
+}
+
 /**
- * Builds the object the cart expects. Quick-add uses the first variant (smallest listing order in our data).
+ * Builds the object the cart expects. Callers must select an available variant.
  */
 export function productToCartLine(
   product: Product,
@@ -72,6 +91,9 @@ export function productToCartLine(
   variantIndex = 0
 ): CartItem {
   const variant = product.variants?.[variantIndex];
+  if (product.available === false || variant?.available === false) {
+    throw new Error(product.unavailableMessage ?? "This item is currently unavailable.");
+  }
   // shopifyHandle + sizeLabel travel with the line so /api/checkout can look up
   // the correct Shopify variant ID when the shopper starts checkout.
   if (variant) {
@@ -118,8 +140,19 @@ export const products: Product[] = [
     howToUse:
       "Apply to wet hair and scalp. Massage gently into a lather, avoiding the eyes. Rinse thoroughly and follow with the next step in your wash-day routine.",
     variants: [
-      { id: "peppermint-shampoo-845", sizeLabel: "8.45 oz", price: 17.95 },
-      { id: "peppermint-shampoo-338", sizeLabel: "32 oz", price: 33.95 },
+      {
+        id: "peppermint-shampoo-845",
+        sizeLabel: "8.45 oz",
+        price: 17.95,
+        available: false,
+        shopifyVariantId: "gid://shopify/ProductVariant/51507731562784",
+      },
+      {
+        id: "peppermint-shampoo-338",
+        sizeLabel: "33.8 oz",
+        price: 33.95,
+        shopifyVariantId: "gid://shopify/ProductVariant/51507731595552",
+      },
     ],
   },
   {
@@ -138,8 +171,19 @@ export const products: Product[] = [
     howToUse:
       "Apply to wet hair, massage into a rich lather. Rinse thoroughly. For best results, follow with Moisture Rich Conditioner.",
     variants: [
-      { id: "hydration-shampoo-845", sizeLabel: "8.45 oz", price: 15.95 },
-      { id: "hydration-shampoo-338", sizeLabel: "32 oz", price: 26.95 },
+      {
+        id: "hydration-shampoo-845",
+        sizeLabel: "8.45 oz",
+        price: 15.95,
+        available: false,
+        shopifyVariantId: "gid://shopify/ProductVariant/51507943309600",
+      },
+      {
+        id: "hydration-shampoo-338",
+        sizeLabel: "33.8 oz",
+        price: 26.95,
+        shopifyVariantId: "gid://shopify/ProductVariant/51507943342368",
+      },
     ],
   },
   {
@@ -158,8 +202,19 @@ export const products: Product[] = [
     howToUse:
       "After shampooing, apply from mid-lengths to ends. Leave on for 3-5 minutes. Rinse thoroughly with cool water to seal the cuticle.",
     variants: [
-      { id: "moisture-conditioner-845", sizeLabel: "8.45 oz", price: 16.97 },
-      { id: "moisture-conditioner-338", sizeLabel: "32 oz", price: 31.95 },
+      {
+        id: "moisture-conditioner-845",
+        sizeLabel: "8.45 oz",
+        price: 16.97,
+        available: false,
+        shopifyVariantId: "gid://shopify/ProductVariant/51507958939936",
+      },
+      {
+        id: "moisture-conditioner-338",
+        sizeLabel: "33.8 oz",
+        price: 31.95,
+        shopifyVariantId: "gid://shopify/ProductVariant/51507958972704",
+      },
     ],
   },
   {
@@ -179,7 +234,7 @@ export const products: Product[] = [
       "Apply to clean, damp hair. Distribute evenly from roots to ends. Do not rinse. Style as usual.",
     variants: [
       { id: "leave-in-treatment-845", sizeLabel: "8.45 oz", price: 16.95 },
-      { id: "leave-in-treatment-338", sizeLabel: "33 oz", price: 33.95 },
+      { id: "leave-in-treatment-338", sizeLabel: "33.8 oz", price: 33.95 },
     ],
   },
   {
@@ -223,6 +278,8 @@ export const products: Product[] = [
     image: "/images/moisturizing-cream.png",
     listingImage: "/images/hero/moisturizing-cream.png",
     shopifyHandle: "honey-argan-daily-moisturizing-cream",
+    available: false,
+    unavailableMessage: "This product is currently sold out.",
     description:
       "Honey & Argan Daily Moisturizing Cream is a leave-on cream for refreshing dry-feeling sections and finishing textured styles between wash days. Warm a small amount between your hands, work it through dry or damp hair, and focus on the areas that need it most.\n\nThe formula lists shea butter, argan oil, coconut oil, vitamin C, honey oil, and vegetable glycerin. Start with a small amount—especially on fine hair, locs, or styles where buildup is a concern—and add more only as needed. Use it for twists, braids, coils, updos, and other natural-style routines. Crowned in Magic.",
     ingredients:
@@ -255,6 +312,9 @@ export const products: Product[] = [
     image: "/images/bundle-2-strand-twist-new.png",
     listingImage: "/images/hero/bundle-2-strand-twist.png",
     shopifyHandle: "the-magic-coils-2-strand-twist",
+    available: false,
+    unavailableMessage: "Online bundle checkout is coming soon. Shop the products individually in the meantime.",
+    availabilityLocked: true,
     description:
       "Build a twist routine with four coordinated styling steps in one set. The 2 Strand Twist Bundle includes the 3-In-1 Leave In Treatment, Honey & Argan Curl Forming Custard, Control Foam Wrap Lotion & Setting Mousse, and Honey & Argan Strengthening Serum.\n\nStart with the leave-in on clean, damp, detangled hair. Work in sections and choose the custard, foam, or a small amount of both based on the finish you want. Form each twist, allow the style to dry completely, and finish with a small amount of serum before separating. See the displayed bundle contents, sizes, and current pricing before ordering. Crowned in Magic.",
     ingredients: "See individual products for full ingredient lists.",
@@ -262,15 +322,18 @@ export const products: Product[] = [
   },
   {
     id: "bundle-magic-press",
-    name: "The Magic Press",
+    name: "Professional Magic Press",
     price: 100.00,
     subtitle: "The ultimate silk press system",
     category: "bundles",
     image: "/images/bundle-magic-press-new.png",
     listingImage: "/images/hero/bundle-magic-press.png",
     shopifyHandle: "the-magic-press",
+    available: false,
+    unavailableMessage: "Online bundle checkout is coming soon. Shop the products individually in the meantime.",
+    availabilityLocked: true,
     description:
-      "The Magic Press brings the Magic Coils silk press routine into one five-product set: Peppermint Detox Shampoo, Intense Hydration Shampoo, Moisture Rich Conditioner, 3-In-1 Leave In Treatment, and Honey & Argan Strengthening Serum.\n\nBegin with the cleanser that fits your wash-day plan, condition and detangle thoroughly, then apply the leave-in before drying. Use a small amount of serum as the pre-styling or finishing step. Heat technique, tool temperature, and results vary by hair and service history, so follow your tool manufacturer's guidance or work with a licensed professional. See the displayed bundle contents, sizes, and current pricing before ordering. Crowned in Magic.",
+      "Professional Magic Press brings the Magic Coils silk press routine into one five-product set: Peppermint Detox Shampoo, Intense Hydration Shampoo, Moisture Rich Conditioner, 3-In-1 Leave In Treatment, and Honey & Argan Strengthening Serum.\n\nBegin with the cleanser that fits your wash-day plan, condition and detangle thoroughly, then apply the leave-in before drying. Use a small amount of serum as the pre-styling or finishing step. Heat technique, tool temperature, and results vary by hair and service history, so follow your tool manufacturer's guidance or work with a licensed professional. See the displayed bundle contents, sizes, and current pricing before ordering. Crowned in Magic.",
     ingredients: "See individual products for full ingredient lists.",
     howToUse: "Start with the Peppermint Detox Shampoo to clarify, follow with Intense Hydration Shampoo and Moisture Rich Conditioner. Apply the Leave In Treatment before blow-drying, and use the Strengthening Serum before flat ironing.",
   }

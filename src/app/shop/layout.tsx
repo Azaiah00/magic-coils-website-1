@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Shop All Products | Magic Coils",
   description:
-    "Shop the full Magic Coils line — eight argan + vitamin C + honey oil formulations and two bundle systems for textured crowns. Free shipping over $75.",
+    "Shop the full Magic Coils line — eight argan + vitamin C + honey oil formulations and two routine systems for textured crowns. Free U.S. standard shipping on orders of $70 or more.",
   alternates: { canonical: "https://magiccoils.net/shop" },
   openGraph: {
     title: "Shop All Products | Magic Coils",

@@ -5,7 +5,7 @@ import PageTransition from "@/components/PageTransition";
 import BundleShowcase from "@/components/BundleShowcase";
 
 export const metadata: Metadata = {
-  title: "Magic Press and Twist Bundles | Magic Coils",
+  title: "Professional Magic Press and Twist Bundles | Magic Coils",
   description:
     "Shop coordinated Magic Coils routines for silk presses and two-strand twists.",
   alternates: { canonical: "https://magiccoils.net/bundles" },
@@ -21,7 +21,7 @@ const BUNDLES = [
   },
   {
     slug: "bundle-magic-press",
-    name: "The Magic Press",
+    name: "Professional Magic Press",
     description: "A coordinated five-product routine for silk-press wash days.",
     price: 100.00,
     image: "https://magiccoils.net/images/bundle-magic-press-new.png",
@@ -51,7 +51,7 @@ export default function BundlesPage() {
                 url: `https://magiccoils.net/bundles`,
                 priceCurrency: "USD",
                 price: bundle.price,
-                availability: "https://schema.org/InStock",
+                availability: "https://schema.org/OutOfStock",
               },
             }))
           ),

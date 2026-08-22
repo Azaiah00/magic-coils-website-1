@@ -8,7 +8,7 @@
 //   SHOPIFY_STOREFRONT_TOKEN     Storefront API access token
 //   SHOPIFY_API_VERSION          optional, defaults to the pinned version below
 
-const API_VERSION = process.env.SHOPIFY_API_VERSION ?? "2025-01";
+const API_VERSION = process.env.SHOPIFY_API_VERSION ?? "2026-07";
 
 type Gql<T> = { data?: T; errors?: Array<{ message: string }> };
 
@@ -27,6 +27,17 @@ export type CheckoutLineInput = {
   merchandiseId?: string;
   quantity: number;
 };
+
+export class ShopifyCheckoutError extends Error {
+  constructor(
+    message: string,
+    public readonly code: "OUT_OF_STOCK" | "PRODUCT_UNAVAILABLE" | "INVALID_CART",
+    public readonly status: number
+  ) {
+    super(message);
+    this.name = "ShopifyCheckoutError";
+  }
+}
 
 /** Low-level GraphQL fetch against Storefront API. Throws on network/GraphQL errors. */
 async function storefront<T>(
@@ -79,6 +90,8 @@ type VariantNode = {
   title: string;
   selectedOptions: Array<{ name: string; value: string }>;
   price: { amount: string; currencyCode: string };
+  availableForSale: boolean;
+  quantityAvailable: number | null;
 };
 
 type ProductByHandleResponse = {
@@ -86,6 +99,7 @@ type ProductByHandleResponse = {
     id: string;
     handle: string;
     title: string;
+    availableForSale: boolean;
     variants: { nodes: VariantNode[] };
   } | null;
 };
@@ -98,11 +112,14 @@ export async function getProductByHandle(handle: string) {
         id
         handle
         title
+        availableForSale
         variants(first: 50) {
           nodes {
             id
             title
             selectedOptions { name value }
+            availableForSale
+            quantityAvailable
             price {
               amount
               currencyCode
@@ -116,6 +133,30 @@ export async function getProductByHandle(handle: string) {
   return data.product;
 }
 
+export async function getProductAvailability(handle: string) {
+  const product = await getProductByHandle(handle);
+  if (!product) return null;
+
+  return {
+    id: product.id,
+    handle: product.handle,
+    title: product.title,
+    availableForSale: product.availableForSale,
+    variants: product.variants.nodes.map((variant) => ({
+      id: variant.id,
+      title: variant.title,
+      sizeLabel:
+        variant.selectedOptions.find((option) =>
+          /size/i.test(option.name)
+        )?.value ?? variant.selectedOptions[0]?.value ?? null,
+      price: Number.parseFloat(variant.price.amount),
+      currencyCode: variant.price.currencyCode,
+      availableForSale: variant.availableForSale,
+      quantityAvailable: variant.quantityAvailable,
+    })),
+  };
+}
+
 /** Compare cart price to Shopify Money amount (Storefront returns decimal strings). */
 function priceAmountMatchesVariant(amount: string, unitPrice: number): boolean {
   const n = Number.parseFloat(amount);
@@ -124,43 +165,41 @@ function priceAmountMatchesVariant(amount: string, unitPrice: number): boolean {
 }
 
 /**
- * Pick variant by size option / title (case-insensitive). Last resort only;
- * our labels often differ from Shopify option text (e.g. "32 oz" vs "33.8 oz").
+ * Pick a variant by size option or title (case-insensitive).
  */
-function pickVariantIdByLabel(
+function pickVariantByLabel(
   variants: VariantNode[],
   sizeLabel?: string
-): string | null {
+): VariantNode | null {
   if (!variants.length) return null;
-  if (!sizeLabel) return variants[0].id;
+  if (!sizeLabel) return variants.length === 1 ? variants[0] : null;
   const wanted = sizeLabel.trim().toLowerCase();
   const byOption = variants.find((v) =>
     v.selectedOptions.some((o) => o.value.trim().toLowerCase() === wanted)
   );
-  if (byOption) return byOption.id;
+  if (byOption) return byOption;
   const byTitle = variants.find(
     (v) => v.title.trim().toLowerCase() === wanted
   );
-  return byTitle?.id ?? null;
+  return byTitle ?? null;
 }
 
 /**
  * Resolve the Storefront `ProductVariant` GID to send as `merchandiseId`.
  * Prefers an explicit `merchandiseId` when it appears on this product's variants,
  * then matches `unitPrice` to `variant.price` from Shopify (same payload as `variant.id`),
- * then falls back to label matching / first variant.
+ * then requires an exact label match. It never guesses among multiple sizes.
  */
-function resolveVariantMerchandiseId(
+function resolveVariant(
   variants: VariantNode[],
   line: CheckoutLineInput
-): string | null {
+): VariantNode | null {
   if (!variants.length) return null;
 
   if (line.merchandiseId) {
     const gid = line.merchandiseId.trim();
-    if (variants.some((v) => v.id === gid)) {
-      return gid;
-    }
+    const explicitVariant = variants.find((v) => v.id === gid);
+    if (explicitVariant) return explicitVariant;
     throw new Error(
       `merchandiseId does not match any variant for handle "${line.handle}".`
     );
@@ -171,10 +210,10 @@ function resolveVariantMerchandiseId(
       priceAmountMatchesVariant(v.price.amount, line.unitPrice as number)
     );
     if (matches.length === 1) {
-      return matches[0].id;
+      return matches[0];
     }
     if (matches.length > 1) {
-      const byLabel = pickVariantIdByLabel(matches, line.sizeLabel);
+      const byLabel = pickVariantByLabel(matches, line.sizeLabel);
       if (byLabel) return byLabel;
       throw new Error(
         `Multiple Shopify variants match unit price ${line.unitPrice} for "${line.handle}".`
@@ -182,9 +221,7 @@ function resolveVariantMerchandiseId(
     }
   }
 
-  return (
-    pickVariantIdByLabel(variants, line.sizeLabel) ?? variants[0]?.id ?? null
-  );
+  return pickVariantByLabel(variants, line.sizeLabel);
 }
 
 type CartCreateResponse = {
@@ -206,15 +243,37 @@ export async function createCheckoutUrl(
   // Resolve each handle -> variant ID in parallel.
   const resolved = await Promise.all(
     lines.map(async (line) => {
+      if (!line.handle || !Number.isInteger(line.quantity) || line.quantity < 1 || line.quantity > 20) {
+        throw new ShopifyCheckoutError(
+          "A cart item has an invalid quantity.",
+          "INVALID_CART",
+          400
+        );
+      }
       const product = await getProductByHandle(line.handle);
       if (!product) {
-        throw new Error(`Shopify product not found for handle "${line.handle}"`);
+        throw new ShopifyCheckoutError(
+          "One of these items is not available for online checkout yet.",
+          "PRODUCT_UNAVAILABLE",
+          409
+        );
       }
-      const variantId = resolveVariantMerchandiseId(product.variants.nodes, line);
-      if (!variantId) {
-        throw new Error(`No variant found for "${line.handle}"`);
+      const variant = resolveVariant(product.variants.nodes, line);
+      if (!variant) {
+        throw new ShopifyCheckoutError(
+          `Please choose an available size for ${product.title}.`,
+          "PRODUCT_UNAVAILABLE",
+          409
+        );
       }
-      return { merchandiseId: variantId, quantity: Math.max(1, line.quantity) };
+      if (!product.availableForSale || !variant.availableForSale) {
+        throw new ShopifyCheckoutError(
+          `${product.title}${line.sizeLabel ? ` (${line.sizeLabel})` : ""} is currently sold out. Remove it from your cart or choose another size.`,
+          "OUT_OF_STOCK",
+          409
+        );
+      }
+      return { merchandiseId: variant.id, quantity: line.quantity };
     })
   );
 

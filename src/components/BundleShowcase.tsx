@@ -5,8 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Star, Truck, Heart, ShieldCheck, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useCart } from "@/context/CartContext";
-import { productToCartLine, products } from "@/data/products";
 import { abbreviateReviewerName, googleReviews } from "@/data/reviews";
 
 // Locked product data
@@ -36,7 +34,7 @@ const BUNDLES = [
   },
   {
     slug: "bundle-magic-press",
-    name: "The Magic Press",
+    name: "Professional Magic Press",
     tagline: "A complete wash-to-finish silk press routine.",
     price: 100.00,
     originalPrice: 151.75,
@@ -70,7 +68,6 @@ const FAQS = [
 ];
 
 export default function BundleShowcase() {
-  const { addItem } = useCart();
   const [activeBundleIndex, setActiveBundleIndex] = useState(0); // for mobile sticky cart
   const [expandedDetails, setExpandedDetails] = useState<Record<string, boolean>>({});
   const gridRef = useRef<HTMLDivElement>(null);
@@ -131,28 +128,6 @@ export default function BundleShowcase() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleAddToCart = (bundle: typeof BUNDLES[0]) => {
-    const p = products.find(prod => prod.id === bundle.slug);
-    if (p) {
-      addItem(productToCartLine(p, 1));
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (window as any).fbq('track', 'AddToCart', {
-            content_ids: [bundle.slug],
-            content_name: bundle.name,
-            content_type: 'product_group',
-            value: bundle.price,
-            currency: 'USD'
-          });
-        }
-      } catch {
-        // Ignore
-      }
-    }
-  };
 
   const toggleDetails = (slug: string) => {
     setExpandedDetails(prev => ({...prev, [slug]: !prev[slug]}));
@@ -306,12 +281,19 @@ export default function BundleShowcase() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-6">
-                    <button 
-                      onClick={() => handleAddToCart(bundle)}
-                      className="flex-1 bg-primary text-white py-4 text-sm font-bold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl text-center"
+                    <button
+                      type="button"
+                      disabled
+                      className="flex-1 bg-primary/60 text-white py-4 text-sm font-bold tracking-widest uppercase cursor-not-allowed shadow-xl text-center"
                     >
-                      Add to Cart
+                      Online Checkout Coming Soon
                     </button>
+                    <Link
+                      href="/shop"
+                      className="flex-1 border border-primary px-5 py-4 text-center text-sm font-bold tracking-widest uppercase text-primary hover:bg-primary hover:text-white transition-colors"
+                    >
+                      Shop Products
+                    </Link>
                   </div>
                 </div>
               </motion.div>
@@ -443,12 +425,12 @@ export default function BundleShowcase() {
               <span className="font-serif text-sm text-primary">{BUNDLES[activeBundleIndex].name}</span>
               <span className="font-bold text-accent">${BUNDLES[activeBundleIndex].price.toFixed(2)}</span>
             </div>
-            <button 
-              onClick={() => handleAddToCart(BUNDLES[activeBundleIndex])}
+            <Link
+              href="/shop"
               className="bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-6 py-3 text-xs font-bold tracking-widest uppercase shadow-lg whitespace-nowrap"
             >
-              Add to Cart
-            </button>
+              Shop Products
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

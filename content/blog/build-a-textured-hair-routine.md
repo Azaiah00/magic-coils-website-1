@@ -82,7 +82,7 @@ If heat tools are part of the routine, follow the tool manufacturer's safety and
 
 If you prefer a set instead of selecting individual products, Magic Coils groups products by styling goal:
 
-- **[The Magic Press](/product/bundle-magic-press)** brings together cleansing, conditioning, leave-in, and finishing steps for a silk press routine.
+- **[Professional Magic Press](/product/bundle-magic-press)** brings together cleansing, conditioning, leave-in, and finishing steps for a silk press routine.
 - **[The Magic Coils 2 Strand Twist](/product/bundle-2-strand-twist)** brings together leave-in, custard, foam, and serum for twists and other set styles.
 
 Review the current contents, sizes, ingredients, directions, and pricing on each product page before ordering.

@@ -52,7 +52,7 @@ const faqs = [
   {
     question: "How long does shipping take?",
     answer:
-      "We ship every order within 1–3 business days of confirmation. Standard transit time within the contiguous United States is 3–7 business days via USPS, UPS, or FedEx — destination-dependent. Orders over $75 ship free. Once your order ships, you'll receive a tracking email. We don't currently ship internationally.",
+      "We ship every order within 1–3 business days of confirmation. Standard transit time within the contiguous United States is 3–7 business days via USPS, UPS, or FedEx — destination-dependent. U.S. standard shipping is free on orders of $70 or more. Once your order ships, you'll receive a tracking email. Available international destinations and carrier-calculated rates are shown at checkout.",
   },
   {
     question: "What's your return policy?",

@@ -5,12 +5,18 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
-import { formatListingPrice, getProductListingImage, productToCartLine, products } from "@/data/products";
+import {
+  formatListingPrice,
+  getProductListingImage,
+  isProductAvailable,
+  productToCartLine,
+} from "@/data/products";
+import { useAvailableProducts } from "@/hooks/useAvailableProducts";
 
 export default function ProductGrid() {
   const { addItem } = useCart();
   // Show first 4 products on home page
-  const displayProducts = products.slice(0, 4);
+  const displayProducts = useAvailableProducts().slice(0, 4);
 
   return (
     <section className="py-32 bg-surface relative overflow-hidden">
@@ -70,7 +76,15 @@ export default function ProductGrid() {
                 
                 {/* Quick Add Button */}
                 <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 opacity-100 translate-y-0 md:opacity-0 md:translate-y-8 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
-                  {product.variants?.length ? (
+                  {!isProductAvailable(product) ? (
+                    <button
+                      type="button"
+                      disabled
+                      className="w-full bg-primary/60 text-white py-4 text-sm font-semibold tracking-widest uppercase cursor-not-allowed shadow-xl"
+                    >
+                      Sold Out
+                    </button>
+                  ) : product.variants?.length ? (
                     <Link
                       href={`/product/${product.id}`}
                       className="block w-full bg-primary text-white py-4 text-center text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"

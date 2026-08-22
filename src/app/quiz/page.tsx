@@ -22,7 +22,14 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import Link from "next/link";
 import Image from "next/image";
-import { products, productToCartLine, getProductListingImage, Product } from "@/data/products";
+import {
+  products,
+  productToCartLine,
+  getProductListingImage,
+  getFirstAvailableVariantIndex,
+  isProductAvailable,
+  Product,
+} from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { Check, Loader2, ShoppingBag } from "lucide-react";
 
@@ -282,7 +289,8 @@ export default function QuizPage() {
   };
 
   const handleAddToCart = (product: Product) => {
-    addItem(productToCartLine(product, 1));
+    if (!isProductAvailable(product)) return;
+    addItem(productToCartLine(product, 1, Math.max(0, getFirstAvailableVariantIndex(product))));
     openCart();
   };
 
@@ -548,13 +556,30 @@ export default function QuizPage() {
 
                           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-6">
                             <span className="text-xl font-medium text-primary">${product.price.toFixed(2)}</span>
-                            <button
-                              onClick={() => handleAddToCart(product)}
-                              className="group relative inline-flex items-center justify-center bg-primary text-white px-8 py-3 text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors duration-300 hover:bg-accent hover:text-primary w-full sm:w-auto"
-                            >
-                              <ShoppingBag className="w-4 h-4 mr-2" />
-                              Add to Cart
-                            </button>
+                            {!isProductAvailable(product) ? (
+                              <button
+                                type="button"
+                                disabled
+                                className="inline-flex items-center justify-center bg-primary/50 text-white px-8 py-3 text-sm font-bold tracking-widest uppercase cursor-not-allowed w-full sm:w-auto"
+                              >
+                                Sold Out
+                              </button>
+                            ) : product.variants?.length ? (
+                              <Link
+                                href={`/product/${product.id}`}
+                                className="inline-flex items-center justify-center bg-primary text-white px-8 py-3 text-sm font-bold tracking-widest uppercase hover:bg-accent hover:text-primary transition-colors w-full sm:w-auto"
+                              >
+                                Choose Size
+                              </Link>
+                            ) : (
+                              <button
+                                onClick={() => handleAddToCart(product)}
+                                className="group relative inline-flex items-center justify-center bg-primary text-white px-8 py-3 text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors duration-300 hover:bg-accent hover:text-primary w-full sm:w-auto"
+                              >
+                                <ShoppingBag className="w-4 h-4 mr-2" />
+                                Add to Cart
+                              </button>
+                            )}
                             <Link
                               href={`/product/${product.id}`}
                               className="text-sm font-bold tracking-widest text-primary uppercase hover:text-accent transition-colors underline underline-offset-4"
@@ -588,13 +613,12 @@ export default function QuizPage() {
                         <p className="font-sans text-white/80 mb-4">{bundleUpsell.subtitle}</p>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-6">
                           <span className="text-2xl font-medium text-accent">${bundleUpsell.price.toFixed(2)}</span>
-                          <button
-                            onClick={() => handleAddToCart(bundleUpsell)}
+                          <Link
+                            href="/shop"
                             className="group relative inline-flex items-center justify-center bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] text-primary px-8 py-3 text-sm font-bold tracking-widest uppercase overflow-hidden hover:scale-[1.02] transition-transform w-full sm:w-auto"
                           >
-                            <ShoppingBag className="w-4 h-4 mr-2" />
-                            Add Bundle to Cart
-                          </button>
+                            Shop Products Individually
+                          </Link>
                           <Link
                             href={`/product/${bundleUpsell.id}`}
                             className="text-sm font-bold tracking-widest text-white uppercase hover:text-accent transition-colors underline underline-offset-4"

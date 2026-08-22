@@ -7,12 +7,12 @@ import { ArrowRight } from "lucide-react";
 
 const routineCards = [
   {
-    title: "The Magic Press",
+    title: "Professional Magic Press",
     eyebrow: "Silk press routine",
     description: "A five-product path from cleansing and conditioning through prep and finish.",
     image: "/images/hero/bundle-magic-press.png",
     href: "/product/bundle-magic-press",
-    cta: "Shop Magic Press",
+    cta: "Explore Magic Press",
   },
   {
     title: "2 Strand Twist",
@@ -20,7 +20,7 @@ const routineCards = [
     description: "Leave-in, custard, foam, and serum grouped for twists and definition-focused styles.",
     image: "/images/hero/bundle-2-strand-twist.png",
     href: "/product/bundle-2-strand-twist",
-    cta: "Shop Twist Routine",
+    cta: "Explore Twist Routine",
   },
 ];
 
