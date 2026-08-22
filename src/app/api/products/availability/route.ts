@@ -19,7 +19,11 @@ export async function GET() {
     handles.map(async (handle) => {
       try {
         return [handle, await getProductAvailability(handle)] as const;
-      } catch {
+      } catch (error) {
+        console.error(
+          `Shopify availability lookup failed for ${handle}:`,
+          error instanceof Error ? error.message : "Unknown error"
+        );
         return [handle, null] as const;
       }
     })

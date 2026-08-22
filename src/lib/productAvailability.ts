@@ -7,7 +7,6 @@ export type StorefrontVariantAvailability = {
   price: number;
   currencyCode: string;
   availableForSale: boolean;
-  quantityAvailable: number | null;
 };
 
 export type StorefrontProductAvailability = {

@@ -91,7 +91,6 @@ type VariantNode = {
   selectedOptions: Array<{ name: string; value: string }>;
   price: { amount: string; currencyCode: string };
   availableForSale: boolean;
-  quantityAvailable: number | null;
 };
 
 type ProductByHandleResponse = {
@@ -119,7 +118,6 @@ export async function getProductByHandle(handle: string) {
             title
             selectedOptions { name value }
             availableForSale
-            quantityAvailable
             price {
               amount
               currencyCode
@@ -152,7 +150,6 @@ export async function getProductAvailability(handle: string) {
       price: Number.parseFloat(variant.price.amount),
       currencyCode: variant.price.currencyCode,
       availableForSale: variant.availableForSale,
-      quantityAvailable: variant.quantityAvailable,
     })),
   };
 }
