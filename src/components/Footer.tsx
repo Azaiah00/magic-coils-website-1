@@ -54,10 +54,11 @@ export default function Footer() {
           >
             <h4 className="font-serif text-xl text-primary mb-8">Shop</h4>
             <nav className="flex flex-col gap-5">
-              <Link href="/shop" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">All Products</Link>
-              <Link href="/shop?category=shampoo" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Shampoo & Conditioners</Link>
-              <Link href="/shop?category=styling" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Styling & Treatments</Link>
-              <Link href="/shop?category=bundles" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Crown Bundles</Link>
+              <Link href="/collections/all-products" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">All Products</Link>
+              <Link href="/collections/professional-magic-press" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Professional Magic Press</Link>
+              <Link href="/collections/2-strand-twist-collection" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">2 Strand Twist Collection</Link>
+              <Link href="/collections/loc-moisture-collection" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Loc Moisture Collection</Link>
+              <Link href="/collections/bundles" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Crown Bundles</Link>
               <Link href="/quiz" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Hair Quiz</Link>
             </nav>
           </motion.div>

@@ -12,7 +12,7 @@ const routineCards = [
     description: "A five-product path from cleansing and conditioning through prep and finish.",
     image: "/images/hero/bundle-magic-press.png",
     mobileImage: "/images/hero/bundle-magic-press-mobile-wide.png",
-    href: "/product/bundle-magic-press",
+    href: "/collections/professional-magic-press",
     cta: "Explore Magic Press",
   },
   {
@@ -21,7 +21,7 @@ const routineCards = [
     description: "Leave-in, custard, foam, and serum grouped for twists and definition-focused styles.",
     image: "/images/hero/bundle-2-strand-twist.png",
     mobileImage: "/images/hero/bundle-2-strand-twist-mobile-wide.png",
-    href: "/product/bundle-2-strand-twist",
+    href: "/collections/2-strand-twist-collection",
     cta: "Explore Twist Routine",
   },
 ];
