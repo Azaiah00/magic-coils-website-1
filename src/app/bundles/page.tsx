@@ -15,14 +15,14 @@ const BUNDLES = [
   {
     slug: "bundle-2-strand-twist",
     name: "The Magic Coils 2 Strand Twist",
-    description: "Curated 4A–4C hair systems designed to work together.",
+    description: "Four coordinated styling products for hydrated, defined twists and twist-outs.",
     price: 50.00,
     image: "https://magiccoils.net/images/bundle-2-strand-twist-new.png",
   },
   {
     slug: "bundle-magic-press",
     name: "Professional Magic Press",
-    description: "A coordinated five-product routine for silk-press wash days.",
+    description: "Five professional-size products for a complete silk-press wash-day routine.",
     price: 100.00,
     image: "https://magiccoils.net/images/bundle-magic-press-new.png",
   }

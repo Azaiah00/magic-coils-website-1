@@ -1,7 +1,7 @@
 # Magic Coils — Terms of Service
 
 **Effective Date:** May 13, 2026
-**Last Updated:** May 13, 2026
+**Last Updated:** August 24, 2026
 **Operated by:** Hair For You LLC, doing business as Magic Coils
 **Contact:** info@magiccoils.net · (843) 344-7131
 
@@ -191,7 +191,7 @@ Questions about these Terms?
 
 **Email:** info@magiccoils.net
 **Phone:** (843) 344-7131 (Monday–Friday, 9 AM – 5 PM Eastern)
-**Mail:** Hair For You LLC, Legal Inquiry, [add mailing address before publishing]
+**Mail:** Hair For You LLC dba Magic Coils, Legal Inquiry, 104 Council St., Sumter, SC 29150, United States
 
 ---
 

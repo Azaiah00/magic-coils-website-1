@@ -11,6 +11,7 @@ const routineCards = [
     eyebrow: "Silk press routine",
     description: "A five-product path from cleansing and conditioning through prep and finish.",
     image: "/images/hero/bundle-magic-press.png",
+    mobileImage: "/images/hero/bundle-magic-press-mobile-wide.png",
     href: "/product/bundle-magic-press",
     cta: "Explore Magic Press",
   },
@@ -19,6 +20,7 @@ const routineCards = [
     eyebrow: "Twist & set routine",
     description: "Leave-in, custard, foam, and serum grouped for twists and definition-focused styles.",
     image: "/images/hero/bundle-2-strand-twist.png",
+    mobileImage: "/images/hero/bundle-2-strand-twist-mobile-wide.png",
     href: "/product/bundle-2-strand-twist",
     cta: "Explore Twist Routine",
   },
@@ -26,7 +28,7 @@ const routineCards = [
 
 export default function BundleTeaser() {
   return (
-    <section className="py-24 md:py-32 bg-primary relative overflow-hidden text-white border-y border-accent/20">
+    <section id="routines" className="scroll-mt-24 py-24 md:py-32 bg-primary relative overflow-hidden text-white border-y border-accent/20">
       {/* Subtle Damask Pattern Overlay */}
       <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("/images/mc-pattern.png")', backgroundSize: '400px', backgroundRepeat: 'repeat', backgroundPosition: 'center' }}></div>
       
@@ -62,12 +64,21 @@ export default function BundleTeaser() {
               className="group overflow-hidden rounded-2xl border border-accent/25 bg-white/[0.06] backdrop-blur-sm"
             >
               <Link href={routine.href} className="grid sm:grid-cols-[0.9fr_1.1fr] h-full">
-                <div className="relative min-h-72 sm:min-h-full bg-white/95">
+                <div className="relative aspect-[512/382] sm:aspect-auto sm:min-h-full bg-white/95">
                   <Image
-                    src={routine.image}
+                    src={routine.mobileImage}
                     alt={`${routine.title} product routine`}
                     fill
-                    className="object-contain p-5 transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 639px) 100vw, 1px"
+                    className="object-cover sm:hidden transition-transform duration-700 group-hover:scale-[1.02]"
+                  />
+                  <Image
+                    src={routine.image}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    sizes="(min-width: 640px) 45vw, 1px"
+                    className="hidden sm:block object-contain p-5 transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-7 md:p-9 flex flex-col justify-center">

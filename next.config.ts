@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Generate the standalone server bundle required by Netlify's Next.js runtime.
+  output: "standalone",
   // Use project directory as root to avoid lockfile warning when multiple lockfiles exist
   turbopack: {
     root: process.cwd(),

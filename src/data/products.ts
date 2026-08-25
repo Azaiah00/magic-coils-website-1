@@ -312,11 +312,8 @@ export const products: Product[] = [
     image: "/images/bundle-2-strand-twist-new.png",
     listingImage: "/images/hero/bundle-2-strand-twist.png",
     shopifyHandle: "the-magic-coils-2-strand-twist",
-    available: false,
-    unavailableMessage: "Online bundle checkout is coming soon. Shop the products individually in the meantime.",
-    availabilityLocked: true,
     description:
-      "Build a twist routine with four coordinated styling steps in one set. The 2 Strand Twist Bundle includes the 3-In-1 Leave In Treatment, Honey & Argan Curl Forming Custard, Control Foam Wrap Lotion & Setting Mousse, and Honey & Argan Strengthening Serum.\n\nStart with the leave-in on clean, damp, detangled hair. Work in sections and choose the custard, foam, or a small amount of both based on the finish you want. Form each twist, allow the style to dry completely, and finish with a small amount of serum before separating. See the displayed bundle contents, sizes, and current pricing before ordering. Crowned in Magic.",
+      "Build a twist routine with four coordinated styling steps in one set: 3-In-1 Leave In Treatment (8.45 oz), Honey & Argan Curl Forming Custard (8.45 oz), Control Foam Wrap Lotion & Setting Mousse (7.44 oz), and Honey & Argan Strengthening Serum (4.05 oz).\n\nStart with the leave-in on clean, damp, detangled hair. Work in sections and choose the custard, foam, or a small amount of both based on the finish you want. Form each twist, allow the style to dry completely, and finish with a small amount of serum before separating. A $75.80 retail value for $50.00—you save $25.80 (34%). Crowned in Magic.",
     ingredients: "See individual products for full ingredient lists.",
     howToUse: "Layer the Leave In Treatment, followed by the Curl Forming Custard or Control Foam. Finish with the Strengthening Serum for brilliant shine.",
   },
@@ -328,12 +325,9 @@ export const products: Product[] = [
     category: "bundles",
     image: "/images/bundle-magic-press-new.png",
     listingImage: "/images/hero/bundle-magic-press.png",
-    shopifyHandle: "the-magic-press",
-    available: false,
-    unavailableMessage: "Online bundle checkout is coming soon. Shop the products individually in the meantime.",
-    availabilityLocked: true,
+    shopifyHandle: "professional-magic-press",
     description:
-      "Professional Magic Press brings the Magic Coils silk press routine into one five-product set: Peppermint Detox Shampoo, Intense Hydration Shampoo, Moisture Rich Conditioner, 3-In-1 Leave In Treatment, and Honey & Argan Strengthening Serum.\n\nBegin with the cleanser that fits your wash-day plan, condition and detangle thoroughly, then apply the leave-in before drying. Use a small amount of serum as the pre-styling or finishing step. Heat technique, tool temperature, and results vary by hair and service history, so follow your tool manufacturer's guidance or work with a licensed professional. See the displayed bundle contents, sizes, and current pricing before ordering. Crowned in Magic.",
+      "Professional Magic Press brings the Magic Coils silk press routine into one five-product professional-size set: Peppermint Detox Shampoo (33.8 oz), Intense Hydration Shampoo (33.8 oz), Moisture Rich Conditioner (33.8 oz), 3-In-1 Leave In Treatment (33.8 oz), and Honey & Argan Strengthening Serum (4.05 oz).\n\nBegin with the cleanser that fits your wash-day plan, condition and detangle thoroughly, then apply the leave-in before drying. Use a small amount of serum as the pre-styling or finishing step. Heat technique, tool temperature, and results vary by hair and service history, so follow your tool manufacturer's guidance or work with a licensed professional. A $151.75 retail value for $100.00—you save $51.75 (34%). Crowned in Magic.",
     ingredients: "See individual products for full ingredient lists.",
     howToUse: "Start with the Peppermint Detox Shampoo to clarify, follow with Intense Hydration Shampoo and Moisture Rich Conditioner. Apply the Leave In Treatment before blow-drying, and use the Strengthening Serum before flat ironing.",
   }

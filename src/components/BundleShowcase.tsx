@@ -281,18 +281,17 @@ export default function BundleShowcase() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-6">
-                    <button
-                      type="button"
-                      disabled
-                      className="flex-1 bg-primary/60 text-white py-4 text-sm font-bold tracking-widest uppercase cursor-not-allowed shadow-xl text-center"
+                    <Link
+                      href={`/product/${bundle.slug}`}
+                      className="flex-1 bg-primary text-white py-4 text-sm font-bold tracking-widest uppercase shadow-xl text-center hover:bg-accent hover:text-primary transition-colors"
                     >
-                      Online Checkout Coming Soon
-                    </button>
+                      Shop This Bundle
+                    </Link>
                     <Link
                       href="/shop"
                       className="flex-1 border border-primary px-5 py-4 text-center text-sm font-bold tracking-widest uppercase text-primary hover:bg-primary hover:text-white transition-colors"
                     >
-                      Shop Products
+                      Shop All Products
                     </Link>
                   </div>
                 </div>
