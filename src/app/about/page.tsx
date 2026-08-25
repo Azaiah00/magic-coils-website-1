@@ -24,7 +24,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-primary/40"></div>
           <div className="relative z-10 text-center px-4">
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="font-serif text-5xl md:text-7xl text-white mb-6"
@@ -32,7 +32,7 @@ export default function AboutPage() {
               Our Story
             </motion.h1>
             <motion.p 
-              initial={{ opacity: 0, y: 30 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-sans text-xl text-white/90 font-medium tracking-widest uppercase"
@@ -46,7 +46,7 @@ export default function AboutPage() {
         <section className="py-24 md:py-32 bg-background">
           <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
             <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
@@ -55,16 +55,16 @@ export default function AboutPage() {
               Honoring the beauty, versatility, and power of textured hair.
             </motion.h2>
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="font-sans text-lg md:text-xl text-primary/80 leading-relaxed mb-12"
             >
-              Rooted in the belief that hair is a crown, our brand celebrates every curl, coil, and wave with professional-quality formulations designed to nourish, define, and protect. Our luxurious blends merge science and nature to empower confidence and elegance in every strand.
+              Rooted in the belief that hair is a crown, Magic Coils celebrates curls, coils, waves, locs, and protective styles with complete routines for wash day, styling, and finishing.
             </motion.p>
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={false}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -82,7 +82,7 @@ export default function AboutPage() {
           <div className="container mx-auto px-4 md:px-8 max-w-6xl">
             {/* Section Header — Above the two columns */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
@@ -99,7 +99,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
               {/* Founder Image — Aligned at top with text */}
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
+                initial={false}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
@@ -115,7 +115,7 @@ export default function AboutPage() {
 
               {/* Message Content */}
               <motion.div
-                initial={{ opacity: 0, x: 30 }}
+                initial={false}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -123,31 +123,19 @@ export default function AboutPage() {
                 {/* Body Copy */}
                 <div className="font-sans text-[17px] leading-[28px] text-primary/90 space-y-6">
                   <p>
-                    I built Magic Coils because the haircare aisle never built it for the women in my life.
+                    Magic Coils was created by Antwun Wilson, a hair distributor and the founder of Hair For You. His work in hair distribution gave the brand a practical starting point: textured-hair customers need clear routines, accessible product education, and reliable ways to buy the products that fit their styling goals.
                   </p>
-                  
+
                   <p>
-                    For years I watched the women in my family search for products that actually understood their hair. Bottle after bottle promised to &quot;tame&quot; them. <em className="italic">Tame.</em> As if their crowns were something unruly that needed to be managed instead of celebrated. The shelves were full of formulas designed for someone else&apos;s texture, marketed in someone else&apos;s language. The few brands that did serve textured hair too often felt like an afterthought — thin ingredient lists, generic packaging, no soul behind the label.
+                    The line brings wash-day, styling, and finishing products together so shoppers can build a routine for silk presses, twists, coils, locs, and other textured-hair styles. Each product page includes directions and a complete ingredient list to help customers make an informed choice.
                   </p>
-                  
+
                   <p>
-                    I knew their hair deserved more. More care. More science. More respect.
+                    Hair For You also gives Magic Coils a direct connection to salons and independent stylists. Through the Royal Court partner program, the brand is building relationships with professionals who want to use, carry, and introduce Magic Coils products to their clients.
                   </p>
-                  
+
                   <p>
-                    So I built it. Magic Coils is what happens when a brand starts with that respect from day one. Every product in our line is built around three hero ingredients chosen specifically for textured hair: <strong className="text-primary">argan oil</strong> for slip and shine, <strong className="text-primary">vitamin C</strong> for scalp health and luminosity, and <strong className="text-primary">honey oil</strong> for deep, lasting moisture. Eight professional-grade formulas — not one of them an afterthought, not one ingredient filler. Each one designed to nourish, define, and protect the natural pattern of your crown, exactly as it grows.
-                  </p>
-                  
-                  <p>
-                    But Magic Coils isn&apos;t only about what&apos;s in the bottle. It&apos;s about who you become when you finally use a product that was made for you. The first time your wash day feels like ritual instead of routine. The first time your twist-out lasts seven days instead of three. The first time you look in the mirror and your hair looks the way it was always supposed to.
-                  </p>
-                  
-                  <p>
-                    That&apos;s the magic. That&apos;s the promise.
-                  </p>
-                  
-                  <p>
-                    This is the brand the women in my life deserved. The one we built so the women coming after them never have to wait for it the way they did.
+                    The goal is simple: help every customer approach their hair as a crown, with a routine they can understand and products they can use with confidence.
                   </p>
                 </div>
 
@@ -157,7 +145,7 @@ export default function AboutPage() {
                     Welcome to Magic Coils. Crowned in Magic.
                   </p>
                   <p className="font-serif italic text-primary/60 text-[15px] mt-4">
-                    — Antwun Wilson<br />
+                    Antwun Wilson<br />
                     Founder, Magic Coils · Hair For You LLC
                   </p>
                 </div>
@@ -178,12 +166,12 @@ export default function AboutPage() {
               {[
                 { title: "Authenticity", desc: "Honoring natural beauty in its truest form." },
                 { title: "Confidence", desc: "Empowering you to wear your crown proudly." },
-                { title: "Quality", desc: "Professional-grade, luxurious formulations." },
+                { title: "Clarity", desc: "Clear routines, directions, and ingredient information." },
                 { title: "Inclusivity", desc: "Celebrating every curl, coil, and wave." }
               ].map((value, idx) => (
                 <motion.div 
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: idx * 0.15 }}
@@ -204,7 +192,7 @@ export default function AboutPage() {
         <section className="py-16 md:py-20 bg-background">
           <div className="container mx-auto px-4 md:px-8 max-w-5xl">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
@@ -219,7 +207,7 @@ export default function AboutPage() {
             </motion.div>
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
+              initial={false}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}

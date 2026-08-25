@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-12 mb-20">
           {/* Column 1: Brand & Social */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
@@ -46,7 +46,7 @@ export default function Footer() {
 
           {/* Column 2: Shop */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
@@ -54,17 +54,18 @@ export default function Footer() {
           >
             <h4 className="font-serif text-xl text-primary mb-8">Shop</h4>
             <nav className="flex flex-col gap-5">
-              <Link href="/shop" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">All Products</Link>
-              <Link href="/shop?category=shampoo" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Shampoo & Conditioners</Link>
-              <Link href="/shop?category=styling" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Styling & Treatments</Link>
-              <Link href="/shop?category=bundles" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Crown Bundles</Link>
+              <Link href="/collections/all-products" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">All Products</Link>
+              <Link href="/collections/professional-magic-press" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Professional Magic Press</Link>
+              <Link href="/collections/2-strand-twist-collection" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">2 Strand Twist Collection</Link>
+              <Link href="/collections/loc-moisture-collection" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Loc Moisture Collection</Link>
+              <Link href="/collections/bundles" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Crown Bundles</Link>
               <Link href="/quiz" className="font-sans text-sm text-primary/70 hover:text-accent transition-colors duration-300">Hair Quiz</Link>
             </nav>
           </motion.div>
 
           {/* Column 3: About & Support */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -83,7 +84,7 @@ export default function Footer() {
 
           {/* Column 4: Newsletter */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -102,7 +103,7 @@ export default function Footer() {
 
         {/* Contact Info & Bottom Bar */}
         <motion.div 
-          initial={{ opacity: 0 }}
+          initial={false}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.5 }}

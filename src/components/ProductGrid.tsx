@@ -5,12 +5,18 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
-import { formatListingPrice, getProductListingImage, productToCartLine, products } from "@/data/products";
+import {
+  formatListingPrice,
+  getProductListingImage,
+  isProductAvailable,
+  productToCartLine,
+} from "@/data/products";
+import { useAvailableProducts } from "@/hooks/useAvailableProducts";
 
 export default function ProductGrid() {
   const { addItem } = useCart();
   // Show first 4 products on home page
-  const displayProducts = products.slice(0, 4);
+  const displayProducts = useAvailableProducts().slice(0, 4);
 
   return (
     <section className="py-32 bg-surface relative overflow-hidden">
@@ -19,7 +25,7 @@ export default function ProductGrid() {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
@@ -29,11 +35,11 @@ export default function ProductGrid() {
               Iconic <span className="bg-gradient-to-r from-[#BF953F] via-[#D4AF37] to-[#B38728] bg-clip-text text-transparent">Essentials</span>
             </h2>
             <p className="font-sans text-lg text-primary/70 leading-relaxed">
-              Curated perfection for your daily routine. Experience the magic of our best-selling formulas, crafted to honor the beauty of textured hair.
+              Start with the step your routine needs now, from cleansing and conditioning to styling, refreshing, and finishing.
             </p>
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -53,7 +59,7 @@ export default function ProductGrid() {
           {displayProducts.map((product, index) => (
             <motion.div 
               key={product.id} 
-              initial={{ opacity: 0, y: 50 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.7, delay: index * 0.15 }}
@@ -69,13 +75,31 @@ export default function ProductGrid() {
                 />
                 
                 {/* Quick Add Button */}
-                <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
-                  <button 
-                    onClick={() => addItem(productToCartLine(product, 1))}
-                    className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
-                  >
-                    Quick Add
-                  </button>
+                <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 opacity-100 translate-y-0 md:opacity-0 md:translate-y-8 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
+                  {!isProductAvailable(product) ? (
+                    <button
+                      type="button"
+                      disabled
+                      className="w-full bg-primary/60 text-white py-4 text-sm font-semibold tracking-widest uppercase cursor-not-allowed shadow-xl"
+                    >
+                      Sold Out
+                    </button>
+                  ) : product.variants?.length ? (
+                    <Link
+                      href={`/product/${product.id}`}
+                      className="block w-full bg-primary text-white py-4 text-center text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                    >
+                      Choose Size
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => addItem(productToCartLine(product, 1))}
+                      className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                    >
+                      Quick Add
+                    </button>
+                  )}
                 </div>
                 
                 {/* Subtle overlay on hover */}

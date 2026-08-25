@@ -1,14 +1,32 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Script from "next/script";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ProductPageClient from "./ProductPageClient";
-import { getProductGalleryImages, getProductListingImage, products } from "@/data/products";
+import {
+  getProductGalleryImages,
+  getProductListingImage,
+  isProductAvailable,
+  products,
+} from "@/data/products";
+import { getProductAvailability } from "@/lib/shopify";
+import { applyStorefrontAvailability } from "@/lib/productAvailability";
 
 type Params = { id: string };
+
+// Inventory and pricing come from Shopify on each product-page request.
+export const dynamic = "force-dynamic";
+
+function summarizeForMetadata(description: string, maxLength = 155): string {
+  const firstParagraph = description.split("\n")[0].replace(/\s+/g, " ").trim();
+  if (firstParagraph.length <= maxLength) return firstParagraph;
+
+  const candidate = firstParagraph.slice(0, maxLength + 1);
+  const lastSpace = candidate.lastIndexOf(" ");
+  return `${candidate.slice(0, lastSpace > 100 ? lastSpace : maxLength).trim()}…`;
+}
 
 export async function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
@@ -24,7 +42,7 @@ export async function generateMetadata({
   if (!product) return { title: "Product Not Found | Magic Coils" };
 
   const url = `https://magiccoils.net/product/${product.id}`;
-  const descShort = product.description.split("\n")[0].slice(0, 155).trim();
+  const descShort = summarizeForMetadata(product.description);
 
   const listingImage = getProductListingImage(product);
 
@@ -61,20 +79,28 @@ export default async function ProductPage({
   params: Promise<Params>;
 }) {
   const { id } = await params;
-  const product = products.find((p) => p.id === id);
+  const sourceProduct = products.find((p) => p.id === id);
 
-  if (!product) {
+  if (!sourceProduct) {
     notFound();
+  }
+
+  let product = sourceProduct;
+  if (sourceProduct.shopifyHandle && !sourceProduct.availabilityLocked) {
+    try {
+      const live = await getProductAvailability(sourceProduct.shopifyHandle);
+      product = applyStorefrontAvailability(sourceProduct, live);
+    } catch {
+      // Keep the conservative local inventory fallback if Shopify is temporarily unreachable.
+    }
   }
 
   return (
     <main className="min-h-screen flex flex-col w-full bg-background">
       <Navbar />
 
-      <Script
-        id={`product-schema-${product.id}`}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
@@ -92,7 +118,9 @@ export default async function ProductPage({
                   url: `https://magiccoils.net/product/${product.id}`,
                   priceCurrency: "USD",
                   price: v.price.toFixed(2),
-                  availability: "https://schema.org/InStock",
+                  availability: v.available === false
+                    ? "https://schema.org/OutOfStock"
+                    : "https://schema.org/InStock",
                   name: v.sizeLabel,
                 }))
               : {
@@ -100,15 +128,15 @@ export default async function ProductPage({
                   url: `https://magiccoils.net/product/${product.id}`,
                   priceCurrency: "USD",
                   price: product.price.toFixed(2),
-                  availability: "https://schema.org/InStock",
+                  availability: isProductAvailable(product)
+                    ? "https://schema.org/InStock"
+                    : "https://schema.org/OutOfStock",
                 },
           }),
         }}
       />
-      <Script
-        id={`breadcrumb-schema-${product.id}`}
+      <script
         type="application/ld+json"
-        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",

@@ -153,7 +153,7 @@ Questions about this Privacy Policy or about how we handle your information?
 
 **Email:** info@magiccoils.net
 **Phone:** (843) 344-7131 (Monday–Friday, 9 AM – 5 PM Eastern)
-**Mail:** Hair For You LLC, Privacy Inquiry, [add mailing address before publishing]
+**Mail:** Hair For You LLC dba Magic Coils, Privacy Inquiry, 104 Council St., Sumter, SC 29150, United States
 
 For Privacy Requests (Section 9), please use the subject line "Privacy Request" so we route your inquiry correctly.
 

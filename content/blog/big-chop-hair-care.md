@@ -4,6 +4,7 @@ slug: "big-chop-hair-care"
 description: "Month-by-month guide to the first year after a big chop. What length to expect, what to do at each stage, and the products that protect new growth from breakage."
 publishedAt: "2026-06-05"
 updatedAt: "2026-06-05"
+draft: true
 author: "The Crown Editors"
 pillar: "transformation"
 featuredImage: "/images/model-blue.png"

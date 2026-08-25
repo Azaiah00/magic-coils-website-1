@@ -4,6 +4,7 @@ slug: "how-to-identify-your-curl-pattern"
 description: "The hair typing system explained without the confusion. A complete guide to identifying your texture from Type 1 (straight) through Type 8 (zig-zag coiled), with the products and routines that work for each."
 publishedAt: "2026-05-29"
 updatedAt: "2026-05-29"
+draft: true
 author: "The Crown Editors"
 pillar: "education"
 featuredImage: "/images/hair-type-4.png"
@@ -59,7 +60,7 @@ Magic Coils uses an **8-pattern system** for our Hair Quiz, which we believe mor
 **Common challenges:** Oily roots, flat-looking volume, build-up from styling products.
 
 **Best Magic Coils routine:**
-- Cleanse 2-3x/week with **[Peppermint Detox Shampoo](/product/peppermint-shampoo)** for scalp circulation
+- Choose **[Peppermint Detox Shampoo](/product/peppermint-shampoo)** when product buildup calls for a clarifying wash; ask your stylist how often to clarify for your scalp and routine
 - Condition lightly with **[Moisture Rich Conditioner](/product/moisture-conditioner)** — mid-length to ends only
 - Style with **[3-In-1 Leave In Treatment](/product/leave-in-treatment)** sprayed lightly through length
 - Skip the custard — too heavy for Type 1

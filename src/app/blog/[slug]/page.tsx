@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -95,11 +94,9 @@ export default async function BlogArticlePage({
       <Navbar />
 
       {schemas.map((schema, index) => (
-        <Script
+        <script
           key={index}
-          id={`blog-schema-${post.slug}-${index}`}
           type="application/ld+json"
-          strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}

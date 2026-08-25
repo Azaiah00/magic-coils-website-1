@@ -1,16 +1,6 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 export default function PageTransition({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-    >
-      {children}
-    </motion.div>
-  );
+  // Critical page content stays visible in the server response. Individual
+  // components can still enhance their UI after hydration, but the entire
+  // page must never depend on JavaScript to appear.
+  return <div>{children}</div>;
 }

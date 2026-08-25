@@ -4,6 +4,7 @@ slug: "peppermint-oil-scalp-science"
 description: "Peppermint oil isn't just a tingle. Here's what the research actually shows about hair growth, scalp circulation, and why concentration matters more than presence."
 publishedAt: "2026-05-22"
 updatedAt: "2026-05-22"
+draft: true
 author: "The Crown Editors"
 pillar: "ingredient"
 featuredImage: "/images/peppermint-shampoo-new.png"

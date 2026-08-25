@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
@@ -10,23 +9,25 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import JudgeMePreviewBadge from "@/components/JudgeMePreviewBadge";
 import { useCart } from "@/context/CartContext";
-import { formatListingPrice, getProductListingImage, productToCartLine, products } from "@/data/products";
+import {
+  formatListingPrice,
+  getProductListingImage,
+  isProductAvailable,
+  productToCartLine,
+  products,
+} from "@/data/products";
+import { useAvailableProducts } from "@/hooks/useAvailableProducts";
 
 const categories = [
-  { id: "all", label: "All Products" },
-  { id: "shampoo", label: "Shampoo & Conditioners" },
-  { id: "styling", label: "Styling" },
-  { id: "treatments", label: "Treatments" },
-  { id: "bundles", label: "Bundles", href: "/bundles" },
+  { id: "all", label: "All Products", href: "/collections/all-products" },
+  { id: "shampoo", label: "Shampoo & Conditioners", href: "/collections/shampoo-conditioners" },
+  { id: "styling", label: "Styling & Treatments", href: "/collections/styling-treatments" },
+  { id: "bundles", label: "Bundles", href: "/collections/bundles" },
 ];
 
 export default function ShopPage() {
-  const [activeCategory, setActiveCategory] = useState("all");
   const { addItem } = useCart();
-
-  const filteredProducts = activeCategory === "all" 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+  const availableProducts = useAvailableProducts();
 
   return (
     <main className="min-h-screen flex flex-col w-full bg-background">
@@ -76,27 +77,13 @@ export default function ShopPage() {
           {/* Filters */}
           <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
             {categories.map((cat) => (
-              cat.href ? (
-                <Link
-                  key={cat.id}
-                  href={cat.href}
-                  className="text-sm font-semibold tracking-widest uppercase transition-colors duration-300 pb-2 border-b-2 border-transparent text-primary/50 hover:text-primary hover:border-accent"
-                >
-                  {cat.label}
-                </Link>
-              ) : (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`text-sm font-semibold tracking-widest uppercase transition-colors duration-300 pb-2 border-b-2 ${
-                    activeCategory === cat.id 
-                      ? "border-accent text-primary" 
-                      : "border-transparent text-primary/50 hover:text-primary"
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              )
+              <Link
+                key={cat.id}
+                href={cat.href}
+                className="border-b-2 border-transparent pb-2 text-sm font-semibold uppercase tracking-widest text-primary/50 transition-colors duration-300 hover:border-accent hover:text-primary"
+              >
+                {cat.label}
+              </Link>
             ))}
           </div>
 
@@ -105,7 +92,7 @@ export default function ShopPage() {
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-12"
           >
-            {filteredProducts.map((product) => (
+            {availableProducts.map((product) => (
               <motion.div 
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -126,12 +113,30 @@ export default function ShopPage() {
                   
                   {/* Quick Add Button */}
                   <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out z-20">
-                    <button 
-                      onClick={() => addItem(productToCartLine(product, 1))}
-                      className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
-                    >
-                      Quick Add
-                    </button>
+                    {!isProductAvailable(product) ? (
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full bg-primary/60 text-white py-4 text-sm font-semibold tracking-widest uppercase cursor-not-allowed shadow-xl"
+                      >
+                        Sold Out
+                      </button>
+                    ) : product.variants?.length ? (
+                      <Link
+                        href={`/product/${product.id}`}
+                        className="block w-full bg-primary text-white py-4 text-center text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                      >
+                        Choose Size
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => addItem(productToCartLine(product, 1))}
+                        className="w-full bg-primary text-white py-4 text-sm font-semibold tracking-widest uppercase hover:bg-accent transition-colors duration-300 shadow-xl"
+                      >
+                        Quick Add
+                      </button>
+                    )}
                   </div>
                   
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -151,6 +156,11 @@ export default function ShopPage() {
                   <p className="font-sans text-primary/80 font-medium">
                     {formatListingPrice(product)}
                   </p>
+                  {!isProductAvailable(product) && (
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-primary/50">
+                      Currently sold out
+                    </p>
+                  )}
                 </div>
               </motion.div>
             ))}

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllBlogPostMeta } from "@/lib/blog";
 import { products } from "@/data/products";
+import { storeCollections } from "@/data/collections";
 
 // Single source for absolute URLs in the sitemap. Keep in sync with
 // metadataBase in src/app/layout.tsx so every entry resolves to production.
@@ -48,6 +49,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: product.category === "bundles" ? 0.95 : 0.85,
   }));
 
+  const collectionPaths = storeCollections.map((collection) => ({
+    url: `${BASE}/collections/${collection.handle}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: collection.handle === "all-products" ? 0.9 : 0.85,
+  }));
+
   // Curl Talk articles — one entry per markdown file in content/blog/.
   const articlePaths = getAllBlogPostMeta().map((article) => ({
     url: `${BASE}/blog/${article.slug}`,
@@ -64,6 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: p.priority,
     })),
     ...productPaths,
+    ...collectionPaths,
     ...articlePaths,
   ];
 }

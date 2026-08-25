@@ -7,11 +7,12 @@ import WelcomeClient from "./WelcomeClient";
 const OG_IMAGE = "https://magiccoils.net/images/promo-card.png";
 
 export const metadata: Metadata = {
-  title: "Unlock 10% Off | Magic Coils",
-  description: "Drop your email and we'll send your 10% off code instantly. Crowned in Magic.",
+  title: "Join the Crowned Community | Magic Coils",
+  description: "Get Magic Coils textured-hair routine education, product updates, and new-release news.",
+  alternates: { canonical: "https://magiccoils.net/welcome" },
   openGraph: {
-    title: "Unlock 10% Off | Magic Coils",
-    description: "Drop your email and we'll send your 10% off code instantly. Crowned in Magic.",
+    title: "Join the Crowned Community | Magic Coils",
+    description: "Get Magic Coils textured-hair routine education, product updates, and new-release news.",
     url: "https://magiccoils.net/welcome",
     siteName: "Magic Coils",
     type: "website",
@@ -20,18 +21,23 @@ export const metadata: Metadata = {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Magic Coils 10% Off",
+        alt: "Join the Magic Coils Crowned Community",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Unlock 10% Off | Magic Coils",
-    description: "Drop your email and we'll send your 10% off code instantly. Crowned in Magic.",
+    title: "Join the Crowned Community | Magic Coils",
+    description: "Get Magic Coils textured-hair routine education, product updates, and new-release news.",
     images: [OG_IMAGE],
   },
 };
 
 export default function WelcomePage() {
-  return <WelcomeClient />;
+  return (
+    <>
+      <h1 className="sr-only">Join the Magic Coils Crowned Community</h1>
+      <WelcomeClient />
+    </>
+  );
 }

@@ -2,59 +2,15 @@
 
 import { motion } from "framer-motion";
 import { ExternalLink, Star } from "lucide-react";
-
-// Hardcoded Google reviews keep the section fast and brand-matched.
-// When new reviews come in, update this array and the aggregate schema
-// below will automatically reflect the new review count and average.
-const reviews = [
-  {
-    id: 1,
-    reviewer: "Dawna Quick",
-    rating: 5,
-    text: "It's strange to find out that someone in the Sumter community actually makes hair products. I've spent so much money on hair products from small makers through the years and would have tried Magic Coils sooner if I'd been aware of it.",
-    date: "May 2026",
-  },
-  {
-    id: 2,
-    reviewer: "Bonnie Joe",
-    rating: 5,
-    text: "Let me tell you, Magic Coils is definitely my go to product for silk wraps. This system makes my blowouts and silk wraps last up to 2 months on some of my clients. I love the versatility of MAGIC Coils.",
-    date: "May 2026",
-  },
-  {
-    id: 3,
-    reviewer: "joy richburg",
-    rating: 5,
-    text: "I'm truly in loved with these products. All of my natural hair girlies look like they have a relaxer and the products make the hair very manageable.",
-    date: "May 2026",
-  },
-  {
-    id: 4,
-    reviewer: "Marcia Sims",
-    rating: 5,
-    text: "This product is amazing! I love the way the hair feels after using these products. The outcome of the silk press starts at the shampoo bowl and this is what you want from start to finish!",
-    date: "May 2026",
-  },
-];
-
-const GOOGLE_BUSINESS_URL =
-  "https://www.google.com/maps/place/Magic+Coils/@33.9417074,-80.3663443,846m/data=!3m1!1e3!4m6!3m5!1s0x88ff69be678be279:0xd935db73f6a89a48!8m2!3d33.9417074!4d-80.3663443!16s%2Fg%2F11zb1shvn2";
-
-function abbreviateName(fullName: string): string {
-  const parts = fullName.trim().split(/\s+/);
-
-  if (parts.length === 1) {
-    return parts[0];
-  }
-
-  const first = parts[0];
-  const lastInitial = parts[parts.length - 1].charAt(0).toUpperCase();
-  return `${first} ${lastInitial}.`;
-}
+import {
+  abbreviateReviewerName,
+  GOOGLE_BUSINESS_URL,
+  googleReviews,
+} from "@/data/reviews";
 
 function averageRating(): string {
-  const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
-  return (sum / reviews.length).toFixed(1);
+  const sum = googleReviews.reduce((acc, review) => acc + review.rating, 0);
+  return (sum / googleReviews.length).toFixed(1);
 }
 
 function StarRow({ rating }: { rating: number }) {
@@ -108,11 +64,11 @@ export default function GoogleReviewsSection() {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: averageRating(),
-      reviewCount: reviews.length,
+      reviewCount: googleReviews.length,
       bestRating: "5",
       worstRating: "1",
     },
-    review: reviews.map((review) => ({
+    review: googleReviews.map((review) => ({
       "@type": "Review",
       reviewRating: {
         "@type": "Rating",
@@ -122,7 +78,7 @@ export default function GoogleReviewsSection() {
       },
       author: {
         "@type": "Person",
-        name: abbreviateName(review.reviewer),
+        name: abbreviateReviewerName(review.reviewer),
       },
       datePublished: review.date,
       reviewBody: review.text,
@@ -146,7 +102,7 @@ export default function GoogleReviewsSection() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
@@ -156,7 +112,7 @@ export default function GoogleReviewsSection() {
             <GoogleIcon className="w-6 h-6" />
             <StarRow rating={Math.round(parseFloat(averageRating()))} />
             <span className="text-sm text-white/70 ml-1">
-              {averageRating()} ({reviews.length} reviews)
+              {averageRating()} ({googleReviews.length} reviews)
             </span>
           </div>
 
@@ -174,10 +130,10 @@ export default function GoogleReviewsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-14">
-          {reviews.map((review, idx) => (
+          {googleReviews.map((review, idx) => (
             <motion.article
               key={review.id}
-              initial={{ opacity: 0, y: 24 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
@@ -195,7 +151,7 @@ export default function GoogleReviewsSection() {
               <footer className="flex items-center justify-between pt-4 border-t border-white/10">
                 <div>
                   <p className="text-[#D4AF37] font-semibold text-sm">
-                    {abbreviateName(review.reviewer)}
+                    {abbreviateReviewerName(review.reviewer)}
                   </p>
                   <p className="text-white/50 text-xs mt-0.5">Verified Google review</p>
                 </div>
@@ -206,7 +162,7 @@ export default function GoogleReviewsSection() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5 }}

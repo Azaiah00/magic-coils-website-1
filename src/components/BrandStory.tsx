@@ -18,7 +18,7 @@ export default function BrandStory() {
             
             {/* Background Glow */}
             <motion.div 
-              initial={{ opacity: 0 }}
+              initial={false}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5 }}
@@ -27,7 +27,7 @@ export default function BrandStory() {
 
             {/* Main Image (Model in Blue) */}
             <motion.div 
-              initial={{ opacity: 0, x: -40, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, ease: "easeOut" }}
@@ -45,7 +45,7 @@ export default function BrandStory() {
 
             {/* Secondary Image (Model in Bathroom) */}
             <motion.div 
-              initial={{ opacity: 0, x: 40, y: -20 }}
+              initial={false}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -66,7 +66,7 @@ export default function BrandStory() {
           {/* Right Side: Copy */}
           <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
@@ -81,7 +81,7 @@ export default function BrandStory() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -91,7 +91,7 @@ export default function BrandStory() {
                 At Magic Coils, we know that textured hair requires a different level of care. It needs deep hydration, intentional ingredients, and products that respect the science of our strands.
               </p>
               <p>
-                Our professional-grade formulas are crafted specifically for Black women—designed to detangle, moisturize, and add brilliant shine without compromising the integrity of your natural curl pattern.
+                Magic Coils brings cleansers, conditioners, leave-ins, stylers, and finishing products together for textured-hair routines built around clear steps and styling goals.
               </p>
               <p className="font-medium text-primary">
                 Whether you&apos;re doing a wash-and-go or prepping for a silk press, treat your hair like royalty.
@@ -99,7 +99,7 @@ export default function BrandStory() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
